@@ -10,7 +10,16 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage, kicker } = Astro.props;
 ---
 
-<SiteLayout title={title} description={description} image={heroImage} wide={false} atmosphere="blank">
+<SiteLayout
+	title={title}
+	description={description}
+	image={heroImage}
+	type="article"
+	publishedTime={pubDate}
+	modifiedTime={updatedDate}
+	wide={false}
+	atmosphere="blank"
+>
 	<article class="article">
 		{
 			heroImage && (

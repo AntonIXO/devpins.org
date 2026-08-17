@@ -10,6 +10,9 @@ interface Props {
 	title?: string;
 	description?: string;
 	image?: ImageMetadata | string;
+	type?: 'website' | 'article' | 'profile';
+	publishedTime?: Date;
+	modifiedTime?: Date;
 	wide?: boolean;
 	atmosphere?: 'field' | 'blank';
 }
@@ -18,6 +21,9 @@ const {
 	title = SITE_TITLE,
 	description = SITE_DESCRIPTION,
 	image,
+	type = 'website',
+	publishedTime,
+	modifiedTime,
 	wide = true,
 	atmosphere = 'blank',
 } = Astro.props;
@@ -28,7 +34,14 @@ const field = atmosphere === 'field';
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} image={image} />
+		<BaseHead
+			title={title}
+			description={description}
+			image={image}
+			type={type}
+			publishedTime={publishedTime}
+			modifiedTime={modifiedTime}
+		/>
 	</head>
 	<body class:list={{ 'has-field': field }}>
 		{field && <NeuroField />}

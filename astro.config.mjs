@@ -7,7 +7,32 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://devpins.org',
-	integrations: [mdx(), sitemap()],
+	integrations: [
+		mdx(),
+		sitemap({
+			filter: (page) => {
+				const { pathname } = new URL(page);
+				return pathname !== '/about' && pathname !== '/about/' && !pathname.startsWith('/api/');
+			},
+			serialize(item) {
+				const { pathname } = new URL(item.url);
+				if (pathname === '/') {
+					item.changefreq = 'weekly';
+					item.priority = 1;
+				} else if (pathname === '/blog/') {
+					item.changefreq = 'weekly';
+					item.priority = 0.8;
+				} else if (pathname.startsWith('/blog/')) {
+					item.changefreq = 'monthly';
+					item.priority = 0.7;
+				} else if (pathname === '/cv/') {
+					item.changefreq = 'monthly';
+					item.priority = 0.6;
+				}
+				return item;
+			},
+		}),
+	],
 	redirects: {
 		'/about': '/',
 	},

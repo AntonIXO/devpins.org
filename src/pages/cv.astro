@@ -5,7 +5,13 @@ import { awards, cvLinks, cvProjects, education, skills } from '../data/cv';
 import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<SiteLayout title="Curriculum vitae" description={`CV — ${SITE_AUTHOR}`} wide={false} atmosphere="blank">
+<SiteLayout
+	title="Curriculum vitae"
+	description={`CV — ${SITE_AUTHOR}`}
+	type="profile"
+	wide={false}
+	atmosphere="blank"
+>
 	<article class="cv">
 		<h1>{SITE_AUTHOR}</h1>
 		<p class="place">{SITE_LOCATION}</p>
