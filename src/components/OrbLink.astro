@@ -1,0 +1,78 @@
+---
+interface Props {
+	href: string;
+	label?: string;
+	size?: 'lg' | 'sm';
+}
+
+const { href, label = 'Learn more', size = 'lg' } = Astro.props;
+---
+
+<a class:list={['orb', size]} href={href} data-cv-orb="learn" data-nav-link>
+	<span class="orb__label">{label}</span>
+	<span class="orb__plus" aria-hidden="true">+</span>
+</a>
+
+<style>
+	.orb {
+		display: grid;
+		place-items: center;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: #ffffff;
+		color: #1e1b4b;
+		text-align: center;
+		box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.55);
+	}
+
+	.orb.lg {
+		width: 104px;
+		padding: 12px;
+	}
+
+	.orb.sm {
+		width: 42px;
+		padding: 4px;
+	}
+
+	.orb:hover {
+		color: #1e1b4b;
+		background: #f4edff;
+	}
+
+	.orb:active {
+		transform: scale(0.97);
+		transition: transform 100ms ease-out;
+	}
+
+	.orb__label {
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		line-height: 1.15;
+		max-width: 7ch;
+	}
+
+	.orb.sm .orb__label {
+		display: none;
+	}
+
+	.orb__plus {
+		font-family: var(--font-mono);
+		font-size: 18px;
+		line-height: 1;
+		margin-top: 2px;
+	}
+
+	.orb.sm .orb__plus {
+		font-size: 20px;
+		margin: 0;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.orb:active {
+			transform: none;
+			transition: none;
+		}
+	}
+</style>

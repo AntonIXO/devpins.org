@@ -1,49 +1,253 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Mark from '../components/Mark.astro';
+import MetricSpark from '../components/MetricSpark.astro';
+import OrbLink from '../components/OrbLink.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { SITE_DESCRIPTION, SITE_KICKER, SITE_MANIFESTO, SITE_TELEGRAM, SITE_TITLE } from '../consts';
+import { featuredWork } from '../data/projects';
+import { primaryMetric } from '../data/metrics';
+import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<SiteLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<section class="cover">
+		<div class="visual">
+			<div class="portrait" aria-hidden="true">
+				<Mark size={220} />
+			</div>
+			<div class="inset">
+				<MetricSpark metric={primaryMetric} compact />
+			</div>
+		</div>
+
+		<div class="copy">
+			<p class="kicker">{SITE_KICKER}</p>
+			<h1>
+				<span class="drop">M</span>easure first, claim later.
+			</h1>
+			<p class="manifesto">{SITE_MANIFESTO}</p>
+		</div>
+
+		<p class="display" aria-hidden="true">
+			<span class="outline">Measure first,</span>
+			<span class="fill">claim later.</span>
+		</p>
+
+		<div class="orb">
+			<OrbLink href="/cv" />
+		</div>
+	</section>
+
+	<SectionLabel>Work</SectionLabel>
+	<div class="work">
+		{
+			featuredWork.map((project, index) => (
+				<WorkCard project={{ ...project, n: String(index + 1).padStart(2, '0') }} />
+			))
+		}
+	</div>
+
+	<SectionLabel>Writing</SectionLabel>
+	<div class="empty">
+		<p>
+			No posts yet — the first notes will cover the SLM reimplementation and what two years of my own
+			biometrics actually showed.
+		</p>
+		<a href={SITE_TELEGRAM}>Follow on Telegram</a>
+	</div>
+</SiteLayout>
+
+<style>
+	.cover {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+		grid-template-areas:
+			'visual copy'
+			'display display';
+		gap: 28px 48px;
+		padding-top: 72px;
+		min-height: calc(100svh - 160px);
+	}
+
+	.visual {
+		grid-area: visual;
+		position: relative;
+		min-height: 420px;
+	}
+
+	.portrait {
+		height: 100%;
+		min-height: 460px;
+		border-radius: var(--web-radius-2xl);
+		border: 1px solid var(--web-glass-border-2);
+		background: rgba(255, 255, 255, 0.04);
+		backdrop-filter: var(--web-blur-md);
+		-webkit-backdrop-filter: var(--web-blur-md);
+		display: grid;
+		place-items: center;
+		overflow: hidden;
+	}
+
+	.portrait :global(svg) {
+		width: min(68%, 280px);
+		height: auto;
+		opacity: 0.18;
+		color: #fff;
+	}
+
+	.inset {
+		position: absolute;
+		left: 16px;
+		bottom: 16px;
+		width: min(240px, 72%);
+	}
+
+	.copy {
+		grid-area: copy;
+		padding-top: 28px;
+		max-width: 36rem;
+	}
+
+	.kicker {
+		font-family: var(--font-mono);
+		font-size: 12.5px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--web-fg-faint);
+		margin: 0 0 26px;
+	}
+
+	h1 {
+		font-size: clamp(2rem, 4vw, 3.25rem);
+		line-height: 1.02;
+		letter-spacing: -0.035em;
+		font-weight: 700;
+		max-width: 12ch;
+	}
+
+	.drop {
+		color: var(--web-accent-purple);
+		font-weight: 700;
+	}
+
+	.manifesto {
+		font-size: 19px;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.75);
+		margin-top: 32px;
+		max-width: 54ch;
+	}
+
+	.display {
+		grid-area: display;
+		font-size: clamp(3.4rem, 12vw, 10.5rem);
+		line-height: 0.88;
+		font-weight: 700;
+		letter-spacing: -0.05em;
+		margin: 8px 0 0;
+		pointer-events: none;
+	}
+
+	.outline {
+		display: block;
+		color: transparent;
+		-webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.88);
+	}
+
+	.fill {
+		display: block;
+		color: #fff;
+	}
+
+	.orb {
+		position: absolute;
+		right: 0;
+		bottom: 6%;
+		z-index: 2;
+	}
+
+	.work {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 12px;
+	}
+
+	.empty {
+		display: flex;
+		align-items: center;
+		gap: 22px;
+		flex-wrap: wrap;
+		padding: 30px 32px;
+		border-radius: var(--web-radius-xl);
+		border: 1px dashed rgba(255, 255, 255, 0.2);
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.empty p {
+		font-size: 16.5px;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.75);
+		flex: 1;
+		min-width: 260px;
+	}
+
+	.empty a {
+		display: inline-flex;
+		align-items: center;
+		height: 40px;
+		padding: 0 18px;
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.22);
+		background: rgba(255, 255, 255, 0.1);
+		font-size: 14.5px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	.empty a:hover {
+		background: rgba(255, 255, 255, 0.2);
+		color: #fff;
+	}
+
+	.empty a:active {
+		transform: scale(0.97);
+		transition: transform 100ms ease-out;
+	}
+
+	@media (max-width: 900px) {
+		.cover {
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				'visual'
+				'copy'
+				'display';
+			min-height: 0;
+			padding-top: 36px;
+			gap: 22px;
+		}
+
+		.portrait {
+			min-height: 240px;
+			aspect-ratio: 16 / 10;
+		}
+
+		.display {
+			font-size: clamp(2.6rem, 16vw, 4.5rem);
+		}
+
+		.orb {
+			position: static;
+			display: flex;
+			justify-content: flex-end;
+			margin-top: -12px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.empty a:active {
+			transform: none;
+		}
+	}
+</style>

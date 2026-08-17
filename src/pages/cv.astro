@@ -1,0 +1,398 @@
+---
+import SectionLabel from '../components/SectionLabel.astro';
+import { SITE_AUTHOR, SITE_LOCATION } from '../consts';
+import { awards, cvIntro, cvLinks, cvProjects, education, skills } from '../data/cv';
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout title="Curriculum vitae" description={cvIntro} wide={false}>
+	<article class="cv">
+		<div class="identity">
+			<h1>{SITE_AUTHOR}</h1>
+			<span class="orb-anchor" transition:name="cv-orb" aria-hidden="true">CV</span>
+		</div>
+		<p class="intro">{cvIntro}</p>
+
+		<div class="chips">
+			{
+				cvLinks.map((link) => (
+					<a href={link.href}>{link.label}</a>
+				))
+			}
+			<span>{SITE_LOCATION}</span>
+		</div>
+
+		<SectionLabel>Education</SectionLabel>
+		<div class="stack">
+			{
+				education.map((item) => (
+					<div class:list={['card', { compact: !item.bullets }]} data-reveal>
+						<div class="card__head">
+							<h2>{item.title}</h2>
+							<span>{item.period}</span>
+						</div>
+						{item.meta &&
+							(item.metaHref ? (
+								<p class="meta">
+									<a href={item.metaHref}>{item.meta.split(' · ')[0]}</a>
+									{' · '}
+									{item.meta.split(' · ').slice(1).join(' · ')}
+								</p>
+							) : (
+								<p class="meta">{item.meta}</p>
+							))}
+						{item.bullets && (
+							<ul>
+								{item.bullets.map((bullet) => (
+									<li>{bullet}</li>
+								))}
+							</ul>
+						)}
+					</div>
+				))
+			}
+		</div>
+
+		<SectionLabel>Projects</SectionLabel>
+		<div class="stack">
+			{
+				cvProjects.map((item) => (
+					<div class="card" data-reveal>
+						<div class="card__head">
+							<h2>
+								{item.href ? <a href={item.href}>{item.title}</a> : item.title}
+							</h2>
+							<span>{item.period}</span>
+						</div>
+						<p class="lede">{item.lede}</p>
+						<ul>
+							{item.bullets.map((bullet) => (
+								<li set:html={bullet.replace(
+									'Yuri Rykov (scholar profile)',
+									'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru">Yuri Rykov</a>',
+								)} />
+							))}
+						</ul>
+					</div>
+				))
+			}
+		</div>
+
+		<SectionLabel>Awards</SectionLabel>
+		<div class="awards">
+			{
+				awards.map((item) => (
+					<div class="award">
+						<span>{item.mark}</span>
+						<p>
+							{item.text}
+							{item.note && <em> — {item.note}</em>}
+						</p>
+					</div>
+				))
+			}
+		</div>
+
+		<SectionLabel>Skills</SectionLabel>
+		<div class="skills">
+			{
+				skills.map((group) => (
+					<div class="skill">
+						<p>{group.label}</p>
+						<div>
+							{group.items.map((item) => (
+								<span>{item}</span>
+							))}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</article>
+</SiteLayout>
+
+<style>
+	.cv {
+		padding: 72px 0 48px;
+	}
+
+	.identity {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+
+	h1 {
+		font-size: 52px;
+		line-height: 1.05;
+		letter-spacing: -0.035em;
+	}
+
+	.orb-anchor {
+		display: grid;
+		place-items: center;
+		width: 36px;
+		height: 36px;
+		flex: none;
+		border-radius: 50%;
+		background: #fff;
+		color: #1e1b4b;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		margin-top: 0.15em;
+	}
+
+	.intro {
+		font-size: 18px;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.75);
+		margin-top: 18px;
+		max-width: 60ch;
+	}
+
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 28px;
+	}
+
+	.chips a,
+	.chips span {
+		display: inline-flex;
+		align-items: center;
+		height: 38px;
+		padding: 0 16px;
+		border-radius: 12px;
+		border: 1px solid var(--web-glass-border);
+		background: var(--web-glass);
+		backdrop-filter: var(--web-blur-md);
+		font-size: 14px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	.chips span {
+		border-color: var(--web-glass-border-2);
+		background: transparent;
+		color: rgba(255, 255, 255, 0.6);
+		font-weight: 400;
+	}
+
+	.chips a:hover {
+		background: rgba(255, 255, 255, 0.2);
+		color: #fff;
+	}
+
+	.chips a:active {
+		transform: scale(0.97);
+		transition: transform 100ms ease-out;
+	}
+
+	.stack {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.card {
+		padding: 22px 24px;
+		border-radius: var(--web-radius-xl);
+		border: 1px solid var(--web-glass-border-2);
+		background: var(--web-glass-subtle);
+		backdrop-filter: var(--web-blur-md);
+	}
+
+	.card.compact {
+		display: flex;
+		align-items: baseline;
+		gap: 16px;
+		padding: 16px 24px;
+	}
+
+	.card__head {
+		display: flex;
+		align-items: baseline;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	.card h2 {
+		font-size: 18px;
+		font-weight: 600;
+		letter-spacing: -0.015em;
+		flex: 1;
+		min-width: 240px;
+	}
+
+	.card.compact h2 {
+		font-size: 16px;
+	}
+
+	.card h2 a {
+		color: var(--web-accent-purple);
+		border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+	}
+
+	.card span {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: rgba(255, 255, 255, 0.55);
+	}
+
+	.meta {
+		font-size: 14px;
+		color: rgba(255, 255, 255, 0.6);
+		margin-top: 8px;
+	}
+
+	.meta a {
+		color: var(--web-accent-purple);
+		border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+	}
+
+	.lede {
+		font-size: 15px;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.8);
+		margin-top: 10px;
+	}
+
+	ul {
+		margin: 14px 0 0;
+		padding-left: 18px;
+		display: flex;
+		flex-direction: column;
+		gap: 7px;
+		font-size: 14.5px;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.7);
+	}
+
+	ul :global(a) {
+		color: var(--web-accent-purple);
+		border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+	}
+
+	.awards {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.award {
+		display: flex;
+		align-items: baseline;
+		gap: 20px;
+		padding: 16px 2px;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.award:last-child {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.award span {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: rgba(255, 255, 255, 0.4);
+		width: 104px;
+		flex: none;
+	}
+
+	.award p {
+		font-size: 15.5px;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.88);
+		flex: 1;
+	}
+
+	.award em {
+		font-style: normal;
+		color: var(--web-fg-faint);
+	}
+
+	.skills {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+	}
+
+	.skill {
+		display: flex;
+		align-items: baseline;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
+	.skill p {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--web-fg-faint);
+		width: 108px;
+		flex: none;
+	}
+
+	.skill div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 7px;
+		flex: 1;
+	}
+
+	.skill span {
+		display: inline-flex;
+		align-items: center;
+		height: 32px;
+		padding: 0 13px;
+		border-radius: 10px;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		background: rgba(255, 255, 255, 0.06);
+		font-size: 13.5px;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	@media (max-width: 720px) {
+		h1 {
+			font-size: 36px;
+		}
+
+		.award {
+			flex-direction: column;
+			gap: 6px;
+		}
+	}
+
+	@media print {
+		:global(body) {
+			background: #fff;
+			color: #111;
+		}
+
+		.cv {
+			padding-top: 0;
+			color: #111;
+		}
+
+		h1,
+		.card h2,
+		.award p,
+		.lede,
+		.intro,
+		.meta,
+		ul,
+		.skill span {
+			color: #111 !important;
+		}
+
+		.card,
+		.chips a,
+		.skill span {
+			background: #fff !important;
+			border-color: #ccc !important;
+			backdrop-filter: none !important;
+		}
+	}
+</style>

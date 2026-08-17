@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/optihealth-design-system-24abdbd8-9f68-49f4-aa5d-d540c43cd554/colors_and_type.css">
+<link rel="stylesheet" href="_ds/optihealth-design-system-24abdbd8-9f68-49f4-aa5d-d540c43cd554/preview/_base.css">
+<script src="_ds/optihealth-design-system-24abdbd8-9f68-49f4-aa5d-d540c43cd554/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #312e81; }
+  a { color: #ffffff; text-decoration: none; }
+  a:hover { color: #c084fc; }
+  ::selection { background: rgba(192,132,252,0.35); }
+  @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.75); } }
+  @keyframes traceLine { from { stroke-dashoffset: 320; } to { stroke-dashoffset: 0; } }
+</style>
+</helmet>
+<div style="min-height: 100vh; background: linear-gradient(135deg, #1e3a8a 0%, #581c87 52%, #312e81 100%); background-attachment: fixed; font-family: 'Geist', system-ui, sans-serif; color: #ffffff; padding: 28px 24px 120px; box-sizing: border-box">
+
+  <div style="max-width: 1120px; margin: 0 auto; position: relative; z-index: 20">
+    <div onMouseEnter="{{ onEnter }}" onMouseLeave="{{ onLeave }}" style="position: relative; border: 1px solid rgba(255,255,255,0.20); border-radius: 24px; background: rgba(255,255,255,0.07); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 20px 60px -20px rgba(0,0,0,0.55)">
+
+      <div style="display: flex; align-items: center; gap: 14px; padding: 12px 14px">
+        <button onClick="{{ toggle }}" aria-label="Toggle navigation" style="display: grid; place-items: center; width: 42px; height: 42px; flex: none; border-radius: 13px; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.10); color: #ffffff; font-family: 'Geist', sans-serif; font-size: 21px; font-weight: 600; line-height: 1; cursor: pointer; padding: 0; transition: transform 520ms cubic-bezier(0.34,1.56,0.64,1), background 200ms ease; transform: {{ dTransform }}" style-hover="background: rgba(255,255,255,0.18)" style-active="transform: scale(0.94)"><span style="display: block; transform: translate(0.5px, -0.5px)">D</span></button>
+
+        <a href="#top" style="font-size: 20px; font-weight: 600; letter-spacing: -0.02em; margin-left: -8px">evPins</a>
+
+        <div style="display: flex; align-items: center; gap: 4px; margin-left: 10px">
+          <a href="https://t.me/AntonlX" aria-label="Telegram" style="display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; color: rgba(255,255,255,0.70); transition: color 180ms ease, background 180ms ease" style-hover="color: #ffffff; background: rgba(255,255,255,0.10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.3 18.9 19.06c-.23 1.02-.84 1.27-1.7.79l-4.7-3.46-2.27 2.18c-.25.25-.46.46-.94.46l.34-4.78 8.7-7.86c.38-.34-.08-.53-.59-.19l-10.75 6.77-4.63-1.45c-1.01-.32-1.03-1.01.21-1.5L20.63 2.8c.84-.31 1.57.2 1.31 1.5Z"></path></svg></a>
+          <a href="https://github.com/AntonIXO" aria-label="GitHub" style="display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; color: rgba(255,255,255,0.70); transition: color 180ms ease, background 180ms ease" style-hover="color: #ffffff; background: rgba(255,255,255,0.10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a>
+          <a href="mailto:antonix@devpins.org" aria-label="Email" style="display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; color: rgba(255,255,255,0.70); transition: color 180ms ease, background 180ms ease" style-hover="color: #ffffff; background: rgba(255,255,255,0.10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a>
+        </div>
+
+        <div style="flex: 1"></div>
+
+        <a href="CV.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.20); backdrop-filter: blur(12px); font-size: 15px; font-weight: 600; letter-spacing: 0.01em; transition: background 200ms ease, transform 160ms cubic-bezier(0.34,1.56,0.64,1)" style-hover="background: rgba(255,255,255,0.30); color: #ffffff" style-active="transform: scale(0.96)">CV<span style="display: inline-block; transition: transform 220ms ease">→</span></a>
+      </div>
+
+      <div style="overflow: hidden; transition: max-height 420ms cubic-bezier(0.22,1,0.36,1), opacity 260ms ease; max-height: {{ drawerH }}; opacity: {{ drawerO }}">
+        <div style="padding: 0 14px 16px">
+
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.10)">
+            <button onClick="{{ pickAll }}" style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 180ms ease, color 180ms ease; background: {{ s.all.bg }}; color: {{ s.all.fg }}" style-hover="background: rgba(255,255,255,0.15)">Everything</button>
+            <button onClick="{{ pickOh }}" style="display: inline-flex; align-items: center; gap: 9px; height: 38px; padding: 0 16px 0 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 180ms ease, color 180ms ease; background: {{ s.oh.bg }}; color: {{ s.oh.fg }}" style-hover="background: rgba(255,255,255,0.15)"><svg width="22" height="22" viewBox="0 0 120 120" style="flex: none"><rect x="14" y="14" width="92" height="92" rx="7" fill="none" stroke="currentColor" stroke-width="8"></rect><line x1="60" y1="14" x2="60" y2="106" stroke="currentColor" stroke-width="8"></line><circle cx="37" cy="83" r="19" fill="none" stroke="#4ade80" stroke-width="8"></circle><line x1="74" y1="33" x2="74" y2="87" stroke="currentColor" stroke-width="8"></line><line x1="96" y1="33" x2="96" y2="87" stroke="currentColor" stroke-width="8"></line><line x1="74" y1="60" x2="96" y2="60" stroke="currentColor" stroke-width="8"></line></svg>optiHealth</button>
+            <button onClick="{{ pickMb }}" style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 180ms ease, color 180ms ease; background: {{ s.mb.bg }}; color: {{ s.mb.fg }}" style-hover="background: rgba(255,255,255,0.15)">MineBit</button>
+            <button onClick="{{ pickK }}" style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 180ms ease, color 180ms ease; background: {{ s.k.bg }}; color: {{ s.k.fg }}" style-hover="background: rgba(255,255,255,0.15)">K</button>
+          </div>
+
+          <div style="position: relative; padding: 14px 0 2px 40px">
+            <div style="position: absolute; left: 20px; top: 0; bottom: 18px; width: 1px; background: rgba(255,255,255,0.16)"></div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <sc-for list="{{ rows }}" as="p" hint-placeholder-count="4">
+                <a href="{{ p.href }}" style="position: relative; display: flex; align-items: baseline; gap: 16px; padding: 11px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.04); transition: background 160ms ease, border-color 160ms ease, transform 160ms ease" style-hover="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.22); transform: translateX(3px)" style-before="content: ''; position: absolute; left: -20px; top: 50%; width: 20px; height: 1px; background: rgba(255,255,255,0.16)">
+                  <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.35); flex: none; width: 22px">{{ p.n }}</span>
+                  <span style="flex: 1; font-size: 15.5px; font-weight: 500; letter-spacing: -0.01em; text-wrap: pretty">{{ p.title }}</span>
+                  <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.50); flex: none">{{ p.tag }}</span>
+                  <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.50); flex: none; width: 96px; text-align: right">{{ p.date }}</span>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 1120px; margin: 0 auto; position: relative; overflow: hidden">
+    <svg viewBox="0 0 120 120" aria-hidden="true" style="position: absolute; right: 0; top: 40px; width: min(46vw, 460px); height: min(46vw, 460px); opacity: 0.09; pointer-events: none"><rect x="14" y="14" width="92" height="92" rx="7" fill="none" stroke="#ffffff" stroke-width="4"></rect><line x1="60" y1="14" x2="60" y2="106" stroke="#ffffff" stroke-width="4"></line><circle cx="37" cy="83" r="19" fill="none" stroke="#4ade80" stroke-width="4"></circle><line x1="74" y1="33" x2="74" y2="87" stroke="#ffffff" stroke-width="4"></line><line x1="96" y1="33" x2="96" y2="87" stroke="#ffffff" stroke-width="4"></line><line x1="74" y1="60" x2="96" y2="60" stroke="#ffffff" stroke-width="4"></line></svg>
+
+    <div style="position: relative; padding-top: 132px">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin: 0 0 26px">Anton Ivanov · St. Petersburg · ITMO AI360</p>
+      <h1 style="font-size: clamp(48px, 8vw, 104px); line-height: 0.94; font-weight: 700; letter-spacing: -0.045em; margin: 0; max-width: 15ch; text-wrap: balance">Measure first, claim later.</h1>
+      <p style="font-size: 19px; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 32px 0 0; max-width: 54ch; text-wrap: pretty">I build the instrumentation for my own experiments — a health platform that logs me continuously, a marketplace that shipped on TON, and a Linux port that runs on a phone.</p>
+    </div>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; margin: 96px 0 20px">
+      <h2 style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin: 0; flex: none">Live from optiHealth</h2>
+      <span style="flex: 1; height: 1px; background: rgba(255,255,255,0.12)"></span>
+      <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.45)"><span style="width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: pulseDot 2.4s ease-in-out infinite"></span>demo dataset</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+      <div style="padding: 20px 22px 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px)">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin: 0">HRV rMSSD</p>
+        <p style="display: flex; align-items: baseline; gap: 7px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; margin: 10px 0 0">62<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.50)">ms</span></p>
+        <svg viewBox="0 0 200 44" preserveAspectRatio="none" style="display: block; width: 100%; height: 44px; margin-top: 12px; overflow: visible"><polyline points="0,30 18,26 36,33 54,20 72,24 90,14 108,22 126,12 144,18 162,9 180,15 200,7" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="320" style="animation: traceLine 1.8s ease-out both"></polyline></svg>
+      </div>
+      <div style="padding: 20px 22px 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px)">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin: 0">Sleep, 7-day mean</p>
+        <p style="display: flex; align-items: baseline; gap: 7px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; margin: 10px 0 0">7.2<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.50)">h</span></p>
+        <svg viewBox="0 0 200 44" preserveAspectRatio="none" style="display: block; width: 100%; height: 44px; margin-top: 12px"><g fill="#60a5fa"><rect x="2" y="16" width="22" height="28" rx="2"></rect><rect x="30" y="10" width="22" height="34" rx="2"></rect><rect x="58" y="22" width="22" height="22" rx="2"></rect><rect x="86" y="6" width="22" height="38" rx="2"></rect><rect x="114" y="14" width="22" height="30" rx="2"></rect><rect x="142" y="20" width="22" height="24" rx="2"></rect><rect x="170" y="9" width="22" height="35" rx="2"></rect></g></svg>
+      </div>
+      <div style="padding: 20px 22px 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px)">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin: 0">Resting HR</p>
+        <p style="display: flex; align-items: baseline; gap: 7px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; margin: 10px 0 0">49<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.50)">bpm</span></p>
+        <svg viewBox="0 0 200 44" preserveAspectRatio="none" style="display: block; width: 100%; height: 44px; margin-top: 12px; overflow: visible"><polyline points="0,14 20,18 40,12 60,22 80,17 100,26 120,20 140,30 160,24 180,32 200,28" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="320" style="animation: traceLine 1.8s ease-out 0.15s both"></polyline></svg>
+      </div>
+      <div style="padding: 20px 22px 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px)">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin: 0">Weekly mileage</p>
+        <p style="display: flex; align-items: baseline; gap: 7px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; margin: 10px 0 0">54<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.50)">km</span></p>
+        <svg viewBox="0 0 200 44" preserveAspectRatio="none" style="display: block; width: 100%; height: 44px; margin-top: 12px; overflow: visible"><polyline points="0,36 25,32 50,34 75,25 100,27 125,18 150,21 175,12 200,8" fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="320" style="animation: traceLine 1.8s ease-out 0.3s both"></polyline></svg>
+      </div>
+    </div>
+
+    <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; line-height: 1.6; color: rgba(255,255,255,0.40); margin: 14px 0 0">Sample figures from the optiHealth demo account — swap for the live endpoint at build time.</p>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; margin: 96px 0 20px">
+      <h2 style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin: 0; flex: none">Work</h2>
+      <span style="flex: 1; height: 1px; background: rgba(255,255,255,0.12)"></span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px">
+      <a href="https://optihealth.devpins.org/demo" style="display: flex; flex-direction: column; padding: 26px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); transition: background 200ms ease, border-color 200ms ease" style-hover="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.20); color: #ffffff">
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.35)">01</span>
+          <svg width="26" height="26" viewBox="0 0 120 120" style="flex: none; opacity: 0.85"><rect x="14" y="14" width="92" height="92" rx="7" fill="none" stroke="currentColor" stroke-width="7"></rect><line x1="60" y1="14" x2="60" y2="106" stroke="currentColor" stroke-width="7"></line><circle cx="37" cy="83" r="19" fill="none" stroke="#4ade80" stroke-width="7"></circle><line x1="74" y1="33" x2="74" y2="87" stroke="currentColor" stroke-width="7"></line><line x1="96" y1="33" x2="96" y2="87" stroke="currentColor" stroke-width="7"></line><line x1="74" y1="60" x2="96" y2="60" stroke="currentColor" stroke-width="7"></line></svg>
+        </div>
+        <h3 style="font-size: 19px; font-weight: 600; margin: 28px 0 8px; letter-spacing: -0.02em">optiHealth</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,0.70); margin: 0; text-wrap: pretty">Continuous sleep, EEG, HR and HRV in one personal database — six months of history syncs in twenty seconds.</p>
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.40); margin: 20px 0 0">2025 — present</p>
+      </a>
+      <a href="https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9" style="display: flex; flex-direction: column; padding: 26px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); transition: background 200ms ease, border-color 200ms ease" style-hover="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.20); color: #ffffff">
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.35)">02</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="opacity: 0.85"><path d="M12 2.5 21 7v10l-9 4.5L3 17V7l9-4.5Z"></path><path d="M12 12l9-5M12 12v9.5M12 12 3 7"></path></svg>
+        </div>
+        <h3 style="font-size: 19px; font-weight: 600; margin: 28px 0 8px; letter-spacing: -0.02em">MineBit</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,0.70); margin: 0; text-wrap: pretty">Voxel builds minted as NFTs on TON — custom Minestom server, Go bridge, FunC contracts, Telegram web app.</p>
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.40); margin: 20px 0 0">2024 · The Open League</p>
+      </a>
+      <a href="https://github.com/SailfishOS-miatoll" style="display: flex; flex-direction: column; padding: 26px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); transition: background 200ms ease, border-color 200ms ease" style-hover="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.20); color: #ffffff">
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.35)">03</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="opacity: 0.85"><rect x="5" y="2" width="14" height="20" rx="2.5"></rect><path d="M9 6h6"></path><path d="M12 18h.01"></path></svg>
+        </div>
+        <h3 style="font-size: 19px; font-weight: 600; margin: 28px 0 8px; letter-spacing: -0.02em">SailfishOS port</h3>
+        <p style="font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,0.70); margin: 0; text-wrap: pretty">A full GNU/Linux system on ARM Android hardware via libhybris. 2,000+ downloads, a 200-user community.</p>
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.40); margin: 20px 0 0">2021 — 2025</p>
+      </a>
+    </div>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; margin: 96px 0 20px">
+      <h2 style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin: 0; flex: none">Writing</h2>
+      <span style="flex: 1; height: 1px; background: rgba(255,255,255,0.12)"></span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 22px; flex-wrap: wrap; padding: 30px 32px; border-radius: 16px; border: 1px dashed rgba(255,255,255,0.20); background: rgba(255,255,255,0.03)">
+      <p style="font-size: 16.5px; line-height: 1.55; color: rgba(255,255,255,0.75); margin: 0; flex: 1; min-width: 260px; text-wrap: pretty">No posts yet — the first notes will cover the SLM reimplementation and what two years of my own biometrics actually showed.</p>
+      <a href="https://t.me/AntonlX" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.10); font-size: 14.5px; font-weight: 500; transition: background 180ms ease, transform 160ms cubic-bezier(0.34,1.56,0.64,1)" style-hover="background: rgba(255,255,255,0.20); color: #ffffff" style-active="transform: scale(0.97)">Follow on Telegram</a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;expandOn&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;click&quot;,&quot;hover&quot;],&quot;default&quot;:&quot;click&quot;,&quot;tsType&quot;:&quot;'click' | 'hover'&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;rgba(255,255,255,0.22)&quot;,&quot;#c084fc&quot;,&quot;#60a5fa&quot;,&quot;#4ade80&quot;],&quot;default&quot;:&quot;rgba(255,255,255,0.22)&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;}}">
+class Component extends DCLogic {
+  state = { open: false, tab: "all" };
+
+  entries = [
+    { n: "01", title: "optiHealth — demo account", tag: "optiHealth", date: "live", k: "oh", href: "https://optihealth.devpins.org/demo" },
+    { n: "02", title: "Sensor Language Models — research in progress", tag: "optiHealth", date: "2026", k: "oh", href: "https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru" },
+    { n: "03", title: "MineBit — voxel builds as NFTs on TON", tag: "MineBit", date: "2024", k: "mb", href: "https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9" },
+    { n: "04", title: "AI Reader — LLMs inside the reading flow", tag: "K", date: "2025", k: "k", href: "https://devpost.com/software/konspecterai" },
+    { n: "05", title: "SailfishOS on a Xiaomi ARM phone", tag: "K", date: "2021—25", k: "k", href: "https://github.com/SailfishOS-miatoll" }
+  ];
+
+  pick = (tab) => () => this.setState({ tab, open: true });
+
+  renderVals() {
+    const { open, tab } = this.state;
+    const mode = this.props.expandOn ?? "click";
+    const accent = this.props.accent ?? "rgba(255,255,255,0.22)";
+    const on = (id) => tab === id
+      ? { bg: accent, fg: "#ffffff" }
+      : { bg: "rgba(255,255,255,0.06)", fg: "rgba(255,255,255,0.72)" };
+
+    return {
+      dTransform: open ? "rotate(90deg)" : "rotate(0deg)",
+      drawerH: open ? "420px" : "0px",
+      drawerO: open ? 1 : 0,
+      rows: tab === "all" ? this.entries : this.entries.filter(e => e.k === tab),
+      s: { all: on("all"), oh: on("oh"), mb: on("mb"), k: on("k") },
+      toggle: () => this.setState(s => ({ open: !s.open })),
+      onEnter: () => { if (mode === "hover") this.setState({ open: true }); },
+      onLeave: () => { if (mode === "hover") this.setState({ open: false }); },
+      pickAll: this.pick("all"),
+      pickOh: this.pick("oh"),
+      pickMb: this.pick("mb"),
+      pickK: this.pick("k")
+    };
+  }
+}
+</script>
+</body>
+</html>

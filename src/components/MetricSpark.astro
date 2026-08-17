@@ -1,0 +1,102 @@
+---
+import type { Metric } from '../data/metrics';
+
+interface Props {
+	metric: Metric;
+	compact?: boolean;
+}
+
+const { metric, compact = false } = Astro.props;
+---
+
+<div class:list={['spark', { compact }]} data-spark-wrap data-reveal>
+	<p class="spark__label">{metric.label}</p>
+	<p class="spark__value">
+		{metric.value}<span>{metric.unit}</span>
+	</p>
+	{
+		metric.kind === 'line' ? (
+			<svg viewBox="0 0 200 44" preserveAspectRatio="none" class="spark__chart" aria-hidden="true">
+				<polyline
+					data-spark
+					points={metric.points}
+					fill="none"
+					stroke={metric.color}
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"></polyline>
+			</svg>
+		) : (
+			<svg viewBox="0 0 200 44" preserveAspectRatio="none" class="spark__chart" aria-hidden="true">
+				<g fill={metric.color}>
+					<rect x="2" y="16" width="22" height="28" rx="2"></rect>
+					<rect x="30" y="10" width="22" height="34" rx="2"></rect>
+					<rect x="58" y="22" width="22" height="22" rx="2"></rect>
+					<rect x="86" y="6" width="22" height="38" rx="2"></rect>
+					<rect x="114" y="14" width="22" height="30" rx="2"></rect>
+					<rect x="142" y="20" width="22" height="24" rx="2"></rect>
+					<rect x="170" y="9" width="22" height="35" rx="2"></rect>
+				</g>
+			</svg>
+		)
+	}
+</div>
+
+<style>
+	.spark {
+		padding: 20px 22px 14px;
+		border-radius: var(--web-radius-xl);
+		border: 1px solid var(--web-glass-border-2);
+		background: var(--web-glass-subtle);
+		backdrop-filter: var(--web-blur-md);
+		-webkit-backdrop-filter: var(--web-blur-md);
+	}
+
+	.spark.compact {
+		padding: 14px 16px 10px;
+	}
+
+	.spark__label {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+		color: var(--web-fg-faint);
+	}
+
+	.spark__value {
+		display: flex;
+		align-items: baseline;
+		gap: 7px;
+		font-size: 34px;
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		margin-top: 10px;
+		line-height: 1;
+	}
+
+	.spark.compact .spark__value {
+		font-size: 26px;
+		margin-top: 6px;
+	}
+
+	.spark__value span {
+		font-family: var(--font-mono);
+		font-size: 13px;
+		font-weight: 400;
+		color: var(--web-fg-faint);
+	}
+
+	.spark__chart {
+		display: block;
+		width: 100%;
+		height: 44px;
+		margin-top: 12px;
+		overflow: visible;
+	}
+
+	.spark.compact .spark__chart {
+		height: 36px;
+		margin-top: 8px;
+	}
+</style>

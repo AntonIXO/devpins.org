@@ -1,0 +1,56 @@
+---
+import type { ImageMetadata } from 'astro';
+import BaseHead from '../components/BaseHead.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteNav from '../components/SiteNav.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: ImageMetadata | string;
+	wide?: boolean;
+}
+
+const {
+	title = SITE_TITLE,
+	description = SITE_DESCRIPTION,
+	image,
+	wide = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} image={image} />
+	</head>
+	<body>
+		<div class:list={['page', { wide }]}>
+			<SiteNav />
+			<main>
+				<slot />
+			</main>
+			<SiteFooter />
+		</div>
+		<script>
+			import '../scripts/page-motion';
+		</script>
+	</body>
+</html>
+
+<style>
+	.page {
+		min-height: 100vh;
+		padding: 28px var(--page-pad-x) 0;
+	}
+
+	main {
+		max-width: var(--page-max-narrow);
+		margin: 0 auto;
+	}
+
+	.wide main {
+		max-width: var(--page-max);
+	}
+</style>

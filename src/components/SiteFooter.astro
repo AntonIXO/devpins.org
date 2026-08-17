@@ -1,0 +1,39 @@
+---
+import { SITE_AUTHOR, SITE_GITHUB, SITE_TELEGRAM } from '../consts';
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+	<p>© {year} {SITE_AUTHOR}</p>
+	<div>
+		<a href={SITE_GITHUB}>GitHub</a>
+		<a href={SITE_TELEGRAM}>Telegram</a>
+		<a href="/rss.xml">RSS</a>
+	</div>
+</footer>
+
+<style>
+	footer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 12px 24px;
+		max-width: var(--page-max);
+		margin: 0 auto;
+		padding: 72px var(--page-pad-x) 48px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		letter-spacing: 0.04em;
+		color: var(--web-fg-faint);
+	}
+
+	div {
+		display: flex;
+		gap: 16px;
+	}
+
+	a:hover {
+		color: var(--web-fg);
+	}
+</style>

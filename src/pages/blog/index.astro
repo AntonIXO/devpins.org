@@ -1,114 +1,134 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import SectionLabel from '../../components/SectionLabel.astro';
+import { SITE_TELEGRAM, SITE_TITLE } from '../../consts';
+import SiteLayout from '../../layouts/SiteLayout.astro';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getCollection('blog', ({ data }) => data.draft !== true)).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<SiteLayout title="Writing" description={`Notes from ${SITE_TITLE}.`} wide={false}>
+	<section class="writing">
+		<SectionLabel>Writing</SectionLabel>
+		{
+			posts.length === 0 ? (
+				<div class="empty">
+					<p>
+						No posts yet — the first notes will cover the SLM reimplementation and what two years of
+						my own biometrics actually showed.
+					</p>
+					<a href={SITE_TELEGRAM}>Follow on Telegram</a>
+				</div>
+			) : (
+				<div class="rows">
+					{posts.map((post, index) => (
+						<a class="row" href={`/blog/${post.id}/`}>
+							<span class="n">{String(index + 1).padStart(2, '0')}</span>
+							<span class="title">{post.data.title}</span>
+							<span class="tag">{post.data.project ?? 'note'}</span>
+							<span class="date">
+								<FormattedDate date={post.data.pubDate} />
+							</span>
+						</a>
+					))}
+				</div>
+			)
+		}
+	</section>
+</SiteLayout>
+
+<style>
+	.writing {
+		padding-top: 24px;
+		padding-bottom: 48px;
+	}
+
+	.empty,
+	.row {
+		border-radius: var(--web-radius-xl);
+	}
+
+	.empty {
+		display: flex;
+		align-items: center;
+		gap: 22px;
+		flex-wrap: wrap;
+		padding: 30px 32px;
+		border: 1px dashed rgba(255, 255, 255, 0.2);
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.empty p {
+		font-size: 16.5px;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.75);
+		flex: 1;
+		min-width: 240px;
+	}
+
+	.empty a {
+		display: inline-flex;
+		align-items: center;
+		height: 40px;
+		padding: 0 18px;
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.22);
+		background: rgba(255, 255, 255, 0.1);
+		font-size: 14.5px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	.rows {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.row {
+		display: flex;
+		align-items: baseline;
+		gap: 16px;
+		padding: 14px 18px;
+		border: 1px solid var(--web-glass-border-2);
+		background: var(--web-glass-subtle);
+		color: #fff;
+	}
+
+	.row:hover {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: var(--web-glass-border);
+		color: #fff;
+	}
+
+	.n,
+	.tag,
+	.date {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		color: var(--web-fg-faint);
+		flex: none;
+	}
+
+	.n {
+		width: 22px;
+		color: var(--web-fg-ghost);
+	}
+
+	.title {
+		flex: 1;
+		font-size: 16px;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		min-width: 0;
+	}
+
+	@media (max-width: 720px) {
+		.row {
+			flex-wrap: wrap;
+		}
+	}
+</style>

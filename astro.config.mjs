@@ -6,30 +6,27 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://devpins.org',
 	integrations: [mdx(), sitemap()],
+	redirects: {
+		'/about': '/cv',
+	},
 	fonts: [
 		{
-			provider: fontProviders.local(),
-			name: 'Atkinson',
-			cssVariable: '--font-atkinson',
+			provider: fontProviders.fontsource(),
+			name: 'Geist',
+			cssVariable: '--font-geist',
+			weights: ['400 700'],
+			styles: ['normal'],
 			fallbacks: ['sans-serif'],
-			options: {
-				variants: [
-					{
-						src: ['./src/assets/fonts/atkinson-regular.woff'],
-						weight: 400,
-						style: 'normal',
-						display: 'swap',
-					},
-					{
-						src: ['./src/assets/fonts/atkinson-bold.woff'],
-						weight: 700,
-						style: 'normal',
-						display: 'swap',
-					},
-				],
-			},
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Geist Mono',
+			cssVariable: '--font-geist-mono',
+			weights: ['400 500'],
+			styles: ['normal'],
+			fallbacks: ['monospace'],
 		},
 	],
 });

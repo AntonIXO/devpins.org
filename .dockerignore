@@ -1,0 +1,11 @@
+.git
+.astro
+.vscode
+dist
+node_modules
+design
+*.md
+!README.md
+.env
+.env.*
+.DS_Store

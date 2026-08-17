@@ -1,0 +1,438 @@
+---
+import Mark from './Mark.astro';
+import { getNavRows } from '../data/nav';
+import { SITE_EMAIL, SITE_GITHUB, SITE_TELEGRAM } from '../consts';
+
+const rows = await getNavRows();
+const onCv = Astro.url.pathname.replace(/\/+$/, '') === '/cv';
+---
+
+<site-nav class="shell">
+	<div class="bar">
+		<div class="brand">
+			<button
+				class="d"
+				type="button"
+				data-toggle
+				aria-expanded="false"
+				aria-controls="site-index"
+				aria-label="Toggle projects"
+			>
+				<span class="d__glyph">D</span>
+			</button>
+			<a class="wordmark" href="/" data-nav-link>evPins</a>
+		</div>
+
+		<div class="socials">
+			<a href={SITE_TELEGRAM} aria-label="Telegram">
+				<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+					><path
+						d="M21.94 4.3 18.9 19.06c-.23 1.02-.84 1.27-1.7.79l-4.7-3.46-2.27 2.18c-.25.25-.46.46-.94.46l.34-4.78 8.7-7.86c.38-.34-.08-.53-.59-.19l-10.75 6.77-4.63-1.45c-1.01-.32-1.03-1.01.21-1.5L20.63 2.8c.84-.31 1.57.2 1.31 1.5Z"
+					></path></svg
+				>
+			</a>
+			<a href={SITE_GITHUB} aria-label="GitHub">
+				<svg
+					width="17"
+					height="17"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+					><path
+						d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+					></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
+				>
+			</a>
+			<a href={`mailto:${SITE_EMAIL}`} aria-label="Email">
+				<svg
+					width="17"
+					height="17"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+					><rect x="2" y="4" width="20" height="16" rx="2"></rect><path
+						d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
+				>
+			</a>
+		</div>
+
+		{
+			onCv ? (
+				<a class="cv" href="/cv" data-nav-link aria-label="Curriculum vitae">
+					CV
+				</a>
+			) : (
+				<a
+					class="cv"
+					href="/cv"
+					data-cv-orb="nav"
+					data-nav-link
+					transition:name="cv-orb"
+					aria-label="Curriculum vitae"
+				>
+					CV
+				</a>
+			)
+		}
+	</div>
+
+	<div class="drawer" id="site-index" data-drawer inert aria-hidden="true">
+		<div class="drawer__clip">
+			<div class="drawer__inner" data-drawer-inner>
+				<div class="segments" role="group" aria-label="Projects">
+					<span class="node" aria-hidden="true"></span>
+					<button type="button" data-filter="oh" aria-pressed="false">
+						<Mark size={18} />
+						optiHealth
+					</button>
+					<button type="button" data-filter="mb" aria-pressed="false">MineBit</button>
+					<button type="button" data-filter="k" aria-pressed="false" class="mono">K</button>
+				</div>
+
+				<div class="tree">
+					{
+						rows.map((row) => (
+							<a class="row" href={row.href} data-row data-k={row.k}>
+								<span class="row__title">{row.title}</span>
+							</a>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</site-nav>
+
+<script>
+	import '../scripts/site-nav';
+</script>
+
+<style>
+	.shell {
+		--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+		--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+		display: block;
+		position: sticky;
+		top: 16px;
+		z-index: 40;
+		max-width: var(--page-max);
+		margin: 0 auto;
+		border: 1px solid var(--web-glass-border);
+		border-radius: var(--web-radius-2xl);
+		background: var(--web-glass-nav);
+		backdrop-filter: var(--web-blur-lg);
+		-webkit-backdrop-filter: var(--web-blur-lg);
+		box-shadow: var(--web-shadow-nav);
+	}
+
+	.bar {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 10px 12px;
+	}
+
+	.brand {
+		display: flex;
+		align-items: center;
+		min-width: 0;
+	}
+
+	.d {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		flex: none;
+		border-radius: 11px;
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		background: rgba(255, 255, 255, 0.1);
+		color: #fff;
+		font-size: 20px;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		line-height: 1;
+		transition: transform 160ms var(--ease-out), background 160ms ease;
+	}
+
+	.d__glyph {
+		display: block;
+		line-height: 1;
+		transform-origin: center;
+	}
+
+	.d:active {
+		transform: scale(0.97);
+	}
+
+	.wordmark {
+		font-size: 20px;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		line-height: 1;
+		margin-left: 6px;
+		color: #fff;
+	}
+
+	.wordmark:hover {
+		color: #fff;
+	}
+
+	.socials {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		margin-left: 4px;
+		flex: 1;
+	}
+
+	.socials a {
+		display: grid;
+		place-items: center;
+		width: 34px;
+		height: 34px;
+		border-radius: 10px;
+		color: rgba(255, 255, 255, 0.7);
+		transition: color 160ms ease, background 160ms ease;
+	}
+
+	.cv {
+		display: grid;
+		place-items: center;
+		width: 36px;
+		height: 36px;
+		margin-left: auto;
+		flex: none;
+		border-radius: 50%;
+		background: #fff;
+		color: #1e1b4b;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		line-height: 1;
+		transition: transform 160ms var(--ease-out), background 160ms ease;
+	}
+
+	.cv:active {
+		transform: scale(0.97);
+	}
+
+	.drawer {
+		display: grid;
+		grid-template-rows: 0fr;
+		opacity: 0;
+		transition:
+			grid-template-rows 240ms var(--ease-drawer),
+			opacity 180ms var(--ease-out);
+	}
+
+	.shell.is-open .drawer {
+		grid-template-rows: 1fr;
+		opacity: 1;
+		transition:
+			grid-template-rows 240ms var(--ease-drawer),
+			opacity 200ms var(--ease-out);
+	}
+
+	.shell.is-open:not(.is-instant) .drawer {
+		transition-duration: 240ms, 200ms;
+	}
+
+	.shell:not(.is-open) .drawer {
+		transition-duration: 160ms, 140ms;
+	}
+
+	.shell.is-instant .drawer {
+		transition-duration: 0ms, 0ms;
+	}
+
+	.drawer__clip {
+		overflow: hidden;
+		min-height: 0;
+	}
+
+	.drawer__inner {
+		padding: 0 12px 14px;
+	}
+
+	.segments {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0;
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: 14px;
+		background: rgba(255, 255, 255, 0.05);
+		overflow: hidden;
+	}
+
+	.node {
+		width: 36px;
+		height: 36px;
+		flex: none;
+		border-right: 1px solid rgba(255, 255, 255, 0.12);
+		position: relative;
+	}
+
+	.node::after {
+		content: '';
+		position: absolute;
+		inset: 12px;
+		border-radius: 50%;
+		border: 1.5px solid rgba(255, 255, 255, 0.45);
+	}
+
+	.segments button {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		height: 36px;
+		padding: 0 14px;
+		border-right: 1px solid rgba(255, 255, 255, 0.12);
+		background: transparent;
+		color: rgba(255, 255, 255, 0.72);
+		font-size: 14px;
+		font-weight: 500;
+		transition: background 160ms ease, color 160ms ease;
+	}
+
+	.segments button:last-child {
+		border-right: 0;
+	}
+
+	.segments button.mono {
+		font-family: var(--font-mono);
+	}
+
+	.segments button.is-on {
+		background: rgba(255, 255, 255, 0.16);
+		color: #fff;
+	}
+
+	.segments button:active {
+		transform: scale(0.97);
+		transition: transform 160ms var(--ease-out);
+	}
+
+	.tree {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		margin-top: 12px;
+		padding: 2px 0 0 36px;
+	}
+
+	.tree::before {
+		content: '';
+		position: absolute;
+		left: 17px;
+		top: -30px;
+		bottom: 16px;
+		width: 1px;
+		background: rgba(255, 255, 255, 0.16);
+	}
+
+	.row {
+		position: relative;
+		display: flex;
+		align-items: center;
+		min-height: 40px;
+		padding: 8px 14px;
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.04);
+		color: #fff;
+		transition: background 160ms ease, border-color 160ms ease;
+	}
+
+	.row[hidden] {
+		display: none;
+	}
+
+	.row::before {
+		content: '';
+		position: absolute;
+		left: -19px;
+		top: 50%;
+		width: 19px;
+		height: 1px;
+		background: rgba(255, 255, 255, 0.16);
+	}
+
+	.row__title {
+		font-size: 15px;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		text-wrap: pretty;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.d:hover {
+			background: rgba(255, 255, 255, 0.18);
+		}
+
+		.socials a:hover {
+			color: #fff;
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.cv:hover {
+			background: #f4edff;
+			color: #1e1b4b;
+		}
+
+		.segments button:hover {
+			background: rgba(255, 255, 255, 0.1);
+			color: #fff;
+		}
+
+		.row:hover {
+			background: rgba(255, 255, 255, 0.12);
+			border-color: rgba(255, 255, 255, 0.22);
+			color: #fff;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.socials {
+			display: none;
+		}
+
+		.segments button {
+			padding: 0 10px;
+			font-size: 13px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.d,
+		.cv,
+		.drawer,
+		.segments button,
+		.row {
+			transition: none;
+		}
+
+		.d:active,
+		.cv:active,
+		.segments button:active {
+			transform: none;
+		}
+	}
+
+	@media print {
+		.shell {
+			display: none;
+		}
+	}
+</style>

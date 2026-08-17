@@ -1,5 +1,11 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = 'Astro Blog';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const SITE_TITLE = 'DevPins';
+export const SITE_DESCRIPTION =
+	'Anton Ivanov — applied maths and AI. Measure first, claim later.';
+export const SITE_AUTHOR = 'Anton Ivanov';
+export const SITE_KICKER = 'Anton Ivanov · St. Petersburg · ITMO AI360';
+export const SITE_MANIFESTO =
+	'I build the instrumentation for my own experiments — a health platform that logs me continuously, a marketplace that shipped on TON, and a Linux port that runs on a phone.';
+export const SITE_EMAIL = 'antonix@devpins.org';
+export const SITE_GITHUB = 'https://github.com/AntonIXO';
+export const SITE_TELEGRAM = 'https://t.me/AntonlX';
+export const SITE_LOCATION = 'St. Petersburg, Russia';

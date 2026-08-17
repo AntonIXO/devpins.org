@@ -1,0 +1,75 @@
+/* DevPins web tokens — ported from the optiHealth liquid-glass spine. */
+
+:root {
+	--brand-indigo-900: #1e1b4b;
+	--web-bg-from: #1e3a8a;
+	--web-bg-via: #581c87;
+	--web-bg-to: #312e81;
+	--web-bg-wash: linear-gradient(135deg, var(--web-bg-from) 0%, var(--web-bg-via) 52%, var(--web-bg-to) 100%);
+
+	--web-glass: rgba(255, 255, 255, 0.1);
+	--web-glass-hover: rgba(255, 255, 255, 0.15);
+	--web-glass-strong: rgba(255, 255, 255, 0.2);
+	--web-glass-subtle: rgba(255, 255, 255, 0.05);
+	--web-glass-nav: rgba(255, 255, 255, 0.07);
+	--web-glass-border: rgba(255, 255, 255, 0.2);
+	--web-glass-border-2: rgba(255, 255, 255, 0.1);
+	--web-glass-topline: rgba(255, 255, 255, 0.4);
+
+	--web-fg: #ffffff;
+	--web-fg-muted: rgba(255, 255, 255, 0.8);
+	--web-fg-subtle: rgba(255, 255, 255, 0.7);
+	--web-fg-faint: rgba(255, 255, 255, 0.5);
+	--web-fg-ghost: rgba(255, 255, 255, 0.35);
+
+	--web-accent-blue: #60a5fa;
+	--web-accent-purple: #c084fc;
+	--web-accent-green: #4ade80;
+	--web-accent-yellow: #facc15;
+
+	--web-blur-md: blur(12px) saturate(180%);
+	--web-blur-lg: blur(16px) saturate(180%);
+	--web-blur-xl: blur(24px) saturate(180%);
+
+	--web-radius-sm: 6px;
+	--web-radius-md: 10px;
+	--web-radius-lg: 12px;
+	--web-radius-xl: 16px;
+	--web-radius-2xl: 24px;
+
+	--web-shadow-nav: 0 20px 60px -20px rgba(0, 0, 0, 0.55);
+
+	--font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+	--font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	--page-pad-x: 24px;
+	--page-max: 1120px;
+	--page-max-narrow: 900px;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+	:root {
+		--web-glass: #2a2770;
+		--web-glass-hover: #35308a;
+		--web-glass-strong: #3d3898;
+		--web-glass-subtle: #25225e;
+		--web-glass-nav: #25225e;
+		--web-blur-md: none;
+		--web-blur-lg: none;
+		--web-blur-xl: none;
+	}
+}
+
+@media (prefers-contrast: more) {
+	:root {
+		--web-glass: #1e1b4b;
+		--web-glass-hover: #25225e;
+		--web-glass-strong: #2a2770;
+		--web-glass-subtle: #1e1b4b;
+		--web-glass-nav: #1e1b4b;
+		--web-glass-border: rgba(255, 255, 255, 0.4);
+		--web-blur-md: none;
+		--web-blur-lg: none;
+		--web-blur-xl: none;
+	}
+}

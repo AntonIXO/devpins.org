@@ -1,0 +1,104 @@
+---
+import Mark from './Mark.astro';
+import type { ProjectEntry } from '../data/projects';
+
+interface Props {
+	project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+---
+
+<a class="work" href={project.href} data-reveal>
+	<div class="work__top">
+		<span class="work__n">{project.n}</span>
+		{
+			project.k === 'oh' ? (
+				<Mark size={26} />
+			) : project.k === 'mb' ? (
+				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+					<path d="M12 2.5 21 7v10l-9 4.5L3 17V7l9-4.5Z"></path>
+					<path d="M12 12l9-5M12 12v9.5M12 12 3 7"></path>
+				</svg>
+			) : (
+				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+					<rect x="5" y="2" width="14" height="20" rx="2.5"></rect>
+					<path d="M9 6h6"></path>
+					<path d="M12 18h.01"></path>
+				</svg>
+			)
+		}
+	</div>
+	<h3>{project.id === 'optihealth' ? 'optiHealth' : project.id === 'minebit' ? 'MineBit' : 'SailfishOS port'}</h3>
+	<p>{project.summary}</p>
+	<span class="work__period">{project.period}</span>
+</a>
+
+<style>
+	.work {
+		display: flex;
+		flex-direction: column;
+		padding: 26px;
+		border-radius: var(--web-radius-xl);
+		border: 1px solid var(--web-glass-border-2);
+		background: var(--web-glass-subtle);
+		backdrop-filter: var(--web-blur-md);
+		-webkit-backdrop-filter: var(--web-blur-md);
+		color: var(--web-fg);
+		min-height: 100%;
+	}
+
+	.work:hover {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: var(--web-glass-border);
+		color: var(--web-fg);
+	}
+
+	.work:active {
+		transform: scale(0.985);
+		transition: transform 100ms ease-out;
+	}
+
+	.work__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.work__n {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		color: var(--web-fg-ghost);
+	}
+
+	.work svg {
+		opacity: 0.85;
+	}
+
+	h3 {
+		font-size: 19px;
+		font-weight: 600;
+		margin: 28px 0 8px;
+		letter-spacing: -0.02em;
+	}
+
+	p {
+		font-size: 14.5px;
+		line-height: 1.55;
+		color: var(--web-fg-subtle);
+		flex: 1;
+	}
+
+	.work__period {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		color: rgba(255, 255, 255, 0.4);
+		margin-top: 20px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.work:active {
+			transform: none;
+		}
+	}
+</style>
