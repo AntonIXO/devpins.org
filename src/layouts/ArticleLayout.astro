@@ -24,7 +24,14 @@ const { title, description, pubDate, updatedDate, heroImage, kicker } = Astro.pr
 		{
 			heroImage && (
 				<div class="hero">
-					<Image width={1200} height={720} src={heroImage} alt="" />
+					<Image
+						width={1200}
+						densities={[1, 2]}
+						src={heroImage}
+						alt=""
+						loading="eager"
+						fetchpriority="high"
+					/>
 				</div>
 			)
 		}
@@ -85,7 +92,7 @@ const { title, description, pubDate, updatedDate, heroImage, kicker } = Astro.pr
 		font-weight: 400;
 		line-height: 1.08;
 		letter-spacing: -0.03em;
-		max-width: 18ch;
+		max-width: 22ch;
 		margin: 0 0 36px;
 	}
 
