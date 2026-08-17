@@ -1,8 +1,29 @@
 // @ts-check
 
+import { copyFile, access } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
+
+/** @type {import('astro').AstroIntegration} */
+const sitemapXmlAlias = {
+	name: 'sitemap-xml-alias',
+	hooks: {
+		'astro:build:done': async ({ dir, logger }) => {
+			const src = new URL('sitemap-0.xml', dir);
+			try {
+				await access(src);
+			} catch {
+				logger.warn('sitemap-0.xml missing; skip /sitemap.xml alias');
+				return;
+			}
+			await copyFile(src, new URL('sitemap.xml', dir));
+			logger.info(`wrote ${fileURLToPath(new URL('sitemap.xml', dir))}`);
+		},
+	},
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -32,6 +53,7 @@ export default defineConfig({
 				return item;
 			},
 		}),
+		sitemapXmlAlias,
 	],
 	redirects: {
 		'/about': '/',
