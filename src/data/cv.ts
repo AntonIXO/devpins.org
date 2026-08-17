@@ -35,6 +35,7 @@ export const cvIntro =
 
 export const cvLinks: CvLink[] = [
 	{ label: 'antonix@devpins.org', href: 'mailto:antonix@devpins.org' },
+	{ label: 'X · @9Rasp', href: 'https://x.com/9Rasp' },
 	{ label: 'GitHub · AntonIXO', href: 'https://github.com/AntonIXO' },
 	{ label: 'Telegram · AntonlX', href: 'https://t.me/AntonlX' },
 ];

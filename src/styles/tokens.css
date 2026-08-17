@@ -1,75 +1,52 @@
-/* DevPins web tokens — ported from the optiHealth liquid-glass spine. */
+/* Paper and ink. The field owns colour; chrome stays quiet. */
 
 :root {
-	--brand-indigo-900: #1e1b4b;
-	--web-bg-from: #1e3a8a;
-	--web-bg-via: #581c87;
-	--web-bg-to: #312e81;
-	--web-bg-wash: linear-gradient(135deg, var(--web-bg-from) 0%, var(--web-bg-via) 52%, var(--web-bg-to) 100%);
+	--paper: #070708;
+	--ink: #edece8;
+	--mute: #8c8983;
+	--rule: rgba(237, 236, 232, 0.14);
+	--pulse: #e8c56b;
 
-	--web-glass: rgba(255, 255, 255, 0.1);
-	--web-glass-hover: rgba(255, 255, 255, 0.15);
-	--web-glass-strong: rgba(255, 255, 255, 0.2);
-	--web-glass-subtle: rgba(255, 255, 255, 0.05);
-	--web-glass-nav: rgba(255, 255, 255, 0.07);
-	--web-glass-border: rgba(255, 255, 255, 0.2);
-	--web-glass-border-2: rgba(255, 255, 255, 0.1);
-	--web-glass-topline: rgba(255, 255, 255, 0.4);
-
-	--web-fg: #ffffff;
-	--web-fg-muted: rgba(255, 255, 255, 0.8);
-	--web-fg-subtle: rgba(255, 255, 255, 0.7);
-	--web-fg-faint: rgba(255, 255, 255, 0.5);
-	--web-fg-ghost: rgba(255, 255, 255, 0.35);
-
-	--web-accent-blue: #60a5fa;
-	--web-accent-purple: #c084fc;
-	--web-accent-green: #4ade80;
-	--web-accent-yellow: #facc15;
-
-	--web-blur-md: blur(12px) saturate(180%);
-	--web-blur-lg: blur(16px) saturate(180%);
-	--web-blur-xl: blur(24px) saturate(180%);
-
-	--web-radius-sm: 6px;
-	--web-radius-md: 10px;
-	--web-radius-lg: 12px;
-	--web-radius-xl: 16px;
-	--web-radius-2xl: 24px;
-
-	--web-shadow-nav: 0 20px 60px -20px rgba(0, 0, 0, 0.55);
-
-	--font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-	--font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+	--font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+	--font-serif: var(--font-plex-serif), ui-serif, Georgia, serif;
+	--font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	--page-pad-x: 24px;
-	--page-max: 1120px;
-	--page-max-narrow: 900px;
+	--page-max: 720px;
+	--page-max-narrow: 720px;
 }
 
-@media (prefers-reduced-transparency: reduce) {
-	:root {
-		--web-glass: #2a2770;
-		--web-glass-hover: #35308a;
-		--web-glass-strong: #3d3898;
-		--web-glass-subtle: #25225e;
-		--web-glass-nav: #25225e;
-		--web-blur-md: none;
-		--web-blur-lg: none;
-		--web-blur-xl: none;
+html[data-theme='dark'] {
+	color-scheme: dark;
+	--paper: #070708;
+	--ink: #edece8;
+	--mute: #8c8983;
+	--rule: rgba(237, 236, 232, 0.14);
+	--pulse: #e8c56b;
+}
+
+html[data-theme='light'] {
+	color-scheme: light;
+	--paper: #f6eeeb;
+	--ink: #141413;
+	--mute: #6b6862;
+	--rule: rgba(20, 20, 19, 0.12);
+	--pulse: #8a2a28;
+}
+
+@media (prefers-color-scheme: light) {
+	html:not([data-theme]) {
+		color-scheme: light;
+		--paper: #f6eeeb;
+		--ink: #141413;
+		--mute: #6b6862;
+		--rule: rgba(20, 20, 19, 0.12);
+		--pulse: #8a2a28;
 	}
 }
 
-@media (prefers-contrast: more) {
-	:root {
-		--web-glass: #1e1b4b;
-		--web-glass-hover: #25225e;
-		--web-glass-strong: #2a2770;
-		--web-glass-subtle: #1e1b4b;
-		--web-glass-nav: #1e1b4b;
-		--web-glass-border: rgba(255, 255, 255, 0.4);
-		--web-blur-md: none;
-		--web-blur-lg: none;
-		--web-blur-xl: none;
+@media (prefers-color-scheme: dark) {
+	html:not([data-theme]) {
+		color-scheme: dark;
 	}
 }

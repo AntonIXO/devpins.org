@@ -48,3 +48,46 @@ export const metrics: Metric[] = [
 ];
 
 export const primaryMetric = metrics[0];
+
+export const FALLBACK_RESTING_HR = 49;
+export const FALLBACK_HRV = 62;
+export const FALLBACK_SLEEP_HOURS = 7.2;
+
+export interface Vitals {
+	bpm: number;
+	hrv: number;
+	sleepHours: number;
+	asOf: string | null;
+	source: 'optihealth' | 'fallback';
+}
+
+function readNumber(record: Record<string, unknown>, keys: string[]): number | null {
+	for (const key of keys) {
+		const value = Number(record[key]);
+		if (Number.isFinite(value)) return value;
+	}
+	return null;
+}
+
+export function parseVitals(data: unknown): Vitals | null {
+	if (!data || typeof data !== 'object') return null;
+	const record = data as Record<string, unknown>;
+	const bpm = readNumber(record, ['bpm']);
+	if (bpm == null || bpm < 20 || bpm > 220) return null;
+	const hrv = readNumber(record, ['hrv', 'hrvRmssd', 'rmssd']) ?? FALLBACK_HRV;
+	const sleepHours =
+		readNumber(record, ['sleepHours', 'sleep', 'sleepH']) ?? FALLBACK_SLEEP_HOURS;
+	if (hrv < 5 || hrv > 250) return null;
+	if (sleepHours < 1 || sleepHours > 16) return null;
+	const source = record.source === 'optihealth' ? 'optihealth' : 'fallback';
+	const asOf = typeof record.asOf === 'string' ? record.asOf : null;
+	return { bpm, hrv, sleepHours, asOf, source };
+}
+
+export const FALLBACK_VITALS: Vitals = {
+	bpm: FALLBACK_RESTING_HR,
+	hrv: FALLBACK_HRV,
+	sleepHours: FALLBACK_SLEEP_HOURS,
+	asOf: null,
+	source: 'fallback',
+};

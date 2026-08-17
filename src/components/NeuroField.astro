@@ -1,0 +1,37 @@
+<canvas id="neuro-field" aria-hidden="true"></canvas>
+
+<script>
+	import { mountNeuroField } from '../scripts/neuro-field';
+
+	let stop: (() => void) | undefined;
+
+	const bind = () => {
+		stop?.();
+		stop = undefined;
+		const canvas = document.getElementById('neuro-field');
+		if (canvas instanceof HTMLCanvasElement) stop = mountNeuroField(canvas);
+	};
+
+	document.addEventListener('astro:page-load', bind);
+	document.addEventListener('astro:before-swap', () => {
+		stop?.();
+		stop = undefined;
+	});
+</script>
+
+<style>
+	canvas {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		pointer-events: none;
+	}
+
+	@media print {
+		canvas {
+			display: none;
+		}
+	}
+</style>

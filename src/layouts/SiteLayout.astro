@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
+import NeuroField from '../components/NeuroField.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteNav from '../components/SiteNav.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
@@ -10,6 +11,7 @@ interface Props {
 	description?: string;
 	image?: ImageMetadata | string;
 	wide?: boolean;
+	atmosphere?: 'field' | 'blank';
 }
 
 const {
@@ -17,7 +19,10 @@ const {
 	description = SITE_DESCRIPTION,
 	image,
 	wide = true,
+	atmosphere = 'blank',
 } = Astro.props;
+
+const field = atmosphere === 'field';
 ---
 
 <!doctype html>
@@ -25,7 +30,8 @@ const {
 	<head>
 		<BaseHead title={title} description={description} image={image} />
 	</head>
-	<body>
+	<body class:list={{ 'has-field': field }}>
+		{field && <NeuroField />}
 		<div class:list={['page', { wide }]}>
 			<SiteNav />
 			<main>
@@ -41,11 +47,17 @@ const {
 
 <style>
 	.page {
+		position: relative;
+		z-index: 1;
 		min-height: 100vh;
-		padding: 28px var(--page-pad-x) 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0 var(--page-pad-x);
 	}
 
 	main {
+		flex: 1;
+		width: 100%;
 		max-width: var(--page-max-narrow);
 		margin: 0 auto;
 	}

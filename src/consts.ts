@@ -8,4 +8,6 @@ export const SITE_MANIFESTO =
 export const SITE_EMAIL = 'antonix@devpins.org';
 export const SITE_GITHUB = 'https://github.com/AntonIXO';
 export const SITE_TELEGRAM = 'https://t.me/AntonlX';
+export const SITE_X = 'https://x.com/9Rasp';
+export const SITE_X_HANDLE = '@9Rasp';
 export const SITE_LOCATION = 'St. Petersburg, Russia';

@@ -35,8 +35,23 @@ const pageTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 />
 <meta name="generator" content={Astro.generator} />
 
-<Font cssVariable="--font-geist" preload />
-<Font cssVariable="--font-geist-mono" />
+<script is:inline>
+	(() => {
+		const key = 'devpins-theme';
+		let theme = 'dark';
+		try {
+			const stored = localStorage.getItem(key);
+			if (stored === 'light' || stored === 'dark') theme = stored;
+			else if (window.matchMedia('(prefers-color-scheme: light)').matches) theme = 'light';
+		} catch {
+			/* private mode */
+		}
+		document.documentElement.dataset.theme = theme;
+	})();
+</script>
+<Font cssVariable="--font-plex-sans" preload />
+<Font cssVariable="--font-plex-serif" />
+<Font cssVariable="--font-plex-mono" />
 
 <link rel="canonical" href={canonicalURL} />
 

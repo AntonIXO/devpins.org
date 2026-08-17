@@ -7,8 +7,8 @@
 }
 
 html {
-	background: var(--web-bg-to);
-	color: var(--web-fg);
+	background: var(--paper);
+	color: var(--ink);
 	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;
 }
@@ -25,18 +25,34 @@ body {
 	font-size: 17px;
 	line-height: 1.6;
 	letter-spacing: 0;
-	background: var(--web-bg-wash) fixed;
-	color: var(--web-fg);
+	background: var(--paper);
+	color: var(--ink);
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 }
 
+body.has-field {
+	background: transparent;
+}
+
+html[data-theme='dark'] body.has-field {
+	--ink: #ffffff;
+	--mute: #f0e8e6;
+	--rule: rgba(255, 255, 255, 0.34);
+}
+
+html[data-theme='dark'] body.has-field .page {
+	text-shadow:
+		0 1px 1px rgba(0, 0, 0, 0.4),
+		0 0 16px rgba(0, 0, 0, 0.35);
+}
+
 ::selection {
-	background: rgba(192, 132, 252, 0.35);
+	background: color-mix(in srgb, var(--ink) 20%, transparent);
 }
 
 :focus-visible {
-	outline: 3px solid rgba(192, 132, 252, 0.7);
+	outline: 2px solid var(--ink);
 	outline-offset: 3px;
 }
 
@@ -46,7 +62,7 @@ a {
 }
 
 a:hover {
-	color: var(--web-accent-purple);
+	color: var(--ink);
 }
 
 img,
@@ -71,7 +87,7 @@ h4,
 h5,
 h6 {
 	margin: 0;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 1.15;
 	letter-spacing: -0.02em;
 	text-wrap: balance;
@@ -113,5 +129,17 @@ ol {
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
+	}
+}
+
+@media print {
+	html,
+	body {
+		background: #fff;
+		color: #111;
+	}
+
+	body.has-field {
+		background: #fff;
 	}
 }

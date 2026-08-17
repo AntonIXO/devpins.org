@@ -1,32 +1,27 @@
 ---
 import SectionLabel from '../components/SectionLabel.astro';
 import { SITE_AUTHOR, SITE_LOCATION } from '../consts';
-import { awards, cvIntro, cvLinks, cvProjects, education, skills } from '../data/cv';
+import { awards, cvLinks, cvProjects, education, skills } from '../data/cv';
 import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<SiteLayout title="Curriculum vitae" description={cvIntro} wide={false}>
+<SiteLayout title="Curriculum vitae" description={`CV — ${SITE_AUTHOR}`} wide={false} atmosphere="blank">
 	<article class="cv">
-		<div class="identity">
-			<h1>{SITE_AUTHOR}</h1>
-			<span class="orb-anchor" transition:name="cv-orb" aria-hidden="true">CV</span>
-		</div>
-		<p class="intro">{cvIntro}</p>
-
+		<h1>{SITE_AUTHOR}</h1>
+		<p class="place">{SITE_LOCATION}</p>
 		<div class="chips">
 			{
 				cvLinks.map((link) => (
 					<a href={link.href}>{link.label}</a>
 				))
 			}
-			<span>{SITE_LOCATION}</span>
 		</div>
 
 		<SectionLabel>Education</SectionLabel>
 		<div class="stack">
 			{
 				education.map((item) => (
-					<div class:list={['card', { compact: !item.bullets }]} data-reveal>
+					<div class:list={['card', { compact: !item.bullets }]}>
 						<div class="card__head">
 							<h2>{item.title}</h2>
 							<span>{item.period}</span>
@@ -57,7 +52,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 		<div class="stack">
 			{
 				cvProjects.map((item) => (
-					<div class="card" data-reveal>
+					<div class="card">
 						<div class="card__head">
 							<h2>
 								{item.href ? <a href={item.href}>{item.title}</a> : item.title}
@@ -67,10 +62,12 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 						<p class="lede">{item.lede}</p>
 						<ul>
 							{item.bullets.map((bullet) => (
-								<li set:html={bullet.replace(
-									'Yuri Rykov (scholar profile)',
-									'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru">Yuri Rykov</a>',
-								)} />
+								<li
+									set:html={bullet.replace(
+										'Yuri Rykov (scholar profile)',
+										'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru">Yuri Rykov</a>',
+									)}
+								/>
 							))}
 						</ul>
 					</div>
@@ -113,102 +110,47 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
 <style>
 	.cv {
-		padding: 72px 0 48px;
-	}
-
-	.identity {
-		display: flex;
-		align-items: center;
-		gap: 16px;
+		padding: 72px 0 24px;
 	}
 
 	h1 {
-		font-size: 52px;
-		line-height: 1.05;
-		letter-spacing: -0.035em;
+		font-family: var(--font-serif);
+		font-size: clamp(2.2rem, 5vw, 3rem);
+		font-weight: 400;
+		letter-spacing: -0.03em;
 	}
 
-	.orb-anchor {
-		display: grid;
-		place-items: center;
-		width: 36px;
-		height: 36px;
-		flex: none;
-		border-radius: 50%;
-		background: #fff;
-		color: #1e1b4b;
-		font-size: 11px;
-		font-weight: 700;
-		letter-spacing: 0.02em;
-		margin-top: 0.15em;
-	}
-
-	.intro {
-		font-size: 18px;
-		line-height: 1.6;
-		color: rgba(255, 255, 255, 0.75);
-		margin-top: 18px;
-		max-width: 60ch;
+	.place {
+		margin-top: 10px;
+		font-family: var(--font-mono);
+		font-size: 12.5px;
+		color: var(--mute);
 	}
 
 	.chips {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 8px;
-		margin-top: 28px;
-	}
-
-	.chips a,
-	.chips span {
-		display: inline-flex;
-		align-items: center;
-		height: 38px;
-		padding: 0 16px;
-		border-radius: 12px;
-		border: 1px solid var(--web-glass-border);
-		background: var(--web-glass);
-		backdrop-filter: var(--web-blur-md);
-		font-size: 14px;
-		font-weight: 500;
-		color: #fff;
-	}
-
-	.chips span {
-		border-color: var(--web-glass-border-2);
-		background: transparent;
-		color: rgba(255, 255, 255, 0.6);
-		font-weight: 400;
+		gap: 8px 16px;
+		margin-top: 20px;
+		font-family: var(--font-mono);
+		font-size: 12.5px;
+		color: var(--mute);
 	}
 
 	.chips a:hover {
-		background: rgba(255, 255, 255, 0.2);
-		color: #fff;
-	}
-
-	.chips a:active {
-		transform: scale(0.97);
-		transition: transform 100ms ease-out;
+		color: var(--ink);
 	}
 
 	.stack {
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
-	}
-
-	.card {
-		padding: 22px 24px;
-		border-radius: var(--web-radius-xl);
-		border: 1px solid var(--web-glass-border-2);
-		background: var(--web-glass-subtle);
-		backdrop-filter: var(--web-blur-md);
+		gap: 28px;
 	}
 
 	.card.compact {
 		display: flex;
 		align-items: baseline;
 		gap: 16px;
-		padding: 16px 24px;
 	}
 
 	.card__head {
@@ -219,8 +161,8 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 	}
 
 	.card h2 {
-		font-size: 18px;
-		font-weight: 600;
+		font-size: 17px;
+		font-weight: 500;
 		letter-spacing: -0.015em;
 		flex: 1;
 		min-width: 240px;
@@ -231,31 +173,32 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 	}
 
 	.card h2 a {
-		color: var(--web-accent-purple);
-		border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.card h2 a:hover {
+		border-bottom-color: var(--ink);
 	}
 
 	.card span {
 		font-family: var(--font-mono);
 		font-size: 12px;
-		color: rgba(255, 255, 255, 0.55);
+		color: var(--mute);
 	}
 
 	.meta {
 		font-size: 14px;
-		color: rgba(255, 255, 255, 0.6);
+		color: var(--mute);
 		margin-top: 8px;
 	}
 
 	.meta a {
-		color: var(--web-accent-purple);
-		border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.lede {
 		font-size: 15px;
 		line-height: 1.6;
-		color: rgba(255, 255, 255, 0.8);
 		margin-top: 10px;
 	}
 
@@ -267,12 +210,11 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 		gap: 7px;
 		font-size: 14.5px;
 		line-height: 1.55;
-		color: rgba(255, 255, 255, 0.7);
+		color: color-mix(in srgb, var(--ink) 78%, var(--paper));
 	}
 
 	ul :global(a) {
-		color: var(--web-accent-purple);
-		border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.awards {
@@ -284,18 +226,18 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 		display: flex;
 		align-items: baseline;
 		gap: 20px;
-		padding: 16px 2px;
-		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 14px 0;
+		border-top: 1px solid var(--rule);
 	}
 
 	.award:last-child {
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.award span {
 		font-family: var(--font-mono);
 		font-size: 12px;
-		color: rgba(255, 255, 255, 0.4);
+		color: var(--mute);
 		width: 104px;
 		flex: none;
 	}
@@ -303,19 +245,18 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 	.award p {
 		font-size: 15.5px;
 		line-height: 1.55;
-		color: rgba(255, 255, 255, 0.88);
 		flex: 1;
 	}
 
 	.award em {
 		font-style: normal;
-		color: var(--web-fg-faint);
+		color: var(--mute);
 	}
 
 	.skills {
 		display: flex;
 		flex-direction: column;
-		gap: 18px;
+		gap: 16px;
 	}
 
 	.skill {
@@ -330,7 +271,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 		font-size: 11.5px;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--web-fg-faint);
+		color: var(--mute);
 		width: 108px;
 		flex: none;
 	}
@@ -338,25 +279,14 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 	.skill div {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 7px;
+		gap: 8px 14px;
 		flex: 1;
-	}
-
-	.skill span {
-		display: inline-flex;
-		align-items: center;
-		height: 32px;
-		padding: 0 13px;
-		border-radius: 10px;
-		border: 1px solid rgba(255, 255, 255, 0.14);
-		background: rgba(255, 255, 255, 0.06);
-		font-size: 13.5px;
-		color: rgba(255, 255, 255, 0.85);
+		font-size: 14.5px;
 	}
 
 	@media (max-width: 720px) {
-		h1 {
-			font-size: 36px;
+		.cv {
+			padding-top: 48px;
 		}
 
 		.award {
@@ -366,33 +296,8 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 	}
 
 	@media print {
-		:global(body) {
-			background: #fff;
-			color: #111;
-		}
-
 		.cv {
 			padding-top: 0;
-			color: #111;
-		}
-
-		h1,
-		.card h2,
-		.award p,
-		.lede,
-		.intro,
-		.meta,
-		ul,
-		.skill span {
-			color: #111 !important;
-		}
-
-		.card,
-		.chips a,
-		.skill span {
-			background: #fff !important;
-			border-color: #ccc !important;
-			backdrop-filter: none !important;
 		}
 	}
 </style>

@@ -1,40 +1,32 @@
 ---
-import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
-import { SITE_TELEGRAM, SITE_TITLE } from '../../consts';
+import { SITE_TITLE } from '../../consts';
+import { getPublishedPosts } from '../../data/nav';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
-const posts = (await getCollection('blog', ({ data }) => data.draft !== true)).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = await getPublishedPosts();
 ---
 
-<SiteLayout title="Writing" description={`Notes from ${SITE_TITLE}.`} wide={false}>
+<SiteLayout title="Writing" description={`Notes from ${SITE_TITLE}.`} wide={false} atmosphere="blank">
 	<section class="writing">
 		<SectionLabel>Writing</SectionLabel>
 		{
 			posts.length === 0 ? (
-				<div class="empty">
-					<p>
-						No posts yet — the first notes will cover the SLM reimplementation and what two years of
-						my own biometrics actually showed.
-					</p>
-					<a href={SITE_TELEGRAM}>Follow on Telegram</a>
-				</div>
+				<p class="empty">No posts yet.</p>
 			) : (
-				<div class="rows">
-					{posts.map((post, index) => (
-						<a class="row" href={`/blog/${post.id}/`}>
-							<span class="n">{String(index + 1).padStart(2, '0')}</span>
-							<span class="title">{post.data.title}</span>
-							<span class="tag">{post.data.project ?? 'note'}</span>
-							<span class="date">
-								<FormattedDate date={post.data.pubDate} />
-							</span>
-						</a>
+				<ul class="rows">
+					{posts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`}>
+								<span class="title">{post.data.title}</span>
+								<span class="date">
+									<FormattedDate date={post.data.pubDate} />
+								</span>
+							</a>
+						</li>
 					))}
-				</div>
+				</ul>
 			)
 		}
 	</section>
@@ -42,93 +34,53 @@ const posts = (await getCollection('blog', ({ data }) => data.draft !== true)).s
 
 <style>
 	.writing {
-		padding-top: 24px;
+		padding-top: 48px;
 		padding-bottom: 48px;
 	}
 
-	.empty,
-	.row {
-		border-radius: var(--web-radius-xl);
-	}
-
-	.empty {
-		display: flex;
-		align-items: center;
-		gap: 22px;
-		flex-wrap: wrap;
-		padding: 30px 32px;
-		border: 1px dashed rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.03);
-	}
-
-	.empty p {
-		font-size: 16.5px;
-		line-height: 1.55;
-		color: rgba(255, 255, 255, 0.75);
-		flex: 1;
-		min-width: 240px;
-	}
-
-	.empty a {
-		display: inline-flex;
-		align-items: center;
-		height: 40px;
-		padding: 0 18px;
-		border-radius: 12px;
-		border: 1px solid rgba(255, 255, 255, 0.22);
-		background: rgba(255, 255, 255, 0.1);
-		font-size: 14.5px;
-		font-weight: 500;
-		color: #fff;
-	}
-
 	.rows {
+		list-style: none;
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
 	}
 
-	.row {
+	.rows a {
 		display: flex;
 		align-items: baseline;
-		gap: 16px;
-		padding: 14px 18px;
-		border: 1px solid var(--web-glass-border-2);
-		background: var(--web-glass-subtle);
-		color: #fff;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 14px 0;
+		border-top: 1px solid var(--rule);
+		color: var(--ink);
 	}
 
-	.row:hover {
-		background: rgba(255, 255, 255, 0.1);
-		border-color: var(--web-glass-border);
-		color: #fff;
-	}
-
-	.n,
-	.tag,
-	.date {
-		font-family: var(--font-mono);
-		font-size: 11.5px;
-		color: var(--web-fg-faint);
-		flex: none;
-	}
-
-	.n {
-		width: 22px;
-		color: var(--web-fg-ghost);
+	.rows li:last-child a {
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.title {
-		flex: 1;
-		font-size: 16px;
+		font-size: 17px;
 		font-weight: 500;
-		letter-spacing: -0.01em;
-		min-width: 0;
+		letter-spacing: -0.015em;
+	}
+
+	.rows a:hover .title {
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
+	.date,
+	.empty {
+		font-family: var(--font-mono);
+		font-size: 12.5px;
+		color: var(--mute);
+		flex: none;
 	}
 
 	@media (max-width: 720px) {
-		.row {
-			flex-wrap: wrap;
+		.rows a {
+			flex-direction: column;
+			gap: 6px;
 		}
 	}
 </style>

@@ -1,5 +1,5 @@
 ---
-import { SITE_AUTHOR, SITE_GITHUB, SITE_TELEGRAM } from '../consts';
+import { SITE_AUTHOR, SITE_EMAIL, SITE_GITHUB, SITE_TELEGRAM, SITE_X, SITE_X_HANDLE } from '../consts';
 
 const year = new Date().getFullYear();
 ---
@@ -7,6 +7,8 @@ const year = new Date().getFullYear();
 <footer>
 	<p>© {year} {SITE_AUTHOR}</p>
 	<div>
+		<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
+		<a href={SITE_X}>{SITE_X_HANDLE}</a>
 		<a href={SITE_GITHUB}>GitHub</a>
 		<a href={SITE_TELEGRAM}>Telegram</a>
 		<a href="/rss.xml">RSS</a>
@@ -19,13 +21,14 @@ const year = new Date().getFullYear();
 		flex-wrap: wrap;
 		justify-content: space-between;
 		gap: 12px 24px;
+		width: 100%;
 		max-width: var(--page-max);
 		margin: 0 auto;
-		padding: 72px var(--page-pad-x) 48px;
+		padding: 72px 0 40px;
 		font-family: var(--font-mono);
 		font-size: 12px;
 		letter-spacing: 0.04em;
-		color: var(--web-fg-faint);
+		color: var(--mute);
 	}
 
 	div {
@@ -34,6 +37,12 @@ const year = new Date().getFullYear();
 	}
 
 	a:hover {
-		color: var(--web-fg);
+		color: var(--ink);
+	}
+
+	@media print {
+		footer {
+			display: none;
+		}
 	}
 </style>

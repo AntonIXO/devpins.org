@@ -1,6 +1,6 @@
 .prose {
 	max-width: 62ch;
-	color: var(--web-fg-muted);
+	color: color-mix(in srgb, var(--ink) 82%, var(--paper));
 	font-size: 1.0625rem;
 	line-height: 1.7;
 }
@@ -13,32 +13,32 @@
 .prose h2,
 .prose h3,
 .prose h4 {
-	color: var(--web-fg);
+	color: var(--ink);
 	margin-top: 1.8em;
+	font-weight: 500;
 }
 
 .prose h2 {
-	font-size: 1.45rem;
+	font-size: 1.35rem;
 	letter-spacing: -0.02em;
 }
 
 .prose h3 {
-	font-size: 1.2rem;
-	font-weight: 600;
+	font-size: 1.15rem;
 }
 
 .prose a {
-	color: var(--web-accent-purple);
-	border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+	color: var(--ink);
+	border-bottom: 1px solid var(--rule);
 }
 
 .prose a:hover {
-	border-bottom-color: var(--web-accent-purple);
+	border-bottom-color: var(--ink);
 }
 
 .prose strong {
-	color: var(--web-fg);
-	font-weight: 600;
+	color: var(--ink);
+	font-weight: 500;
 }
 
 .prose ul,
@@ -53,17 +53,14 @@
 .prose code {
 	font-family: var(--font-mono);
 	font-size: 0.88em;
-	background: var(--web-glass-subtle);
-	border: 1px solid var(--web-glass-border-2);
-	border-radius: 6px;
-	padding: 0.1em 0.35em;
+	border-bottom: 1px solid var(--rule);
+	padding: 0 0.15em;
 }
 
 .prose pre {
-	padding: 1.25rem 1.4rem;
-	border-radius: var(--web-radius-xl);
-	border: 1px solid var(--web-glass-border-2);
-	background: rgba(0, 0, 0, 0.28);
+	padding: 1.15rem 0;
+	border-top: 1px solid var(--rule);
+	border-bottom: 1px solid var(--rule);
 	overflow-x: auto;
 }
 
@@ -76,25 +73,16 @@
 .prose blockquote {
 	margin: 0;
 	padding: 0 0 0 1.1rem;
-	border-left: 2px solid var(--web-accent-purple);
-	color: var(--web-fg-subtle);
+	border-left: 1px solid var(--ink);
+	color: var(--mute);
 }
 
 .prose hr {
 	border: 0;
-	border-top: 1px solid var(--web-glass-border-2);
+	border-top: 1px solid var(--rule);
 }
 
 .prose img {
-	border-radius: var(--web-radius-xl);
-}
-
-.prose > p:first-of-type::first-letter {
-	float: left;
-	font-size: 3.4em;
-	font-weight: 700;
-	line-height: 0.82;
-	letter-spacing: -0.04em;
-	padding: 0.08em 0.12em 0 0;
-	color: var(--web-accent-purple);
+	width: 100%;
+	height: auto;
 }

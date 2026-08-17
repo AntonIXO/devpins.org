@@ -1,253 +1,178 @@
 ---
-import Mark from '../components/Mark.astro';
-import MetricSpark from '../components/MetricSpark.astro';
-import OrbLink from '../components/OrbLink.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import SectionLabel from '../components/SectionLabel.astro';
-import WorkCard from '../components/WorkCard.astro';
-import { SITE_DESCRIPTION, SITE_KICKER, SITE_MANIFESTO, SITE_TELEGRAM, SITE_TITLE } from '../consts';
+import {
+	SITE_AUTHOR,
+	SITE_EMAIL,
+	SITE_GITHUB,
+	SITE_TELEGRAM,
+	SITE_TITLE,
+	SITE_X,
+	SITE_X_HANDLE,
+} from '../consts';
+import { cvIntro } from '../data/cv';
+import { FALLBACK_HRV, FALLBACK_RESTING_HR, FALLBACK_SLEEP_HOURS } from '../data/metrics';
+import { getPublishedPosts } from '../data/nav';
 import { featuredWork } from '../data/projects';
-import { primaryMetric } from '../data/metrics';
 import SiteLayout from '../layouts/SiteLayout.astro';
+
+const posts = await getPublishedPosts();
+
+const workTitle: Record<string, string> = {
+	optihealth: 'optiHealth',
+	minebit: 'MineBit',
+	sailfish: 'SailfishOS',
+};
 ---
 
-<SiteLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<section class="cover">
-		<div class="visual">
-			<div class="portrait" aria-hidden="true">
-				<Mark size={220} />
-			</div>
-			<div class="inset">
-				<MetricSpark metric={primaryMetric} compact />
-			</div>
-		</div>
-
-		<div class="copy">
-			<p class="kicker">{SITE_KICKER}</p>
-			<h1>
-				<span class="drop">M</span>easure first, claim later.
-			</h1>
-			<p class="manifesto">{SITE_MANIFESTO}</p>
-		</div>
-
-		<p class="display" aria-hidden="true">
-			<span class="outline">Measure first,</span>
-			<span class="fill">claim later.</span>
+<SiteLayout title={SITE_TITLE} atmosphere="field">
+	<section class="identity">
+		<h1>{SITE_AUTHOR}</h1>
+		<p class="bio">{cvIntro}</p>
+		<p class="meta">St. Petersburg · ITMO AI360</p>
+		<p class="contacts">
+			<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
+			<a href={SITE_X}>{SITE_X_HANDLE}</a>
+			<a href={SITE_GITHUB}>GitHub</a>
+			<a href={SITE_TELEGRAM}>Telegram</a>
 		</p>
-
-		<div class="orb">
-			<OrbLink href="/cv" />
-		</div>
+		<p class="bpm" data-bpm>
+			resting {FALLBACK_RESTING_HR} · hrv {FALLBACK_HRV} · sleep {FALLBACK_SLEEP_HOURS}
+		</p>
 	</section>
 
 	<SectionLabel>Work</SectionLabel>
-	<div class="work">
+	<ul class="list">
 		{
-			featuredWork.map((project, index) => (
-				<WorkCard project={{ ...project, n: String(index + 1).padStart(2, '0') }} />
+			featuredWork.map((project) => (
+				<li>
+					<a href={project.href}>
+						<span class="list__title">{workTitle[project.id] ?? project.title}</span>
+						<span class="list__note">{project.summary}</span>
+					</a>
+				</li>
 			))
 		}
-	</div>
+	</ul>
 
 	<SectionLabel>Writing</SectionLabel>
-	<div class="empty">
-		<p>
-			No posts yet — the first notes will cover the SLM reimplementation and what two years of my own
-			biometrics actually showed.
-		</p>
-		<a href={SITE_TELEGRAM}>Follow on Telegram</a>
-	</div>
+	{
+		posts.length === 0 ? (
+			<p class="empty">No posts yet.</p>
+		) : (
+			<ul class="list">
+				{posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`}>
+							<span class="list__title">{post.data.title}</span>
+							<span class="list__note">
+								<FormattedDate date={post.data.pubDate} />
+							</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		)
+	}
+
 </SiteLayout>
 
 <style>
-	.cover {
-		position: relative;
-		display: grid;
-		grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-		grid-template-areas:
-			'visual copy'
-			'display display';
-		gap: 28px 48px;
-		padding-top: 72px;
-		min-height: calc(100svh - 160px);
-	}
-
-	.visual {
-		grid-area: visual;
-		position: relative;
-		min-height: 420px;
-	}
-
-	.portrait {
-		height: 100%;
-		min-height: 460px;
-		border-radius: var(--web-radius-2xl);
-		border: 1px solid var(--web-glass-border-2);
-		background: rgba(255, 255, 255, 0.04);
-		backdrop-filter: var(--web-blur-md);
-		-webkit-backdrop-filter: var(--web-blur-md);
-		display: grid;
-		place-items: center;
-		overflow: hidden;
-	}
-
-	.portrait :global(svg) {
-		width: min(68%, 280px);
-		height: auto;
-		opacity: 0.18;
-		color: #fff;
-	}
-
-	.inset {
-		position: absolute;
-		left: 16px;
-		bottom: 16px;
-		width: min(240px, 72%);
-	}
-
-	.copy {
-		grid-area: copy;
-		padding-top: 28px;
+	.identity {
+		padding-top: 88px;
 		max-width: 36rem;
 	}
 
-	.kicker {
+	h1 {
+		font-family: var(--font-serif);
+		font-size: clamp(2.4rem, 6vw, 3.4rem);
+		font-weight: 400;
+		letter-spacing: -0.03em;
+		line-height: 1.05;
+	}
+
+	.bio {
+		margin-top: 22px;
+		font-size: 18px;
+		line-height: 1.55;
+		color: var(--ink);
+		max-width: 38ch;
+	}
+
+	.meta,
+	.contacts,
+	.bpm,
+	.list__note,
+	.empty {
 		font-family: var(--font-mono);
 		font-size: 12.5px;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--web-fg-faint);
-		margin: 0 0 26px;
+		letter-spacing: 0.02em;
+		color: var(--mute);
 	}
 
-	h1 {
-		font-size: clamp(2rem, 4vw, 3.25rem);
-		line-height: 1.02;
-		letter-spacing: -0.035em;
-		font-weight: 700;
-		max-width: 12ch;
+	.meta {
+		margin-top: 28px;
 	}
 
-	.drop {
-		color: var(--web-accent-purple);
-		font-weight: 700;
+	.contacts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+		margin-top: 10px;
 	}
 
-	.manifesto {
-		font-size: 19px;
-		line-height: 1.6;
-		color: rgba(255, 255, 255, 0.75);
-		margin-top: 32px;
-		max-width: 54ch;
+	.contacts a:hover {
+		color: var(--ink);
 	}
 
-	.display {
-		grid-area: display;
-		font-size: clamp(3.4rem, 12vw, 10.5rem);
-		line-height: 0.88;
-		font-weight: 700;
-		letter-spacing: -0.05em;
-		margin: 8px 0 0;
-		pointer-events: none;
+	.list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		max-width: 40rem;
 	}
 
-	.outline {
-		display: block;
-		color: transparent;
-		-webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.88);
-	}
-
-	.fill {
-		display: block;
-		color: #fff;
-	}
-
-	.orb {
-		position: absolute;
-		right: 0;
-		bottom: 6%;
-		z-index: 2;
-	}
-
-	.work {
+	.list a {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 12px;
+		grid-template-columns: minmax(8.5rem, auto) minmax(0, 1fr);
+		gap: 12px 28px;
+		align-items: baseline;
+		padding: 11px 0;
+		border-top: 1px solid var(--rule);
+		color: var(--ink);
+	}
+
+	.list li:last-child a {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.list__title {
+		font-size: 16px;
+		font-weight: 500;
+		letter-spacing: -0.015em;
+	}
+
+	.list a:hover .list__title {
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
 	}
 
 	.empty {
-		display: flex;
-		align-items: center;
-		gap: 22px;
-		flex-wrap: wrap;
-		padding: 30px 32px;
-		border-radius: var(--web-radius-xl);
-		border: 1px dashed rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.03);
+		padding: 8px 0;
 	}
 
-	.empty p {
-		font-size: 16.5px;
-		line-height: 1.55;
-		color: rgba(255, 255, 255, 0.75);
-		flex: 1;
-		min-width: 260px;
+	.bpm {
+		margin-top: 18px;
 	}
 
-	.empty a {
-		display: inline-flex;
-		align-items: center;
-		height: 40px;
-		padding: 0 18px;
-		border-radius: 12px;
-		border: 1px solid rgba(255, 255, 255, 0.22);
-		background: rgba(255, 255, 255, 0.1);
-		font-size: 14.5px;
-		font-weight: 500;
-		color: #fff;
-	}
+	@media (max-width: 720px) {
+		.identity {
+			padding-top: 48px;
+		}
 
-	.empty a:hover {
-		background: rgba(255, 255, 255, 0.2);
-		color: #fff;
-	}
-
-	.empty a:active {
-		transform: scale(0.97);
-		transition: transform 100ms ease-out;
-	}
-
-	@media (max-width: 900px) {
-		.cover {
+		.list a {
 			grid-template-columns: 1fr;
-			grid-template-areas:
-				'visual'
-				'copy'
-				'display';
-			min-height: 0;
-			padding-top: 36px;
-			gap: 22px;
-		}
-
-		.portrait {
-			min-height: 240px;
-			aspect-ratio: 16 / 10;
-		}
-
-		.display {
-			font-size: clamp(2.6rem, 16vw, 4.5rem);
-		}
-
-		.orb {
-			position: static;
-			display: flex;
-			justify-content: flex-end;
-			margin-top: -12px;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.empty a:active {
-			transform: none;
+			gap: 4px;
 		}
 	}
 </style>
