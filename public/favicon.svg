@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  
-  <rect width="120" height="120" rx="26" fill="#0F1211"></rect>
+  <!-- OH mark. Full-bleed plate: rx on the 120×120 rect left transparent
+       corners that light tab chrome and Google painted as white sides. -->
+  <rect width="120" height="120" fill="#0F1211"></rect>
 
   <rect x="14" y="14" width="92" height="92" rx="7" fill="none" stroke="#FFFFFF" stroke-width="6"></rect>
   <line x1="60" y1="14" x2="60" y2="106" stroke="#FFFFFF" stroke-width="6"></line>

@@ -8,6 +8,13 @@ import {
 	type Vitals,
 } from '../data/metrics';
 import { prefersReducedMotion } from './reduced-motion';
+import {
+	clamp,
+	fieldBrightness,
+	paperRgb,
+	shadeBySleep,
+	sleepDelta,
+} from './sleep-shade';
 import { readTheme, THEME_EVENT, type Theme } from './theme';
 
 const TIME_SCALE = 0.28;
@@ -105,39 +112,10 @@ function cardiac(phase: number): number {
 	return Math.max(beat(phase, 0, 0.16, 1), beat(phase, 0.2, 0.34, 0.42));
 }
 
-function clamp(value: number, min: number, max: number): number {
-	return Math.min(max, Math.max(min, value));
-}
-
 const SLEEP_REF = FALLBACK_SLEEP_HOURS;
-
-function sleepDelta(hours: number): number {
-	return clamp((hours - SLEEP_REF) / 2.4, -1, 1);
-}
 
 function hrvAmount(ms: number): number {
 	return clamp((ms - 20) / 70, 0, 1);
-}
-
-function shadeBySleep(colors: number[], delta: number): number[] {
-	const out = colors.slice();
-	if (delta < 0) {
-		const t = -delta;
-		for (let i = 0; i < COLOR_COUNT; i++) {
-			const k = i === 3 ? t * 0.35 : t * 0.55;
-			out[i * 3] *= 1 - k;
-			out[i * 3 + 1] *= 1 - k;
-			out[i * 3 + 2] *= 1 - k;
-		}
-		return out;
-	}
-	for (let i = 0; i < COLOR_COUNT; i++) {
-		const k = delta * (i === 0 ? 0.22 : 0.12);
-		out[i * 3] += (1 - out[i * 3]) * k;
-		out[i * 3 + 1] += (1 - out[i * 3 + 1]) * k * 0.6;
-		out[i * 3 + 2] += (1 - out[i * 3 + 2]) * k * 0.6;
-	}
-	return out;
 }
 
 function readCachedVitals(): Vitals | null {
@@ -171,21 +149,6 @@ function whenIdle(fn: () => void): () => void {
 	}
 	const id = window.setTimeout(fn, 0);
 	return () => window.clearTimeout(id);
-}
-
-function paperRgb(theme: Theme, delta: number): [number, number, number] {
-	const base: [number, number, number] =
-		theme === 'light' ? [0.965, 0.94, 0.932] : [0.55, 0.09, 0.28];
-	if (delta < 0) {
-		const t = 1 + delta * 0.45;
-		return [base[0] * t, base[1] * t, base[2] * t];
-	}
-	const lift = theme === 'light' ? 0.16 : 0.18;
-	return [
-		base[0] + (1 - base[0]) * delta * lift,
-		base[1] + (1 - base[1]) * delta * lift * 0.55,
-		base[2] + (1 - base[2]) * delta * lift * 0.55,
-	];
 }
 
 export function mountNeuroField(canvas: HTMLCanvasElement): () => void {
@@ -293,17 +256,16 @@ export function mountNeuroField(canvas: HTMLCanvasElement): () => void {
 			}
 		}
 
-		const rest = sleepDelta(sleepHours);
+		const rest = sleepDelta(sleepHours, SLEEP_REF);
 		const tone = hrvAmount(hrv);
 		const colors = shadeBySleep(mixPalette(fromPalette, toPalette, themeT), rest);
-		const paper = paperRgb(theme, rest);
+		const paper = paperRgb(theme);
 		gl.clearColor(paper[0], paper[1], paper[2], 1);
 		gl.clear(gl.COLOR_BUFFER_BIT);
 
 		const pulse = reduced ? 0 : cardiac(((elapsed * bpm) / 60) % 1);
 		const flash = 0.65 + 0.5 * tone;
-		const brightness =
-			(theme === 'light' ? 0.02 + 0.07 * pulse : 0.02 + 0.1 * pulse) * flash + rest * 0.06;
+		const brightness = fieldBrightness(theme, pulse, flash);
 		const contrast = 1 + 0.16 * pulse * flash;
 		const paramA = 0.32 + 0.38 * pulse * flash;
 		const warp = 0.04 + 0.1 * tone;
