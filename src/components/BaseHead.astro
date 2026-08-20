@@ -15,6 +15,8 @@ import {
 	SITE_TITLE,
 	SITE_X,
 	SITE_X_HANDLE,
+	UMAMI_SCRIPT_URL,
+	UMAMI_WEBSITE_ID,
 } from '../consts';
 
 interface Props {
@@ -125,6 +127,13 @@ const jsonLd =
 		document.documentElement.dataset.theme = theme;
 	})();
 </script>
+<script
+	is:inline
+	defer
+	src={UMAMI_SCRIPT_URL}
+	data-website-id={UMAMI_WEBSITE_ID}
+	data-domains="devpins.org"
+></script>
 <Font cssVariable="--font-plex-sans" preload />
 <Font cssVariable="--font-plex-serif" />
 <Font cssVariable="--font-plex-mono" />

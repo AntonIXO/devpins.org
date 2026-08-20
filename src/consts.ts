@@ -14,3 +14,5 @@ export const SITE_TELEGRAM = 'https://t.me/AntonlX';
 export const SITE_X = 'https://x.com/9Rasp';
 export const SITE_X_HANDLE = '@9Rasp';
 export const SITE_LOCATION = 'St. Petersburg, Russia';
+export const UMAMI_SCRIPT_URL = 'https://stats.devpins.org/script.js';
+export const UMAMI_WEBSITE_ID = '4c824ca3-f082-40fe-9cbb-af3dd4815b83';
