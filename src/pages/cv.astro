@@ -18,7 +18,13 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 		<div class="chips">
 			{
 				cvLinks.map((link) => (
-					<a href={link.href}>{link.label}</a>
+					<a
+						href={link.href}
+						target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+						rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+					>
+						{link.label}
+					</a>
 				))
 			}
 		</div>
@@ -35,7 +41,9 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 						{item.meta &&
 							(item.metaHref ? (
 								<p class="meta">
-									<a href={item.metaHref}>{item.meta.split(' · ')[0]}</a>
+									<a href={item.metaHref} target="_blank" rel="noopener noreferrer">
+										{item.meta.split(' · ')[0]}
+									</a>
 									{' · '}
 									{item.meta.split(' · ').slice(1).join(' · ')}
 								</p>
@@ -61,7 +69,13 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 					<div class="card">
 						<div class="card__head">
 							<h2>
-								{item.href ? <a href={item.href}>{item.title}</a> : item.title}
+								{item.href ? (
+									<a href={item.href} target="_blank" rel="noopener noreferrer">
+										{item.title}
+									</a>
+								) : (
+									item.title
+								)}
 							</h2>
 							<span>{item.period}</span>
 						</div>
@@ -71,7 +85,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 								<li
 									set:html={bullet.replace(
 										'Yuri Rykov (scholar profile)',
-										'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru">Yuri Rykov</a>',
+										'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer">Yuri Rykov</a>',
 									)}
 								/>
 							))}

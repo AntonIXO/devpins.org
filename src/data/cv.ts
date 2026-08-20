@@ -80,6 +80,16 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
+		title: 'Dream Walker — LLM-driven retro dream thriller',
+		href: 'https://dreamwalker.devpins.org',
+		period: 'Feb 2026 – present',
+		lede: 'Interactive retro pixel-art dream mystery powered by autonomous LLM reasoning agents.',
+		bullets: [
+			'Custom PixiJS engine with dynamic tilemaps, shaders, and real-time state manipulation.',
+			'Self-contained agent runtime using Gemini 3.7 reasoning models for contextual NPC dialogue and world reactions.',
+		],
+	},
+	{
 		title: 'AI Reader PWA',
 		href: 'https://devpost.com/software/konspecterai',
 		period: 'Oct 2024 – Jan 2025',

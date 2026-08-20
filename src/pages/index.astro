@@ -20,6 +20,7 @@ const posts = await getPublishedPosts();
 
 const workTitle: Record<string, string> = {
 	optihealth: 'optiHealth',
+	dreamwalker: 'Dream Walker',
 	minebit: 'MineBit',
 	sailfish: 'SailfishOS',
 };
@@ -32,9 +33,9 @@ const workTitle: Record<string, string> = {
 		<p class="meta">St. Petersburg · ITMO AI360</p>
 		<p class="contacts">
 			<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
-			<a href={SITE_X}>{SITE_X_HANDLE}</a>
-			<a href={SITE_GITHUB}>GitHub</a>
-			<a href={SITE_TELEGRAM}>Telegram</a>
+			<a href={SITE_X} target="_blank" rel="noopener noreferrer">{SITE_X_HANDLE}</a>
+			<a href={SITE_GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
+			<a href={SITE_TELEGRAM} target="_blank" rel="noopener noreferrer">Telegram</a>
 		</p>
 		<p class="bpm" data-bpm>
 			resting {FALLBACK_RESTING_HR} · hrv {FALLBACK_HRV} · sleep {FALLBACK_SLEEP_HOURS}
@@ -46,7 +47,7 @@ const workTitle: Record<string, string> = {
 		{
 			featuredWork.map((project) => (
 				<li>
-					<a href={project.href}>
+					<a href={project.href} target="_blank" rel="noopener noreferrer">
 						<span class="list__title">{workTitle[project.id] ?? project.title}</span>
 						<span class="list__note">{project.summary}</span>
 					</a>

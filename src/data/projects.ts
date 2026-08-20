@@ -1,4 +1,4 @@
-export type ProjectKey = 'oh' | 'mb' | 'k';
+export type ProjectKey = 'oh' | 'dw' | 'mb' | 'k';
 
 export interface ProjectEntry {
 	id: string;
@@ -28,8 +28,21 @@ export const projects: ProjectEntry[] = [
 		featured: true,
 	},
 	{
-		id: 'slm',
+		id: 'dreamwalker',
 		n: '02',
+		title: 'Dream Walker — LLM-driven dream thriller',
+		tag: 'Dream Walker',
+		date: 'live',
+		k: 'dw',
+		href: 'https://dreamwalker.devpins.org',
+		summary:
+			'One server, one dream, one secret. A retro pixel-art dream mystery powered by local Gemini 3.7 reasoning agents.',
+		period: '2026',
+		featured: true,
+	},
+	{
+		id: 'slm',
+		n: '03',
 		title: 'Sensor Language Models — research in progress',
 		tag: 'optiHealth',
 		date: '2026',
@@ -38,7 +51,7 @@ export const projects: ProjectEntry[] = [
 	},
 	{
 		id: 'minebit',
-		n: '03',
+		n: '04',
 		title: 'MineBit — voxel builds as NFTs on TON',
 		tag: 'MineBit',
 		date: '2024',
@@ -51,7 +64,7 @@ export const projects: ProjectEntry[] = [
 	},
 	{
 		id: 'aireader',
-		n: '04',
+		n: '05',
 		title: 'AI Reader — LLMs inside the reading flow',
 		tag: 'K',
 		date: '2025',
@@ -60,7 +73,7 @@ export const projects: ProjectEntry[] = [
 	},
 	{
 		id: 'sailfish',
-		n: '05',
+		n: '06',
 		title: 'SailfishOS on a Xiaomi ARM phone',
 		tag: 'K',
 		date: '2021—25',

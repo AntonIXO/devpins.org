@@ -9,12 +9,18 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<a class="work" href={project.href} data-reveal>
+<a class="work" href={project.href} target="_blank" rel="noopener noreferrer" data-reveal>
 	<div class="work__top">
 		<span class="work__n">{project.n}</span>
 		{
 			project.k === 'oh' ? (
 				<Mark size={26} />
+			) : project.k === 'dw' ? (
+				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+					<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+					<path d="M19 3v4"></path>
+					<path d="M21 5h-4"></path>
+				</svg>
 			) : project.k === 'mb' ? (
 				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
 					<path d="M12 2.5 21 7v10l-9 4.5L3 17V7l9-4.5Z"></path>
@@ -29,7 +35,7 @@ const { project } = Astro.props;
 			)
 		}
 	</div>
-	<h3>{project.id === 'optihealth' ? 'optiHealth' : project.id === 'minebit' ? 'MineBit' : 'SailfishOS port'}</h3>
+	<h3>{project.id === 'optihealth' ? 'optiHealth' : project.id === 'dreamwalker' ? 'Dream Walker' : project.id === 'minebit' ? 'MineBit' : 'SailfishOS port'}</h3>
 	<p>{project.summary}</p>
 	<span class="work__period">{project.period}</span>
 </a>
