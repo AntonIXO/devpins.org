@@ -22,6 +22,8 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 						href={link.href}
 						target={link.href.startsWith('mailto:') ? undefined : '_blank'}
 						rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+						data-umami-event="cv-contact-click"
+						data-umami-event-channel={link.label.toLowerCase()}
 					>
 						{link.label}
 					</a>
@@ -41,7 +43,13 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 						{item.meta &&
 							(item.metaHref ? (
 								<p class="meta">
-									<a href={item.metaHref} target="_blank" rel="noopener noreferrer">
+									<a
+										href={item.metaHref}
+										target="_blank"
+										rel="noopener noreferrer"
+										data-umami-event="cv-education-click"
+										data-umami-event-institution={item.meta.split(' · ')[0]}
+									>
 										{item.meta.split(' · ')[0]}
 									</a>
 									{' · '}
@@ -70,7 +78,13 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 						<div class="card__head">
 							<h2>
 								{item.href ? (
-									<a href={item.href} target="_blank" rel="noopener noreferrer">
+									<a
+										href={item.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										data-umami-event="cv-project-click"
+										data-umami-event-project={item.title}
+									>
 										{item.title}
 									</a>
 								) : (
@@ -85,7 +99,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 								<li
 									set:html={bullet.replace(
 										'Yuri Rykov (scholar profile)',
-										'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer">Yuri Rykov</a>',
+										'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer" data-umami-event="cv-scholar-click" data-umami-event-target="yuri-rykov">Yuri Rykov</a>',
 									)}
 								/>
 							))}

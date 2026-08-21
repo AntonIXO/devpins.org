@@ -29,6 +29,11 @@ export function applyTheme(theme: Theme): void {
 export function toggleTheme(): Theme {
 	const next: Theme = readTheme() === 'dark' ? 'light' : 'dark';
 	applyTheme(next);
+	try {
+		window.umami?.track('theme-toggle', { theme: next });
+	} catch {
+		// ignore
+	}
 	return next;
 }
 

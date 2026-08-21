@@ -7,11 +7,11 @@ const year = new Date().getFullYear();
 <footer>
 	<p>© {year} {SITE_AUTHOR}</p>
 	<div>
-		<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
-		<a href={SITE_X} target="_blank" rel="noopener noreferrer">{SITE_X_HANDLE}</a>
-		<a href={SITE_GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
-		<a href={SITE_TELEGRAM} target="_blank" rel="noopener noreferrer">Telegram</a>
-		<a href="/rss.xml">RSS</a>
+		<a href={`mailto:${SITE_EMAIL}`} data-umami-event="footer-contact-click" data-umami-event-channel="email">{SITE_EMAIL}</a>
+		<a href={SITE_X} target="_blank" rel="noopener noreferrer" data-umami-event="footer-contact-click" data-umami-event-channel="x">{SITE_X_HANDLE}</a>
+		<a href={SITE_GITHUB} target="_blank" rel="noopener noreferrer" data-umami-event="footer-contact-click" data-umami-event-channel="github">GitHub</a>
+		<a href={SITE_TELEGRAM} target="_blank" rel="noopener noreferrer" data-umami-event="footer-contact-click" data-umami-event-channel="telegram">Telegram</a>
+		<a href="/rss.xml" data-umami-event="footer-rss-click">RSS</a>
 	</div>
 </footer>
 

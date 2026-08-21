@@ -5,12 +5,12 @@ const onCv = path === '/cv';
 ---
 
 <nav class="nav">
-	<a class="brand" href="/" data-nav-link>
+	<a class="brand" href="/" data-nav-link data-umami-event="nav-click" data-umami-event-target="home">
 		<span class="d">D</span>evPins
 	</a>
 	<div class="links">
-		<a href="/blog/" data-nav-link class:list={{ current: onWriting }}>Writing</a>
-		<a href="/cv/" data-nav-link class:list={{ current: onCv }}>CV</a>
+		<a href="/blog/" data-nav-link class:list={{ current: onWriting }} data-umami-event="nav-click" data-umami-event-target="writing">Writing</a>
+		<a href="/cv/" data-nav-link class:list={{ current: onCv }} data-umami-event="nav-click" data-umami-event-target="cv">CV</a>
 		<button type="button" data-theme-toggle>White</button>
 	</div>
 </nav>

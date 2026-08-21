@@ -32,10 +32,10 @@ const workTitle: Record<string, string> = {
 		<p class="bio">{cvIntro}</p>
 		<p class="meta">St. Petersburg · ITMO AI360</p>
 		<p class="contacts">
-			<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
-			<a href={SITE_X} target="_blank" rel="noopener noreferrer">{SITE_X_HANDLE}</a>
-			<a href={SITE_GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
-			<a href={SITE_TELEGRAM} target="_blank" rel="noopener noreferrer">Telegram</a>
+			<a href={`mailto:${SITE_EMAIL}`} data-umami-event="contact-click" data-umami-event-channel="email">{SITE_EMAIL}</a>
+			<a href={SITE_X} target="_blank" rel="noopener noreferrer" data-umami-event="contact-click" data-umami-event-channel="x">{SITE_X_HANDLE}</a>
+			<a href={SITE_GITHUB} target="_blank" rel="noopener noreferrer" data-umami-event="contact-click" data-umami-event-channel="github">GitHub</a>
+			<a href={SITE_TELEGRAM} target="_blank" rel="noopener noreferrer" data-umami-event="contact-click" data-umami-event-channel="telegram">Telegram</a>
 		</p>
 		<p class="bpm" data-bpm>
 			resting {FALLBACK_RESTING_HR} · hrv {FALLBACK_HRV} · sleep {FALLBACK_SLEEP_HOURS}
@@ -47,7 +47,13 @@ const workTitle: Record<string, string> = {
 		{
 			featuredWork.map((project) => (
 				<li>
-					<a href={project.href} target="_blank" rel="noopener noreferrer">
+					<a
+						href={project.href}
+						target="_blank"
+						rel="noopener noreferrer"
+						data-umami-event="project-click"
+						data-umami-event-name={project.id}
+					>
 						<span class="list__title">{workTitle[project.id] ?? project.title}</span>
 						<span class="list__note">{project.summary}</span>
 					</a>
@@ -64,7 +70,7 @@ const workTitle: Record<string, string> = {
 			<ul class="list">
 				{posts.map((post) => (
 					<li>
-						<a href={`/blog/${post.id}/`}>
+						<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
 							<span class="list__title">{post.data.title}</span>
 							<span class="list__note">
 								<FormattedDate date={post.data.pubDate} />

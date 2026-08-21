@@ -20,7 +20,7 @@ const { title, description, pubDate, updatedDate, heroImage, kicker } = Astro.pr
 	wide={false}
 	atmosphere="blank"
 >
-	<article class="article">
+	<article class="article" data-article-title={title}>
 		{
 			heroImage && (
 				<div class="hero">
@@ -52,8 +52,36 @@ const { title, description, pubDate, updatedDate, heroImage, kicker } = Astro.pr
 		<div class="prose">
 			<slot />
 		</div>
+		<div class="article-end-sentinel" aria-hidden="true"></div>
 	</article>
 </SiteLayout>
+
+<script>
+	let readTracked = false;
+	const observer = new IntersectionObserver((entries) => {
+		for (const entry of entries) {
+			if (entry.isIntersecting && !readTracked) {
+				readTracked = true;
+				const article = document.querySelector('article.article');
+				const title = article?.getAttribute('data-article-title') || document.title;
+				try {
+					window.umami?.track('article-read-complete', { title });
+				} catch {
+					// ignore
+				}
+				observer.disconnect();
+			}
+		}
+	}, { threshold: 0.5 });
+
+	document.addEventListener('astro:page-load', () => {
+		readTracked = false;
+		const target = document.querySelector('.article-end-sentinel');
+		if (target) {
+			observer.observe(target);
+		}
+	});
+</script>
 
 <style>
 	.article {

@@ -18,7 +18,7 @@ const posts = await getPublishedPosts();
 				<ul class="rows">
 					{posts.map((post) => (
 						<li>
-							<a href={`/blog/${post.id}/`}>
+							<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
 								<span class="title">{post.data.title}</span>
 								<span class="date">
 									<FormattedDate date={post.data.pubDate} />
