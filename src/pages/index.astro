@@ -117,6 +117,14 @@ const workTitle: Record<string, string> = {
 		color: var(--mute);
 	}
 
+	.list__title {
+		min-width: 0;
+	}
+
+	a:has(> .list__note) .list__note {
+		white-space: nowrap;
+	}
+
 	.meta {
 		margin-top: 28px;
 	}
@@ -141,7 +149,7 @@ const workTitle: Record<string, string> = {
 
 	.list a {
 		display: grid;
-		grid-template-columns: minmax(8.5rem, auto) minmax(0, 1fr);
+		grid-template-columns: minmax(0, 1fr) auto;
 		gap: 12px 28px;
 		align-items: baseline;
 		padding: 11px 0;
