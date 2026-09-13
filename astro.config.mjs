@@ -4,8 +4,11 @@ import { copyFile, access } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
+import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math';
 
 /** @type {import('astro').AstroIntegration} */
 const sitemapXmlAlias = {
@@ -28,6 +31,12 @@ const sitemapXmlAlias = {
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://devpins.org',
+	markdown: {
+		processor: unified({
+			remarkPlugins: [remarkMath],
+			rehypePlugins: [rehypeKatex],
+		}),
+	},
 	integrations: [
 		mdx(),
 		sitemap({
