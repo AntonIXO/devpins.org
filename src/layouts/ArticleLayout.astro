@@ -7,7 +7,7 @@ import '../styles/prose.css';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, kicker } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroAtTop = true, kicker } = Astro.props;
 ---
 
 <SiteLayout
@@ -22,7 +22,7 @@ const { title, description, pubDate, updatedDate, heroImage, kicker } = Astro.pr
 >
 	<article class="article" data-article-title={title}>
 		{
-			heroImage && (
+			heroImage && heroAtTop && (
 				<div class="hero">
 					<Image
 						width={1200}

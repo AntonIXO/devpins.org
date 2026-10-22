@@ -3,6 +3,7 @@ title: '(Не) я умер'
 description: '(Не) я умер'
 pubDate: 2026-10-22
 heroImage: '../../assets/blog/ne-ya-umer/night.png'
+heroAtTop: false
 ---
 
 > "You fucking die," I said to him  
