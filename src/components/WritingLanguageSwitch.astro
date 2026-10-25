@@ -110,8 +110,20 @@ const languages = [
 
 <style>
 	.writing-switch {
-		--switch-border: color-mix(in srgb, var(--ink) 16%, transparent);
-		--switch-fill: color-mix(in srgb, var(--ink) 5%, transparent);
+		--switch-border: color-mix(in srgb, var(--ink) 24%, transparent);
+		--switch-fill: color-mix(in srgb, var(--paper) 18%, transparent);
+		--switch-thumb-start: color-mix(in srgb, var(--ink) 12%, transparent);
+		--switch-thumb-mid: color-mix(in srgb, var(--ink) 26%, transparent);
+		--switch-highlight: color-mix(in srgb, var(--ink) 28%, transparent);
+		--switch-shadow: color-mix(in srgb, var(--paper) 42%, transparent);
+	}
+
+	html[data-theme='light'] .writing-switch {
+		--switch-fill: color-mix(in srgb, #ffffff 16%, transparent);
+		--switch-thumb-start: color-mix(in srgb, #ffffff 44%, transparent);
+		--switch-thumb-mid: color-mix(in srgb, #ffffff 68%, transparent);
+		--switch-highlight: color-mix(in srgb, #ffffff 74%, transparent);
+		--switch-shadow: color-mix(in srgb, var(--ink) 16%, transparent);
 	}
 
 	.language-control {
@@ -122,6 +134,12 @@ const languages = [
 		border: 1px solid var(--switch-border);
 		border-radius: 999px;
 		background: var(--switch-fill);
+		-webkit-backdrop-filter: blur(12px) saturate(1.15);
+		backdrop-filter: blur(12px) saturate(1.15);
+		box-shadow:
+			inset 0 1px 0 var(--switch-highlight),
+			inset 0 -1px 0 var(--switch-shadow),
+			0 6px 16px color-mix(in srgb, var(--paper) 28%, transparent);
 		isolation: isolate;
 	}
 
@@ -133,7 +151,19 @@ const languages = [
 		left: 3px;
 		width: calc(50% - 3px);
 		border-radius: 999px;
-		background: var(--ink);
+		border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+		background: linear-gradient(
+			-75deg,
+			var(--switch-thumb-start),
+			var(--switch-thumb-mid),
+			var(--switch-thumb-start)
+		);
+		-webkit-backdrop-filter: blur(4px) saturate(1.15);
+		backdrop-filter: blur(4px) saturate(1.15);
+		box-shadow:
+			inset 0 1px 1px var(--switch-highlight),
+			inset 0 -1px 2px var(--switch-shadow),
+			0 4px 8px color-mix(in srgb, var(--paper) 36%, transparent);
 		transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
@@ -142,6 +172,8 @@ const languages = [
 	}
 
 	.language-option {
+		position: relative;
+		z-index: 1;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -152,8 +184,14 @@ const languages = [
 		font-family: var(--font-mono);
 		font-size: 12px;
 		letter-spacing: 0.02em;
-		color: var(--mute);
+		color: var(--ink);
 		transition: color 220ms ease, transform 220ms ease;
+	}
+
+	.language-option > span:first-child {
+		font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+		font-size: 1.05em;
+		line-height: 1;
 	}
 
 	.language-option.is-active {
@@ -266,6 +304,22 @@ const languages = [
 
 		.language-panel.is-active {
 			animation: none;
+		}
+	}
+
+	@media (prefers-reduced-transparency: reduce) {
+		.language-control,
+		.language-thumb {
+			-webkit-backdrop-filter: none;
+			backdrop-filter: none;
+		}
+
+		.language-control {
+			background: color-mix(in srgb, var(--paper) 82%, transparent);
+		}
+
+		.language-thumb {
+			background: color-mix(in srgb, var(--ink) 22%, var(--paper));
 		}
 	}
 </style>
