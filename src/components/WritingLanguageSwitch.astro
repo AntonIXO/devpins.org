@@ -1,0 +1,271 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+type Props = {
+	posts: CollectionEntry<'blog'>[];
+	variant?: 'rows' | 'list';
+};
+
+const { posts, variant = 'rows' } = Astro.props;
+const languages = [
+	{ key: 'en', label: 'English', emoji: '🇬🇧', posts: posts.filter((post) => post.data.language === 'en') },
+	{ key: 'ru', label: 'Русский', emoji: '🇷🇺', posts: posts.filter((post) => post.data.language === 'ru') },
+];
+---
+
+<div class:list={['writing-switch', `writing-switch--${variant}`]} data-language-switch data-language="en">
+	<div class="language-control" role="group" aria-label="Writing language">
+		<span class="language-thumb" aria-hidden="true"></span>
+		{languages.map((language, index) => (
+			<button
+				type="button"
+				class:list={{ 'language-option': true, 'is-active': index === 0 }}
+				data-language-option={language.key}
+				aria-pressed={index === 0}
+				disabled={language.posts.length === 0}
+			>
+				<span aria-hidden="true">{language.emoji}</span>
+				<span>{language.label}</span>
+			</button>
+		))}
+	</div>
+
+	<div class="language-panels">
+		{languages.map((language, index) => (
+			<section
+				class="language-panel"
+				class:list={{ 'is-active': index === 0 }}
+				data-language-panel={language.key}
+				aria-labelledby={`writing-${language.key}-heading`}
+				hidden={index !== 0}
+			>
+				<h2 id={`writing-${language.key}-heading`} class="sr-only">{language.label}</h2>
+				{
+					variant === 'list' ? (
+						<ul class="list">
+							{language.posts.map((post) => (
+								<li>
+									<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
+										<span class="list__title">{post.data.title}</span>
+										<span class="list__note"><FormattedDate date={post.data.pubDate} /></span>
+									</a>
+								</li>
+							))}
+						</ul>
+					) : (
+						<ul class="rows">
+							{language.posts.map((post) => (
+								<li>
+									<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
+										<span class="title">{post.data.title}</span>
+										<span class="date"><FormattedDate date={post.data.pubDate} /></span>
+									</a>
+								</li>
+							))}
+						</ul>
+					)
+				}
+			</section>
+		))}
+	</div>
+</div>
+
+<script>
+	const setupLanguageSwitches = () => {
+		document.querySelectorAll<HTMLElement>('[data-language-switch]').forEach((root) => {
+			if (root.dataset.ready === 'true') return;
+			root.dataset.ready = 'true';
+
+			const buttons = root.querySelectorAll<HTMLButtonElement>('[data-language-option]');
+			const panels = root.querySelectorAll<HTMLElement>('[data-language-panel]');
+
+			const setLanguage = (language: string) => {
+				root.dataset.language = language;
+				buttons.forEach((button) => {
+					const active = button.dataset.languageOption === language;
+					button.classList.toggle('is-active', active);
+					button.setAttribute('aria-pressed', String(active));
+				});
+				panels.forEach((panel) => {
+					const active = panel.dataset.languagePanel === language;
+					panel.hidden = !active;
+					panel.classList.toggle('is-active', active);
+				});
+			};
+
+			buttons.forEach((button) => {
+				button.addEventListener('click', () => {
+					if (button.dataset.languageOption) setLanguage(button.dataset.languageOption);
+				});
+			});
+
+			setLanguage('en');
+		});
+	};
+
+	document.addEventListener('astro:page-load', setupLanguageSwitches);
+	setupLanguageSwitches();
+</script>
+
+<style>
+	.writing-switch {
+		--switch-border: color-mix(in srgb, var(--ink) 16%, transparent);
+		--switch-fill: color-mix(in srgb, var(--ink) 5%, transparent);
+	}
+
+	.language-control {
+		position: relative;
+		display: inline-grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		padding: 3px;
+		border: 1px solid var(--switch-border);
+		border-radius: 999px;
+		background: var(--switch-fill);
+		isolation: isolate;
+	}
+
+	.language-thumb {
+		position: absolute;
+		z-index: 0;
+		top: 3px;
+		bottom: 3px;
+		left: 3px;
+		width: calc(50% - 3px);
+		border-radius: 999px;
+		background: var(--ink);
+		transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	[data-language='ru'] .language-thumb {
+		transform: translateX(100%);
+	}
+
+	.language-option {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 7px;
+		min-width: 124px;
+		padding: 8px 14px;
+		border-radius: 999px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		letter-spacing: 0.02em;
+		color: var(--mute);
+		transition: color 220ms ease, transform 220ms ease;
+	}
+
+	.language-option.is-active {
+		color: var(--paper);
+	}
+
+	.language-option:not(:disabled):hover {
+		transform: translateY(-1px);
+	}
+
+	.language-option:disabled {
+		opacity: 0.45;
+		cursor: not-allowed;
+	}
+
+	.language-panels {
+		margin-top: 18px;
+	}
+
+	.language-panel.is-active {
+		animation: language-panel-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	@keyframes language-panel-in {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.rows,
+	.list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.rows a,
+	.list a {
+		color: var(--ink);
+	}
+
+	.rows a {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 14px 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	.rows li:last-child a,
+	.list li:last-child a {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.rows .title,
+	.list__title {
+		font-size: 17px;
+		font-weight: 500;
+		letter-spacing: -0.015em;
+	}
+
+	.rows a:hover .title,
+	.list a:hover .list__title {
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
+	.rows .date,
+	.list__note {
+		flex: none;
+		font-family: var(--font-mono);
+		font-size: 12.5px;
+		color: var(--mute);
+	}
+
+	.list a {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 14px 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	@media (max-width: 720px) {
+		.language-option {
+			min-width: 108px;
+			padding-inline: 10px;
+		}
+
+		.rows a,
+		.list a {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 6px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.language-thumb,
+		.language-option {
+			transition: none;
+		}
+
+		.language-panel.is-active {
+			animation: none;
+		}
+	}
+</style>

@@ -1,5 +1,4 @@
 ---
-import FormattedDate from '../components/FormattedDate.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import {
 	SITE_AUTHOR,
@@ -14,13 +13,10 @@ import { cvIntro } from '../data/cv';
 import { FALLBACK_HRV, FALLBACK_RESTING_HR, FALLBACK_SLEEP_HOURS } from '../data/metrics';
 import { getPublishedPosts } from '../data/nav';
 import { featuredWork } from '../data/projects';
+import WritingLanguageSwitch from '../components/WritingLanguageSwitch.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const posts = await getPublishedPosts();
-const languageSections = [
-	{ label: 'Russian', posts: posts.filter((post) => post.data.language === 'ru') },
-	{ label: 'English', posts: posts.filter((post) => post.data.language === 'en') },
-].filter((section) => section.posts.length > 0);
 
 const workTitle: Record<string, string> = {
 	optihealth: 'optiHealth',
@@ -67,27 +63,7 @@ const workTitle: Record<string, string> = {
 	</ul>
 
 	<SectionLabel>Writing</SectionLabel>
-	{posts.length === 0 ? (
-		<p class="empty">No posts yet.</p>
-	) : (
-		languageSections.map((section) => (
-			<div class="writing-language">
-				<SectionLabel>{section.label}</SectionLabel>
-				<ul class="list">
-					{section.posts.map((post) => (
-						<li>
-							<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
-								<span class="list__title">{post.data.title}</span>
-								<span class="list__note">
-									<FormattedDate date={post.data.pubDate} />
-								</span>
-							</a>
-						</li>
-					))}
-				</ul>
-			</div>
-		))
-	)}
+	{posts.length === 0 ? <p class="empty">No posts yet.</p> : <WritingLanguageSwitch posts={posts} variant="list" />}
 
 </SiteLayout>
 
