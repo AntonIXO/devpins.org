@@ -63,7 +63,9 @@ Sleep staging shows a much larger difference:
 
 The first thing that catches the eye is that WHOOP reports 26.3 more minutes of deep sleep, but 9 minutes less total sleep.
 
-![fig2 bland altman](../../assets/blog/whoop-vs-fitbit/image-03.png)
+![Bland–Altman plot](../../assets/blog/whoop-vs-fitbit/image-03.png)
+
+<p class="caption">This is the Bland–Altman plot. The green line shows the mean difference; the red lines show the 95% limits of agreement.</p>
 
 ![fig3 decomposition](../../assets/blog/whoop-vs-fitbit/image-04.png)
 
@@ -152,7 +154,9 @@ This table supports the hypothesis. The fourth column applies block permutation,
 
 ## Steps
 
-![image](../../assets/blog/whoop-vs-fitbit/image-08.png)
+![Steps comparison](../../assets/blog/whoop-vs-fitbit/image-08.png)
+
+<p class="caption">It is no surprise that WHOOP labels steps as a beta feature.<br />Fitbit has been a step counter for years, so I trust it much more for this metric.</p>
 
 ## Did the algorithms change over time?
 
@@ -194,7 +198,9 @@ The replies are fast, though.)
 
 Both have built-in AI assistants, but Fitbit’s is useless again: it can access your data, but it is not integrated with the app. It does not find anything meaningful in your data.
 
-![image](../../assets/blog/whoop-vs-fitbit/image-09.png)
+![Fitbit AI assistant](../../assets/blog/whoop-vs-fitbit/image-09.png)
+
+<p class="caption">It is also region-locked, unlike the WHOOP assistant.</p>
 
 ## Summary
 
