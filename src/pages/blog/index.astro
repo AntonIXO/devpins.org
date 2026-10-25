@@ -6,29 +6,36 @@ import { getPublishedPosts } from '../../data/nav';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const posts = await getPublishedPosts();
+const languageSections = [
+	{ label: 'Russian', posts: posts.filter((post) => post.data.language === 'ru') },
+	{ label: 'English', posts: posts.filter((post) => post.data.language === 'en') },
+].filter((section) => section.posts.length > 0);
 ---
 
 <SiteLayout title="Writing" description={`Notes from ${SITE_TITLE}.`} wide={false} atmosphere="blank">
 	<section class="writing">
 		<SectionLabel>Writing</SectionLabel>
-		{
-			posts.length === 0 ? (
-				<p class="empty">No posts yet.</p>
-			) : (
-				<ul class="rows">
-					{posts.map((post) => (
-						<li>
-							<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
-								<span class="title">{post.data.title}</span>
-								<span class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</span>
-							</a>
-						</li>
-					))}
-				</ul>
-			)
-		}
+		{posts.length === 0 ? (
+			<p class="empty">No posts yet.</p>
+		) : (
+			languageSections.map((section) => (
+				<div class="language-section">
+					<SectionLabel>{section.label}</SectionLabel>
+					<ul class="rows">
+						{section.posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
+									<span class="title">{post.data.title}</span>
+									<span class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			))
+		)}
 	</section>
 </SiteLayout>
 

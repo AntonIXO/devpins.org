@@ -2,6 +2,7 @@
 title: 'WHOOP vs Fitbit: Real-World Data (N=97)'
 description: 'A 96-day personal comparison of WHOOP 4.0 and Fitbit Charge 6 across sleep, recovery, steps, and device UX.'
 pubDate: 2026-10-25
+language: en
 heroImage: '../../assets/blog/whoop-vs-fitbit/cover.jpg'
 kicker: 'OptiHealth · Wearables'
 project: oh

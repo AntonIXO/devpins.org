@@ -2,6 +2,7 @@
 title: '(Не) я умер'
 description: '(Не) я умер'
 pubDate: 2026-10-22
+language: ru
 heroImage: '../../assets/blog/ne-ya-umer/night.png'
 heroAtTop: false
 ---

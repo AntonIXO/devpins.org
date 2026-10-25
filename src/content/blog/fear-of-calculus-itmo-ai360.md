@@ -2,6 +2,7 @@
 title: 'Fear of Calculus and Loathing of Linear Algebra at ITMO AI360'
 description: 'A first-year account of Russia’s elite AI program — admissions, coursework, conferences, and the part where I nearly got expelled.'
 pubDate: 2026-08-04
+language: en
 heroImage: '../../assets/blog/fear-of-calculus/hero.jpg'
 kicker: 'ITMO · 2025–26'
 ---

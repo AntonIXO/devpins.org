@@ -2,6 +2,7 @@
 title: 'Fitbit Charge 6 vs Oura Ring 4: Two Devices See the Same Night Differently'
 description: 'A paired comparison of Fitbit Charge 6 and Oura Ring 4 sleep, heart-rate, and activity data from one personal OptiHealth dataset.'
 pubDate: 2026-10-22
+language: en
 kicker: 'OptiHealth · Wearables'
 project: oh
 ---
