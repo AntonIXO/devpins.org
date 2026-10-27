@@ -3,6 +3,7 @@ title: 'Страх матана и ненависть к линалу на пу�
 description: 'Честный рассказ первокурсника про поступление, AI360, преподов, учёбу, поездки на конференции — и то, как я чуть не вылетел.'
 pubDate: 2026-08-24
 language: ru
+translationKey: fear-of-calculus-itmo-ai360
 heroImage: '../../assets/blog/fear-of-calculus/hero.jpg'
 kicker: 'ИТМО · 2025–26'
 ---

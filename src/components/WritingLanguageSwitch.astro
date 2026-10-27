@@ -2,12 +2,13 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 
-type Props = {
+	type Props = {
 	posts: CollectionEntry<'blog'>[];
 	variant?: 'rows' | 'list';
+	showControl?: boolean;
 };
 
-const { posts, variant = 'rows' } = Astro.props;
+const { posts, variant = 'rows', showControl = false } = Astro.props;
 const languages = [
 	{ key: 'en', label: 'English', emoji: '🇬🇧', posts: posts.filter((post) => post.data.language === 'en') },
 	{ key: 'ru', label: 'Русский', emoji: '🇷🇺', posts: posts.filter((post) => post.data.language === 'ru') },
@@ -15,21 +16,23 @@ const languages = [
 ---
 
 <div class:list={['writing-switch', `writing-switch--${variant}`]} data-language-switch data-language="en">
-	<div class="language-control" role="group" aria-label="Writing language">
-		<span class="language-thumb" aria-hidden="true"></span>
-		{languages.map((language, index) => (
-			<button
-				type="button"
-				class:list={{ 'language-option': true, 'is-active': index === 0 }}
-				data-language-option={language.key}
-				aria-pressed={index === 0}
-				disabled={language.posts.length === 0}
-			>
-				<span aria-hidden="true">{language.emoji}</span>
-				<span>{language.label}</span>
-			</button>
-		))}
-	</div>
+	{showControl && (
+		<div class="language-control" role="group" aria-label="Writing language">
+			<span class="language-thumb" aria-hidden="true"></span>
+			{languages.map((language, index) => (
+				<button
+					type="button"
+					class:list={{ 'language-option': true, 'is-active': index === 0 }}
+					data-language-option={language.key}
+					aria-pressed={index === 0}
+					disabled={language.posts.length === 0}
+				>
+					<span aria-hidden="true">{language.emoji}</span>
+					<span>{language.label}</span>
+				</button>
+			))}
+		</div>
+	)}
 
 	<div class="language-panels">
 		{languages.map((language, index) => (
@@ -96,11 +99,26 @@ const languages = [
 
 			buttons.forEach((button) => {
 				button.addEventListener('click', () => {
-					if (button.dataset.languageOption) setLanguage(button.dataset.languageOption);
+					if (button.dataset.languageOption) {
+						localStorage.setItem('devpins-language', button.dataset.languageOption);
+						setLanguage(button.dataset.languageOption);
+					}
 				});
 			});
 
-			setLanguage('en');
+			const stored = localStorage.getItem('devpins-language');
+			if (stored === 'en' || stored === 'ru') {
+				setLanguage(stored);
+				return;
+			}
+
+			const russianCountries = new Set(['RU', 'BY', 'KZ', 'KG', 'UZ', 'TJ']);
+			const browserLanguage = navigator.language.toLowerCase().startsWith('ru') ? 'ru' : 'en';
+			setLanguage(browserLanguage);
+			fetch('https://ipapi.co/country_code/', { headers: { Accept: 'text/plain' } })
+				.then((response) => response.ok ? response.text() : '')
+				.then((country) => setLanguage(russianCountries.has(country.trim().toUpperCase()) ? 'ru' : 'en'))
+				.catch(() => undefined);
 		});
 	};
 

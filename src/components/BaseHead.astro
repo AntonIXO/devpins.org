@@ -26,6 +26,9 @@ interface Props {
 	type?: 'website' | 'article' | 'profile';
 	publishedTime?: Date;
 	modifiedTime?: Date;
+	language?: 'ru' | 'en';
+	alternateUrl?: string;
+	alternateLanguage?: 'ru' | 'en';
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -36,6 +39,9 @@ const {
 	type = 'website',
 	publishedTime,
 	modifiedTime,
+	language = 'en',
+	alternateUrl,
+	alternateLanguage,
 } = Astro.props;
 const origin = Astro.site ?? canonicalURL;
 const defaultOg = !image;
@@ -142,6 +148,7 @@ const jsonLd =
 <Font cssVariable="--font-plex-mono" />
 
 <link rel="canonical" href={canonicalURL} />
+{alternateUrl && alternateLanguage && <link rel="alternate" hreflang={alternateLanguage} href={alternateUrl} />}
 
 <title>{pageTitle}</title>
 <meta name="description" content={description} />

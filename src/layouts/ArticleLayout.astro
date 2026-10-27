@@ -2,12 +2,17 @@
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import FormattedDate from '../components/FormattedDate.astro';
+import ArticleLanguageSwitch from '../components/ArticleLanguageSwitch.astro';
 import SiteLayout from './SiteLayout.astro';
 import '../styles/prose.css';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	post: CollectionEntry<'blog'>;
+	alternate?: CollectionEntry<'blog'>;
+};
 
-const { title, description, pubDate, updatedDate, heroImage, heroAtTop = true, kicker } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroAtTop = true, kicker, post, alternate } = Astro.props;
+const alternateUrl = alternate ? new URL(`/blog/${alternate.id}/`, Astro.site).href : undefined;
 ---
 
 <SiteLayout
@@ -17,6 +22,9 @@ const { title, description, pubDate, updatedDate, heroImage, heroAtTop = true, k
 	type="article"
 	publishedTime={pubDate}
 	modifiedTime={updatedDate}
+	language={post.data.language}
+	alternateUrl={alternateUrl}
+	alternateLanguage={alternate?.data.language}
 	wide={false}
 	atmosphere="blank"
 >
@@ -36,6 +44,7 @@ const { title, description, pubDate, updatedDate, heroImage, heroAtTop = true, k
 			)
 		}
 		<header>
+			<ArticleLanguageSwitch post={post} alternate={alternate} />
 			{kicker && <p class="kicker">{kicker}</p>}
 			<p class="date">
 				<FormattedDate date={pubDate} />

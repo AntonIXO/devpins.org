@@ -15,6 +15,7 @@ const blog = defineCollection({
 			kicker: z.string().optional(),
 			project: z.enum(['oh', 'mb', 'k']).optional(),
 			language: z.enum(['ru', 'en']),
+			translationKey: z.string(),
 			draft: z.boolean().optional(),
 		}),
 });

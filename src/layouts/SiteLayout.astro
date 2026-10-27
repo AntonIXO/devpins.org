@@ -13,6 +13,9 @@ interface Props {
 	type?: 'website' | 'article' | 'profile';
 	publishedTime?: Date;
 	modifiedTime?: Date;
+	language?: 'ru' | 'en';
+	alternateUrl?: string;
+	alternateLanguage?: 'ru' | 'en';
 	wide?: boolean;
 	atmosphere?: 'field' | 'blank';
 }
@@ -24,6 +27,9 @@ const {
 	type = 'website',
 	publishedTime,
 	modifiedTime,
+	language = 'en',
+	alternateUrl,
+	alternateLanguage,
 	wide = true,
 	atmosphere = 'blank',
 } = Astro.props;
@@ -32,16 +38,19 @@ const field = atmosphere === 'field';
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead
-			title={title}
-			description={description}
-			image={image}
-			type={type}
-			publishedTime={publishedTime}
-			modifiedTime={modifiedTime}
-		/>
+<html lang={language}>
+		<head>
+			<BaseHead
+				title={title}
+				description={description}
+				image={image}
+				type={type}
+				publishedTime={publishedTime}
+				modifiedTime={modifiedTime}
+				language={language}
+				alternateUrl={alternateUrl}
+				alternateLanguage={alternateLanguage}
+			/>
 	</head>
 	<body class:list={{ 'has-field': field }}>
 		{field && <NeuroField />}

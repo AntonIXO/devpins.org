@@ -1,0 +1,108 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type Props = {
+	post: CollectionEntry<'blog'>;
+	alternate?: CollectionEntry<'blog'>;
+};
+
+const { post, alternate } = Astro.props;
+const hrefFor = (entry?: CollectionEntry<'blog'>) => (entry ? `/blog/${entry.id}/` : undefined);
+const options = [
+	{ key: 'en', label: 'English', flag: '🇬🇧', href: post.data.language === 'en' ? hrefFor(post) : hrefFor(alternate) },
+	{ key: 'ru', label: 'Русский', flag: '🇷🇺', href: post.data.language === 'ru' ? hrefFor(post) : hrefFor(alternate) },
+];
+---
+
+<nav class="article-language" data-article-language-switch data-language={post.data.language} aria-label="Article language">
+	<span class="article-language__label">Read in</span>
+	<div class="article-language__options">
+		{options.map((option) => (
+			<a
+				class:list={{ active: option.key === post.data.language, unavailable: !option.href }}
+				href={option.href ?? '#'}
+				aria-current={option.key === post.data.language ? 'page' : undefined}
+				aria-disabled={!option.href ? 'true' : undefined}
+				data-article-language={option.key}
+			>
+				<span aria-hidden="true">{option.flag}</span> {option.label}
+			</a>
+		))}
+	</div>
+</nav>
+
+<script>
+	const languageCountries = new Set(['RU', 'BY', 'KZ', 'KG', 'UZ', 'TJ']);
+	const preferredLanguage = (country?: string) => country ? (languageCountries.has(country) ? 'ru' : 'en') : undefined;
+
+	const setupArticleLanguage = () => {
+		const root = document.querySelector<HTMLElement>('[data-article-language-switch]');
+		if (!root || root.dataset.ready === 'true') return;
+		root.dataset.ready = 'true';
+
+		root.querySelectorAll<HTMLAnchorElement>('[data-article-language]').forEach((link) => {
+			link.addEventListener('click', () => {
+				if (link.getAttribute('aria-disabled') !== 'true') {
+					localStorage.setItem('devpins-language', link.dataset.articleLanguage || 'en');
+				}
+			});
+		});
+
+		if (localStorage.getItem('devpins-language')) return;
+		const browserLanguage = navigator.language.toLowerCase().startsWith('ru') ? 'ru' : undefined;
+		fetch('https://ipapi.co/country_code/', { headers: { Accept: 'text/plain' } })
+			.then((response) => response.ok ? response.text() : '')
+			.then((country) => {
+				const wanted = preferredLanguage(country.trim().toUpperCase()) || browserLanguage || 'en';
+				if (wanted === root.dataset.language) return;
+				const target = root.querySelector<HTMLAnchorElement>(`[data-article-language="${wanted}"]`);
+				if (target && target.getAttribute('aria-disabled') !== 'true') window.location.replace(target.href);
+			})
+			.catch(() => {
+				if (browserLanguage && browserLanguage !== root.dataset.language) {
+					const target = root.querySelector<HTMLAnchorElement>('[data-article-language="ru"]');
+					if (target && target.getAttribute('aria-disabled') !== 'true') window.location.replace(target.href);
+				}
+			});
+	};
+
+	document.addEventListener('astro:page-load', setupArticleLanguage);
+	setupArticleLanguage();
+</script>
+
+<style>
+	.article-language {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin: 0 0 28px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: var(--mute);
+	}
+
+	.article-language__options {
+		display: inline-flex;
+		gap: 6px;
+	}
+
+	.article-language a {
+		padding: 5px 9px;
+		border: 1px solid var(--rule);
+		border-radius: 999px;
+		color: var(--mute);
+		transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+	}
+
+	.article-language a:hover,
+	.article-language a.active {
+		color: var(--ink);
+		border-color: color-mix(in srgb, var(--ink) 42%, transparent);
+		background: color-mix(in srgb, var(--paper) 24%, transparent);
+	}
+
+	.article-language a.unavailable {
+		opacity: 0.4;
+		pointer-events: none;
+	}
+</style>

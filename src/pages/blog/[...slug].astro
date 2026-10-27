@@ -13,9 +13,13 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
+const allPosts = await getCollection('blog', ({ data }) => data.draft !== true);
+const alternate = allPosts.find(
+	(candidate) => candidate.data.translationKey === post.data.translationKey && candidate.data.language !== post.data.language,
+);
 const { Content } = await render(post);
 ---
 
-<ArticleLayout {...post.data}>
+<ArticleLayout {...post.data} post={post} alternate={alternate}>
 	<Content />
 </ArticleLayout>
