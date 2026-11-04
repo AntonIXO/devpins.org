@@ -1,255 +1,217 @@
 ---
-title: 'I wore WHOOP and Fitbit sumultaneously for 68 days. Which is better?'
-description: 'Why I built instrumentation for my own experiments before I trusted any of the conclusions.'
-pubDate: 2026-09-12
-kicker: 'optiHealth'
+title: 'WHOOP vs Fitbit: Real-World Data (N=97)'
+description: 'A 96-day personal comparison of WHOOP 4.0 and Fitbit Charge 6 across sleep, recovery, steps, and device UX.'
+pubDate: 2026-10-25
+language: en
+translationKey: whoop-vs-fitbit
+heroImage: '../../assets/blog/whoop-vs-fitbit/cover.jpg'
+kicker: 'OptiHealth · Wearables'
 project: oh
 ---
 
-## What I found
+I’ve used WHOOP, Fitbit, Oura, Huawei, TicWatch and HR straps—plenty of wearables!<br />
+Over the past year, I tested a WHOOP 4.0 alongside a Fitbit Charge 6 and wore both for **96** days to compare them.
 
-In autumn 2025, I wore a Fitbit Charge 6 and a WHOOP 4.0 on different wrists. Both fed into my own analytics system, [OptiHealth](https://optihealth.devpins.org), so I could compare the numbers rather than my impressions.
+There were two periods: from 8 October to 24 December 2025, and again in May 2026.
 
-The main sleep comparison covers **68 paired, staged nights, from 11 October to 23 December 2025**. A second window in April–May 2026 provides much less paired sleep-stage data and a separate comparison of steps.
+I don’t think the WHOOP 4.0 versus 5.0 distinction is critical here: Gen 5’s improvements are mainly around HR and UX, while I was mostly interested in sleep and aggregate data.<br />
+I also assume that there is no relevant difference between the Charge 6 and Fitbit Air: they have identical sensors and server-side algorithms.
 
-The short version: **the devices track changes in sleep duration closely, but disagree substantially about how much of the night was deep sleep.** WHOOP Strain is a different question: it needs to be judged as an intensity–duration load, not as an expensive step counter. And the software was not necessarily the same across the two wear windows.
+## Sleep
 
----
+Sleep is the most interesting and hardest-to-measure metric, and the devices differ substantially.
 
-## 1. Sleep duration: close tracking is not perfect agreement
+It seems that I collected my data before Fitbit’s new algorithm. The only visible change is that time in bed was reduced, although I am not sure whether this reflects a change in my routine. ([7](https://blog.google/products-and-platforms/devices/fitbit/fitbit-personal-health-coach-updates-2026))
 
-![Sleep duration and stage comparisons](../../assets/blog/whoop-vs-fitbit/fig1_sleep_scatter.png)
+It is worth noting that awakenings are a somewhat different metric: in Fitbit’s case, they are small awake segments on the hypnogram, while WHOOP exposes them as a separate metric. There is no correlation either (ρ = -0.011)!
+
+MAE, in this case, shows the difference across all nights. For example, REM is generally similar, but the MAE is high, which means that individual nights can still differ substantially.
+
+| Cohort | Metric | n | Fitbit mean | WHOOP mean | WHOOP − Fitbit | MAE |
+| --- | --- | --- | --- | --- | --- | --- |
+| P1 | Awake minutes | 70 | 40.3 min | 27.8 min | **−12.6 min** | 15.6 min |
+| P1 | Awakenings | 70 | **3.36/night** | **11.33/night** | **+7.97/night** | 7.97/night |
+| P1 | Sleep efficiency | 70 | 92.2% | 94.4% | **+2.25 pp** | 2.84 pp |
+| P1 | Light sleep | 70 | 274.9 min | 239.8 min | **−35.0 min** | 37.5 min |
+| P1 | Deep sleep | 70 | 98.0 min | 124.7 min | **+26.7 min** | 28.1 min |
+| P1 | REM sleep | 70 | 101.4 min | 98.4 min | **−3.0 min** | 12.8 min |
+| P1 | Time in bed | 70 | 515.1 min | 490.4 min | **−24.7 min** | 24.7 min |
+| May 2026 | Awake minutes | 17 | 29.4 min | 33.4 min | **+4.1 min** | 4.1 min |
+| May 2026 | Sleep efficiency | 17 | 92.4% | 92.4% | **+0.1 pp** | 1.4 pp |
+| May 2026 | Light sleep | 4 | 324.5 min | 276.0 min | **−48.5 min** | 48.5 min |
+| May 2026 | Deep sleep | 4 | 93.0 min | 132.3 min | **+39.3 min** | 39.3 min |
+| May 2026 | REM sleep | 4 | 101.5 min | 94.0 min | **−7.5 min** | 11.0 min |
+| May 2026 | Time in bed | 17 | 458.4 min | 457.8 min | **−0.5 min** | 1.5 min |
+
+Overall sleep duration looks pretty close:
+
+![image](../../assets/blog/whoop-vs-fitbit/image-01.png)
 
 | Measure | Fitbit mean | WHOOP mean | Spearman correlation |
-|---|---:|---:|---:|
+| --- | --- | --- | --- |
 | Total sleep time | 473.0 min | 463.5 min | **ρ = 0.961** |
 | Time in bed | 513.8 min | 491.2 min | ρ = 0.951 |
+
+### Staging
+
+Sleep staging shows a much larger difference:
+
+![fig1 sleep architecture](../../assets/blog/whoop-vs-fitbit/image-02.png)
+
+| Measure | Fitbit mean | WHOOP mean | Spearman correlation |
+| --- | --- | --- | --- |
 | REM sleep | 101.2 min | 98.9 min | ρ = 0.812 |
 | **Deep sleep** | **98.2 min** | **124.4 min** | **ρ = 0.523** |
 
-When one device records a longer night, the other usually does too. WHOOP also places the start of the night about **18 minutes later**, on average.
+The first thing that catches the eye is that WHOOP reports 26.3 more minutes of deep sleep, but 9 minutes less total sleep.
 
-But correlation is not accuracy. Two devices can move together and share an error; they can also correlate strongly while disagreeing by a practically important amount on individual nights. There is no polysomnography in my home data to decide which device is right.
+![Bland–Altman plot](../../assets/blog/whoop-vs-fitbit/image-03.png)
 
----
+<p class="caption">This is the Bland–Altman plot. The green line shows the mean difference; the red lines show the 95% limits of agreement.</p>
 
-## 2. Deep sleep: 26 extra minutes, despite a shorter night
+![fig3 decomposition](../../assets/blog/whoop-vs-fitbit/image-04.png)
 
-![Bland–Altman agreement plots](../../assets/blog/whoop-vs-fitbit/fig2_bland_altman.png)
+At the same time, Fitbit reports more time in bed and more awake minutes, while sleep efficiency is nearly the same.
 
-WHOOP reports **26.3 more minutes of deep sleep**, on average. I had noticed the difference before doing the analysis: its deep-sleep number usually looked more generous.
+It is interesting that the Fitbit algorithm depends heavily on blood oxygen, like Oura’s, while WHOOP measures it only once at night (and it is pretty useless for healthy people).
 
-The estimated Bland–Altman limits for WHOOP minus Fitbit are **−9.4 to +61.9 minutes**. That is a wide range for one sleep stage. These are descriptive limits based on the mean difference and its standard deviation, not a guarantee about future nights.
+### Lab comparison
 
-For total sleep, the limits are **−49.8 to +30.9 minutes**, around a mean difference of −9.5 minutes. So total sleep has a smaller systematic offset, but its absolute limits are not narrower than those for deep sleep. High correlation should not hide that distinction.
+![fig4 lab vs life](../../assets/blog/whoop-vs-fitbit/image-05.png)
 
-The obvious explanation—“WHOOP simply thinks the night was longer”—does not work:
-
-![Deep-sleep gap decomposition](../../assets/blog/whoop-vs-fitbit/fig3_decomposition.png)
-
-WHOOP records **9.5 fewer minutes of sleep**. At Fitbit's mean deep-sleep share of **21.3%**, that shorter duration would predict about **2 fewer minutes** of deep sleep. Instead, WHOOP reports 26.3 more. The remaining difference under this accounting convention is **28.3 minutes**. The mean deep-sleep shares are **21.3% for Fitbit and 27.8% for WHOOP**.
-
-This rules out a simple proportional “longer night” explanation. It is consistent with different stage classification, but it is not an epoch-by-epoch demonstration that one device relabelled exactly 28 minutes of light sleep as deep sleep. That would require aligned hypnograms.
-
-Sleep stages are defined using physiological recordings including EEG. Wrist wearables infer them from indirect signals such as pulse and movement. Two classifiers can assign different stages to the same night.[^1]
-
----
-
-## 3. A laboratory bias is not a universal correction
-
-![Published laboratory offsets versus my paired differences](../../assets/blog/whoop-vs-fitbit/fig4_lab_vs_life.png)
-
-Schyvens and colleagues compared consumer wearables against polysomnography in a study of **62 adults**. Their data were collected **from April 2023 to August 2024**, although the paper was published in 2025. Participants wore **two to four devices simultaneously**, not just one. The usable samples differed by device: **39 for Fitbit Charge 5 and 40 for WHOOP 4.0**.[^1]
-
-The paper reported a deep-sleep bias of **+31.49 minutes for WHOOP 4.0** and **−2.19 minutes for Fitbit Charge 5**. Subtracting those point estimates gives a reference gap of **+33.68 minutes**.[^1]
+These are results from a 2023–2024 study using Fitbit Charge **5** ([13](https://pmc.ncbi.nlm.nih.gov/articles/PMC12038347)).
 
 | Measure | Difference of published biases, WHOOP−Fitbit Charge 5 | My WHOOP−Fitbit Charge 6 difference | My 95% block-bootstrap CI |
-|---|---:|---:|---:|
+| --- | --- | --- | --- |
 | Deep sleep | +33.7 min | **+26.3 min** | +22.5 to +32.0 |
 | REM | +15.5 min | **−2.3 min** | −6.5 to +2.7 |
 | Total sleep | +13.3 min | **−9.5 min** | −13.5 to −2.9 |
 
-The deep-sleep offset has the same direction and a broadly similar magnitude. The total-sleep point estimate has the opposite sign. REM's point estimate also reverses, but my interval includes zero.
+The 95% CI captures uncertainty in the data while accounting for the fact that the nights are taken together.
 
-This is **a descriptive comparison, not a formal test of a fixed laboratory prediction**. I wore a Charge 6, not the study's Charge 5. The study estimates have their own uncertainty, come from partially different device samples, and describe earlier software and a different population. My confidence intervals quantify uncertainty in my observed mean differences, not in the difference between the laboratory and home estimates.
+| Measure | WHOOP 4.0 bias vs PSG | Fitbit Charge 5 bias vs PSG |
+| --- | --- | --- |
+| Deep sleep | +31.49 min | −2.19 min |
+| REM | +15.28 min | −0.24 min |
+| Total sleep | +24.46 min | +11.12 min |
 
-Boundary detection is one plausible contributor: the study's validation was restricted to the PSG lights-out period, whereas home sleep detection must decide the relevant interval. The authors themselves identify algorithm updates as a limitation of longitudinal comparisons.[^1] My data cannot isolate boundary detection from model version, hardware, placement, or participant differences.
+The published results generally agree with my deep-sleep observations, but the REM result is a surprise: Fitbit was accurate in the research, and the published difference was large, while the difference between WHOOP and Fitbit is small in my data. It seems that WHOOP fixed its REM-detection algorithm. ([12](https://www.community.whoop.com/t/whats-new-in-whoops-sleep-staging-algorithm-update/321))
 
-The practical lesson is narrower—and more useful—than “lab validation fails”: **do not subtract a published average bias from your own wearable history and assume you have corrected it.**
+### Does deep sleep predict next-day RHR?
 
----
+![image](../../assets/blog/whoop-vs-fitbit/image-06.png)
 
-## 4. WHOOP Strain through the lens of TRIMP
+For Fitbit, yes. But does that mean Fitbit’s deep-sleep estimate is more accurate, or could it be an algorithmic heuristic?
 
-**TRIMP means duration weighted by relative cardiovascular intensity—not distance, steps, or calories.** It is a family of internal training-load measures: estimates of the body's response to work, rather than the external work itself.[^2]
+| Sleep predictor | Next-day outcome | n | Spearman ρ | Block-permutation p |
+| --- | --- | --- | --- | --- |
+| Fitbit deep sleep | Fitbit RHR | 67 | **−0.319** | 0.0060 |
+| WHOOP deep sleep | Fitbit RHR | 67 | +0.041 | 0.7211 |
+| Fitbit deep sleep | WHOOP RHR | 65 | **−0.239** | 0.0589 |
+| WHOOP deep sleep | WHOOP RHR | 65 | −0.050 | 0.7052 |
 
-### What the comparison should be
+**Block permutation** keeps the daily RHR series intact, randomly swaps deep-sleep values in blocks, and then checks the correlation again. After 10,000 permutations, 60 were at least as strong as the original (60/10,000).
 
-A schematic Banister-style expression is
+My guess is that Fitbit counts RHR as medium during sleep, while WHOOP takes the lowest value from the latest deep-sleep stage (as it does for HRV). More deep sleep means a lower HR. But this does not fit perfectly, because we are using the **next**-day RHR.
 
-$$
-h = \frac{\overline{HR}-HR_{\mathrm{rest}}}{HR_{\max}-HR_{\mathrm{rest}}},
-\qquad
-\mathrm{TRIMP}=T\,h\,a\,e^{bh},
-$$
+Personally, sleep always looked worse to me on Fitbit than on WHOOP. In May, they fixed it: it now looks even better, but it is still less sensitive to deep sleep than WHOOP and Oura.
 
-where $T$ is session duration in minutes, $h$ is the fraction of heart-rate reserve, and $a,b$ are coefficients of the chosen formulation. Zone-based approaches instead add time in intensity bands with different weights. These methods are not interchangeable, and session-average HR can miss the structure of intermittent exercise.[^2]
+It is worth noting that WHOOP [does not provide exact stage](https://developer.whoop.com/docs/developing/user-data/sleep/) breakdowns through its API, so I could not measure the overlap.
 
-WHOOP's cardiovascular Strain has the same broad intensity–duration logic, but its complete formula is proprietary and its displayed **0–21 scale is nonlinear**. It also includes non-workout load and, for supported activities, muscular load. Calling it **TRIMP-like** is defensible; calling it Banister TRIMP rescaled to 21 is not.[^3][^4]
+## WHOOP Recovery vs Fitbit Readiness
 
-A detail that matters: WHOOP's support article, published **6 October 2025** and explicitly applicable to **4.0, 5.0 and MG**, says the displayed heart-rate zones use heart-rate reserve, but **manually changing those zones does not directly change Strain**. A zone-display update is not automatically a Strain-formula update.[^3]
+![image](../../assets/blog/whoop-vs-fitbit/image-07.png)
 
-Muscular load is not new to 2026. WHOOP launched Strength Trainer for **WHOOP 4.0 on 25 April 2023**, incorporating muscular load into Strain. The 2026 changes expanded automatic estimation to more activity types.[^5][^6]
+Although WHOOP Recovery is consistently higher, I find Fitbit Readiness pretty useless in practice. WHOOP feels like a real “body battery” that you get used to checking every day, and the whole UX is built around it, while Readiness is much less useful. <br />
+It often collapses to the same values from day to day.
 
-### What my export shows
+The analysis also suggests that it does not take sleep into account at all:
 
-![WHOOP Strain: descriptive associations and distribution](../../assets/blog/whoop-vs-fitbit/fig5_strain.png)
+| Fitbit Readiness ([8](https://blog.google/products-and-platforms/devices/fitbit/pixel-watch-3-daily-readiness-update-cardio-target-load), [18](https://support.google.com/fitbit/answer/14236710?hl=en-GB)) vs data | n | Spearman ρ |
+| --- | --- | --- |
+| HRV RMSSD | 317 | **+0.793** |
+| Resting HR | 317 | **−0.558** |
+| Respiratory rate | 316 | −0.336 |
+| Total sleep duration | 316 | −0.015 |
+| Deep sleep minutes | 315 | +0.011 |
+| REM minutes | 315 | +0.015 |
 
-The existing analysis compares Day Strain with daily activity summaries, excluding **11–12 October 2025**, the two dates omitted by the original figure. That leaves **72 scored days**; each correlation uses only dates with both measurements. The full export spans **8 October–24 December 2025** and retains 8–9 October even after these exclusions. They are therefore not the first two exported days, and their calibration status is unverified. The audit reports both inclusion and exclusion cohorts.
+| WHOOP Recovery ([17](https://support.whoop.com/s/article/WHOOP-Recovery?language=en_US)) vs data | n | Spearman ρ |
+| --- | --- | --- |
+| HRV RMSSD | 89 | **+0.681** |
+| Resting HR | 94 | **−0.453** |
+| Respiratory rate | 94 | **−0.483** |
+| Total sleep duration | 94 | +0.352 |
+| Deep sleep minutes | 81 | +0.180 |
+| REM minutes | 81 | +0.136 |
 
-| Comparison with Day Strain | Spearman ρ | Paired dates |
-|---|---:|---:|
-| Fitbit total calories | +0.061 | 72 |
-| Fitbit steps | +0.070 | 72 |
-| Fitbit MVPA minutes | +0.027 | 72 |
-| Recorded minutes with HR >120 bpm | +0.088 | 71 |
-| Recorded minutes with HR >140 bpm | +0.087 | 71 |
-| WHOOP workout minutes | +0.088 | 69 |
-| Mean recorded daily HR | +0.194 | 71 |
-| Sum of WHOOP workout Strains | −0.020 | 63 |
-| Maximum WHOOP workout Strain | −0.198 | 63 |
+These numbers suggest that Readiness is essentially an average of three metrics: HR, HRV and RR.
 
-These are weak descriptive associations. They do **not**, by themselves, establish that Strain is useless:
+| Hypothesis | n | Spearman ρ | BH over BP |
+| --- | --- | --- | --- |
+| WHOOP−Fitbit gap ↔ total sleep | 61 | +0.330 | **0.0083** |
+| WHOOP−Fitbit gap ↔ REM | 61 | +0.313 | **0.0180** |
 
-- **Steps and calories are not the target construct.** A long easy walk and a shorter hard effort need not have the same ranking under an intensity-weighted load.[^2][^4]
-- **An absolute HR threshold is not personalised intensity.** Minutes above 120 bpm do not reconstruct a full HR-reserve distribution. A daily mean, maximum, and a few threshold counts do not preserve the trajectory needed to reconstruct nonlinear load.
-- **Session Strains are not additive.** WHOOP explicitly says that two workouts scoring 10 do not make a Day Strain of 20.[^4] Even so, nonlinearity is not a universal excuse: applying a strictly increasing transformation to one scalar preserves its Spearman ranks. Log compression alone cannot erase a correctly aligned monotonic load relationship.
-- **Dates must refer to the same interval.** WHOOP's developer API attaches Strain to physiological cycles, which need not align with calendar days.[^7] Its current consumer explainer describes a midnight reset.[^4] Those descriptions do not establish how my historical export was dated. I need the actual cycle boundaries and workout timestamps, not a guessed one-day shift.
-- **Missing workout data are not automatically rest days.** Nor does low lag-one autocorrelation prove that a score is white noise.
+This table supports the hypothesis. The fourth column applies block permutation, as described above, followed by the Benjamini–Hochberg procedure: sort the p-values, compare each p-value with (rank / number of tests) × 0.1, and discard the values that fail the threshold. These two survived, suggesting that sleep contributes to the WHOOP score but not to the Fitbit score.
 
-### The date alignment changes the result
+## Steps
 
-I checked actual calendar offsets from −2 to +2 days, without filling missing dates or treating adjacent rows as adjacent days. Pairing **Day Strain on date d with workouts on date d−1** changes the picture:
+![Steps comparison](../../assets/blog/whoop-vs-fitbit/image-08.png)
 
-| Comparator | Same exported date | Previous calendar day |
-|---|---:|---:|
-| Maximum workout Strain | ρ = −0.198, n = 63 | **ρ = +0.788, n = 60** |
-| Sum of workout Strains | ρ = −0.020, n = 63 | **ρ = +0.672, n = 60** |
-| Workout minutes | ρ = +0.088, n = 69 | **ρ = +0.554, n = 65** |
+<p class="caption">It is no surprise that WHOOP labels steps as a beta feature.<br />Fitbit has been a step counter for years, so I trust it much more for this metric.</p>
 
-![Calendar-lag sensitivity of Day Strain versus workout Strain](../../assets/blog/whoop-vs-fitbit/fig9_strain_alignment.png)
+## Did the algorithms change over time?
 
-This is not just a change in which dates survive. Restricting the maximum-workout comparison to the **same 38 Day Strain dates with data at every tested offset**, the correlations are **−0.237 at zero lag and +0.879 at −1 day**.
+Yes, several times:
 
-Another consistency flag follows the same pattern: Day Strain falls below the largest workout Strain on **17 of 63 same-date pairs**, versus **3 of 60 previous-day pairs**. That is a flag conditional on complete, correctly aligned intervals—not proof of a broken scoring algorithm.
+- On **25 February 2026**, [WHOOP released a new HR signal-processing algorithm](https://www.whoop.com/us/en/thelocker/2026-whats-new) affecting Recovery, Strain and Sleep.
 
-**The original “WHOOP disagrees with itself” conclusion does not survive this alignment check.** A dating or cycle-boundary mismatch is a serious candidate explanation. The lag was explored after seeing the discrepancy, however, so I do not silently shift the data, report a selected-lag significance test, or claim to have established the correct join. Cycle boundaries, timestamps, and score completeness remain necessary to resolve it.
+- On **17 March 2026**, [Google announced a 15% sleep-staging accuracy improvement](https://blog.google/products-and-platforms/devices/fitbit/fitbit-personal-health-coach-updates-2026) for Fitbit Public Preview users, with a redesigned Sleep Score to follow.<br />
+(I did not get the preview on my account, so this update does not seem to have affected me. Based on how it feels, deep sleep has not changed much.)
 
-The audit also computes a deliberately simple exploratory proxy, $M_{100}+M_{120}+M_{140}$, where $M_x$ is recorded minutes above $x$ bpm. This weights the disjoint upper-HR bands increasingly and gives **ρ = +0.014 on 71 same-date pairs**. It is **not TRIMP**: its thresholds and weights are not personalised, it omits lower-HR exposure, and the original extraction query for the wide HR table is absent. The proxy cannot settle the validity question either.
+## Device UX
 
-**Can I calculate actual TRIMP from the article's current data? Not reliably.** The local Strain table contains daily HR summaries and absolute-threshold counts, not a timestamped HR series with coverage and historical maximum/resting-HR settings. It cannot reconstruct Banister or Edwards TRIMP, or WHOOP's proprietary transformation. I do not replace those missing inputs with invented heart rates or label a custom threshold proxy “TRIMP”.
+A few words about the UX of these two devices:
 
-The proper next comparison would calculate a specified HR-based load over the **same intervals** as completed WHOOP scores, separate cardiovascular-only from muscular-load activities, and retain sensor coverage. Using WHOOP's own HR would test internal consistency; using a reference chest strap would provide a more independent check. My present result is **poor correspondence with the available daily summaries**, not a completed validation or refutation of TRIMP-like Strain.
+### Fitbit
 
----
+I liked that Fitbit has a screen. Some people say they do not want notifications, but notifications are optional - and in my case they often did not work properly. On my Xiaomi 14, I received messages in Chinese and strange prompts to change settings. This continued for much of the year without fix, so I turned notifications off. Pixel experience in all its essence!
 
-## 5. Recovery overlaps with resting heart rate
+The battery life is excellent, and the OS is simple and clean.
 
-![Resting heart rate and WHOOP Recovery](../../assets/blog/whoop-vs-fitbit/fig6_rhr_recovery.png)
+I also wanted two things from it:
 
-Resting heart rate correlates across devices at about **ρ = 0.68**, but WHOOP reports values **6.7 bpm lower on average**. The difference is systematic in this sample; it is not evidence that one device measured my physiological resting rate correctly.
+- Show sunset time, which is not possible.
 
-WHOOP Recovery correlates with Fitbit resting heart rate at **ρ = −0.59 across 70 paired days**. That is useful overlap with a simpler measurement.
+- Weather. There is a custom installable app, but it is unusable: every time I swipe to the weather page, the watch face glitches, and I have to force-reboot the device using a cable.<br />
+There has been no fix in a year.
 
-It does **not** prove that Recovery is merely inverted resting HR or contributes no additional information. Establishing that would require testing incremental predictive value beyond RHR against an independent outcome—not just correlating two daily summaries.
+- ECG and SpO2 are region-locked, so if they are not approved in your region, you need a VPN.
 
----
+### WHOOP
 
-## 6. Steps: the exported records disagree
+WHOOP’s UX is generally better: there are no extraneous or broken features.<br />
+The app is clean, and the metrics are usable.
 
-![Paired step counts in May 2026](../../assets/blog/whoop-vs-fitbit/fig7_steps.png)
+The only thing I don’t like is the AI support: it sent me to pages that did not exist, but it turned out that WHOOP does not support historical HR syncing. Support tried to convince me otherwise.<br />
+The replies are fast, though.)
 
-From **1 to 28 May 2026**, the Health Connect exports contain **25 paired days**. The step-count correlation is **ρ = 0.03**. The median absolute difference is **5,540 steps**, with discrepancies of roughly 14,000 on some days.
+### AI
 
-There are very low WHOOP totals on dates when Fitbit reports an active day. That is a serious disagreement in the records I actually receive.
+Both have built-in AI assistants, but Fitbit’s is useless again: it can access your data, but it is not integrated with the app. It does not find anything meaningful in your data.
 
-It is not yet a clean test of the step-detection algorithms themselves. Wearing time, sync completeness, source selection, and day boundaries can all affect exported daily totals. I found no verified, dated step-algorithm release that establishes the cause of this May mismatch. I would not merge these two exported step series as though they were interchangeable.
+![Fitbit AI assistant](../../assets/blog/whoop-vs-fitbit/image-09.png)
 
----
+<p class="caption">It is also region-locked, unlike the WHOOP assistant.</p>
 
-## 7. An exploratory lead: deep sleep and next-day RHR
+## Summary
 
-![Exploratory associations with next-day resting heart rate](../../assets/blog/whoop-vs-fitbit/fig8_predictive.png)
+- Fitbit has a more open API and provides more data.
 
-Without PSG, another question is whether a device's deep-sleep estimate is associated with a later physiological measurement.
+- WHOOP reports more deep sleep, which seems wrong, but it feels more precise based on my experience!
 
-- Fitbit deep sleep versus next-day Fitbit RHR: **ρ = −0.319**.
-- WHOOP deep sleep versus the same next-day Fitbit RHR: **ρ = +0.041**.
+- WHOOP’s UX is better, but Fitbit is cheaper.<br />
+Google generally starves its products of good technology but gives them bad UX: it keeps releasing features nobody asked for, and I doubt developers use them themselves. I hope this gets better in the future.
 
-The negative Fitbit association is an interesting lead, not proof of superior staging. The outcome is itself Fitbit-derived, so this is not an independent reference instrument. Shared sensor and processing effects, persistence in RHR, sleep duration, and other time-varying factors remain possible explanations.
-
-**None of the 32 hypotheses in the original exploratory family passed its multiple-testing correction.** I treat this as a question for another wear window, not a validated prediction or evidence that one device's deep sleep is biologically “real” and the other's is not.
-
----
-
-## 8. Did the algorithms change between October and May?
-
-**There were relevant product and algorithm releases. Whether every one reached my account or WHOOP 4.0 is not recorded in this dataset.** That distinction matters: an announcement date is not a personal model-version log.
-
-| Date or documented bound | Verified change | Relevance to my windows |
-|---|---|---|
-| **11 September 2024** | Google described a redesigned Fitbit Daily Readiness algorithm incorporating RHR alongside HRV and sleep.[^8] | Predates both windows. It should not be misdated as an October 2025 release merely because a support page was updated then. |
-| **By 2 May 2025** | A WHOOP staff reply described a sleep-staging update trained with more CQU/Arizona lab data and new signal interpretation.[^9] | An update was already documented before my October start. The December recap is not evidence that this same update launched in December. |
-| **By 6 October 2025** | WHOOP documented personalised HR-reserve zones for 4.0/5.0/MG, with Strain calculated independently of manual zone boundaries.[^3] | Already documented before the first paired night. Personal calibration may evolve without a new algorithm release. |
-| **2025, recapped 15 December** | WHOOP described an updated Sleep Performance score using sufficiency, consistency, efficiency, and stress, and its sleep-staging improvements.[^10] | Confirms product evolution, but the recap alone does not date account-level rollout. Sleep Performance is not the same variable as minutes in a sleep stage. |
-| **January 2026** | WHOOP lowered the minimum workout auto-detection duration from 15 to 10 minutes. On 8 January it expanded passive muscular-load estimation to rucking and Solidcore.[^6] | Between windows; activity counts and supported Activity Strain can change without equivalent changes in behaviour. |
-| **10–18 February 2026** | WHOOP shipped automatic muscular-load estimation for weightlifting, functional fitness, HIIT, and additional activity types.[^6] | Between windows; relevant if those activity types were used. This expanded an existing muscular-load component rather than inventing it. |
-| **25 February 2026** | WHOOP's release log records a new HR signal-processing algorithm, explicitly affecting the data behind Recovery, Strain, and Sleep.[^6] | A genuine between-window measurement change. The entry does not establish my exact rollout date or explicitly resolve eligibility for my 4.0. |
-| **17 March 2026** | Google announced an additional **15% increase in sleep-staging accuracy for Public Preview users**, with tracking rolling out over the following days and a redesigned Sleep Score to follow.[^11] | Potentially relevant to April–May sleep. The percentage is Google's validation claim, not a measured improvement in me and not necessarily 15 percentage points. My Preview participation is unverified. |
-| **22 April 2026** | WHOOP expanded automatic muscular-load estimation to 14 outdoor/adventure and labour activities, including rowing, climbing, skiing, and shovelling.[^6] | On the first date in my second paired-sleep window; applies to the listed activities, not all daily movement. |
-| **20 May 2026** | WHOOP updated workout auto-detection and classification, including strength work and lower-Strain sustained activity.[^6] | Near the end of the second window; workout counts and labels need not be directly comparable with autumn. |
-| **6 July 2026** | WHOOP's release log records another HR algorithm update.[^6] | **After both windows. It cannot explain the October–May difference.** |
-
-The important implication for the sleep comparison is that **the 2023–2024 validation study, my autumn 2025 measurements, and my spring 2026 measurements are not demonstrably the same measurement system**. Software version belongs alongside hardware model, wrist placement, and data source in the methods section.
-
-This does not prove an algorithm update caused any observed change. With only **six paired staged nights** in April–May, no saved per-night model versions, and no reference PSG, the project cannot separate software changes from changes in my sleep or recording coverage. The second window's roughly **+37-minute WHOOP deep-sleep offset** is a small descriptive follow-up, not a clean replication under a fixed instrument.
-
----
-
-## What I take away
-
-1. **Sleep duration moves together across the devices**, but neither agreement nor high correlation establishes accuracy against PSG.
-2. **Absolute deep-sleep minutes are not interchangeable.** WHOOP averages 26.3 minutes higher in my main window. Trends within one device still need attention to software changes.
-3. **Strain deserves a TRIMP-like test, not a step-count test.** Its weak associations with my available summaries remain interesting, but the present export does not validate the internal-load calculation or establish that it is useless.
-4. **Recovery overlaps with RHR.** Whether it adds useful information is a separate, unanswered question.
-5. **Do not splice these step exports into one history** without checking completeness and attribution.
-6. **Changing software can change the instrument even when I keep the same wristband.** A change in the chart is not automatically a change in my health.
-
-## How this was analysed
-
-The measurements are the project's existing CSV extracts from OptiHealth. This revision uses those local files; it does not re-extract or change the live database.
-
-- **Spearman correlation** describes rank associations, with pairwise complete observations.
-- The original exploratory analyses use **serial-dependence-aware block permutation tests**; the descriptive Strain table is not presented as a set of confirmed discoveries.
-- Mean paired sleep-gap intervals use **20,000 moving-block bootstrap resamples**, with the settings in `analysis/phase4_literature_test.py`.
-- **Bland–Altman** plots show systematic offsets and the spread of paired differences.
-- Deep sleep is examined in both minutes and as a share of total sleep.
-- Algorithm-release claims are sourced separately from personal measurements. Source pages describe releases and mechanisms, not proof of which version produced an individual historical row.
-
-See [GLOSSARY.md](GLOSSARY.md) for definitions and [README.md](README.md) for reproduction instructions and unresolved data requirements.
-
-**Limitations:** one person; no simultaneous home PSG; different wrists without a crossover; device and software mismatch with the laboratory reference; unequal coverage across metrics; unresolved cycle/calendar alignment for Strain; possible incomplete Health Connect exports; no saved historical algorithm versions or Fitbit Preview status. Oura has only five nights in the existing project and is not included.
-
-## Sources
-
-[^1]: <https://pmc.ncbi.nlm.nih.gov/articles/PMC12038347>
-[^2]: <https://www.mdpi.com/2227-7080/11/3/79>
-[^3]: <https://support.whoop.com/s/article/What-is-Max-Heart-Rate-and-How-Do-I-Adjust-It>
-[^4]: <https://www.whoop.com/us/en/thelocker/how-does-whoop-strain-work-101>
-[^5]: <https://www.whoop.com/us/en/press-center/whoop-introduces-strength-trainer-becomes-first-wearable-to-measure-muscular>
-[^6]: <https://www.whoop.com/us/en/thelocker/2026-whats-new>
-[^7]: <https://developer.whoop.com/docs/developing/user-data/cycle>
-[^8]: <https://blog.google/products-and-platforms/devices/fitbit/pixel-watch-3-daily-readiness-update-cardio-target-load>
-[^9]: <https://www.community.whoop.com/t/whats-new-in-whoops-sleep-staging-algorithm-update/321>
-[^10]: <https://www.whoop.com/us/en/thelocker/everything-whoop-launched-in-2025>
-[^11]: <https://blog.google/products-and-platforms/devices/fitbit/fitbit-personal-health-coach-updates-2026>
+That’s it! All analysis data and scripts can be found on [GitHub](https://github.com/AntonIXO/whoop-vs-fitbit).<br />
+Fitbit vs Oura 4 (maybe vs Whoop) is next!
