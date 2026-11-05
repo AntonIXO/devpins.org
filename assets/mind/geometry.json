@@ -1,0 +1,10 @@
+{
+  "objects": [
+    "Cortex-left",
+    "Cortex-right",
+    "Cerebellum",
+    "Brainstem",
+    "Corpus-callosum"
+  ],
+  "triangles": 47616
+}

@@ -27,6 +27,8 @@ probe() {
 
 check() {
 	probe "$ORIGIN/" 200
+	probe "$ORIGIN/brain/" 200
+	probe "$ORIGIN/mind/mind.glb" 200
 	probe "$ORIGIN/favicon.svg" 200
 	probe "$ORIGIN/favicon.ico" 200
 	probe "$ORIGIN/apple-touch-icon.png" 200
@@ -74,7 +76,7 @@ fi
 echo "== test =="
 bun test
 echo "== build → $ROOT/dist (live mount) =="
-bun run build
+bun --bun run build
 echo "== probe $ORIGIN =="
 check
 echo "DEPLOY OK"

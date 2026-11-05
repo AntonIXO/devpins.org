@@ -1,90 +1,26 @@
 ---
-import SiteNav from '../components/SiteNav.astro';
-import { SITE_AUTHOR } from '../consts';
-
-const projects = [
-  { id: 'sensorlm', zone: 'CORPUS CALLOSUM', title: 'Sensor Language Models', text: 'Raw biosensor time-series into language. A from-scratch temporal encoder built on the optiHealth data stream.', color: '#f2b84b' },
-  { id: 'optihealth', zone: 'MOTOR CORTEX', title: 'optiHealth', text: 'A personal biometric vector database: sleep, EEG, HRV and glucose in one N-of-1 telemetry engine.', color: '#ef6d73' },
-  { id: 'dreamwalker', zone: 'VISUAL CORTEX', title: 'Dream Walker', text: 'A shared dream mystery run by local reasoning agents. One server, one dream, one secret.', color: '#a67cff' },
-  { id: 'minebit', zone: 'PREFRONTAL CORTEX', title: 'MineBit', text: 'Voxel builds as NFTs on TON: Minestom, Go bridge, FunC contracts and a Telegram Web App.', color: '#65c7b5' },
-  { id: 'sailfish', zone: 'BRAINSTEM', title: 'SailfishOS on ARM', text: 'A complete GNU/Linux port to Android hardware through libhybris. 2,000+ downloads and a 200-user community.', color: '#76a7ff' },
-  { id: 'audio', zone: 'AUDITORY CORTEX', title: 'Zero-interference audio', text: 'PostmarketOS, custom kernels and a clean digital audio path — the physical runtime underneath the ideas.', color: '#ed8fbd' },
-];
+import { mindZones } from '../data/mind';
 ---
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={`Inside ${SITE_AUTHOR}'s mind — an interactive project atlas`} />
-    <title>Inside the mind</title>
-  </head>
-  <body>
-    <SiteNav />
-    <main class="brain-page">
-      <div class="brain-stage">
-        <canvas id="brain-canvas" aria-label="Interactive 3D brain project atlas"></canvas>
-        <div class="grain" aria-hidden="true"></div>
-        <div class="hud hud-top">
-          <p class="eyebrow">INSIDE THE EYE / ATLAS 01</p>
-          <h1>My projects,<br /><em>distributed by anatomy.</em></h1>
-          <p class="lede">A brain is not a portfolio grid. It is a map of obsessions that learned to cooperate.</p>
-        </div>
-        <a class="skip" href="#proof">Skip intro <span>→</span></a>
-        <div class="hud hud-bottom">
-          <span>drag to orbit</span><span>click a node</span><span>pulse: live vitals</span>
-        </div>
-        <div id="project-card" class="project-card" hidden>
-          <button id="close-card" type="button" aria-label="Close project">×</button>
-          <p id="card-zone" class="eyebrow"></p>
-          <h2 id="card-title"></h2>
-          <p id="card-text"></p>
-        </div>
-      </div>
-      <section id="proof" class="proof">
-        <div class="proof-intro"><p class="eyebrow">PROOF OF WORK</p><h2>The readable layer<br /><em>after the hallucination.</em></h2></div>
-        <div class="proof-grid">
-          {projects.map((project) => <article class="proof-card" style={`--accent: ${project.color}`}><span>{project.zone}</span><h3>{project.title}</h3><p>{project.text}</p></article>)}
-        </div>
-      </section>
-    </main>
-    <script type="importmap">
-      { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }
-    </script>
-    <script type="module" src="/brain/brain-atlas.js"></script>
-  </body>
-</html>
-
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Inner world · Anton Ivanov</title><meta name="description" content="Six connected territories: Anton Ivanov's projects, research and obsessions."/><link rel="icon" href="/favicon.svg"/></head>
+<body>
+<header><a href="/" class="brand">Anton Ivanov<span> / INNER WORLD</span></a><a class="skip" href="#proof">Skip intro → Proof of work</a></header>
+<main>
+<section class="world" aria-label="Interactive project map">
+ <div class="heading"><p class="eyebrow">A MAP OF CONNECTED OBSESSIONS</p><h1>Everything<br/>is connected.</h1><p class="intro">Biology. Machines. Perception.<br/>Six ways into the things I build.</p></div>
+ <div class="viewport"><canvas id="mind-canvas" aria-label="Three-dimensional brain. Drag to rotate. Use region buttons to explore."></canvas><div id="hotspots" aria-label="Brain regions"></div><p id="scene-status" role="status">Assembling the inner world…</p></div>
+ <div class="scene-tools"><span>01 — INNER WORLD</span><div><button id="rotate" type="button" aria-pressed="false">Pause motion</button><button id="reset" type="button">Reset view ↗</button></div><span class="drag-hint">DRAG TO EXPLORE</span></div>
+ <aside class="territories" aria-label="Choose a territory"><p class="eyebrow">SIX TERRITORIES / SELECT TO EXPLORE</p>{mindZones.map((z,i)=><button class="zone" data-zone={i} aria-pressed={i===0} style={`--zone:${z.color}`}><span>{z.number}</span><div>{z.title}<small>{z.area}</small></div><span>↗</span></button>)}</aside>
+ <article id="detail" aria-live="polite" style={`--accent:${mindZones[0].color}`}><div class="detail-meta"><span id="detail-area">01 / Corpus callosum</span><span id="detail-status">Research in progress</span></div><h2 id="detail-title">Sensor Language Models</h2><p id="detail-text">{mindZones[0].text}</p><a id="detail-link" href={mindZones[0].href}>Research ↗</a></article>
+ <p class="footnote">An anatomical metaphor. A connected body of work.<span>Surface: fsaverage5 · <a href="/mind/LICENSE.txt">credits & license</a></span></p>
+</section>
+<section id="proof" tabindex="-1"><p class="eyebrow">PROOF OF WORK / THE READABLE LAYER</p><h2>Ideas, made tangible.</h2><div class="proof-grid">{mindZones.map(z=><article style={`--accent:${z.color}`}><p class="eyebrow">{z.number} / {z.area}</p><h3>{z.project}</h3><p>{z.built}</p><a href={z.href}>{z.action} ↗</a></article>)}</div><a class="back" href="/cv/">Full CV →</a></section>
+</main>
+<script>import '../scripts/mind';</script>
+</body></html>
 <style>
-  :global(html) { scroll-behavior: smooth; background: #06050e; }
-  :global(body) { margin: 0; background: #06050e; color: #f0ebef; overflow-x: hidden; }
-  :global(body > nav), :global(body > header) { position: absolute; z-index: 20; inset: 0 0 auto; }
-  .brain-page { min-height: 100vh; background: #06050e; }
-  .brain-stage { height: max(760px, 100svh); position: relative; overflow: hidden; isolation: isolate; background: radial-gradient(circle at 50% 48%, #24152e 0, #0d0918 38%, #06050e 76%); }
-  #brain-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
-  #brain-canvas:active { cursor: grabbing; }
-  .grain { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .08; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); mix-blend-mode: screen; }
-  .hud { position: absolute; z-index: 2; pointer-events: none; }
-  .hud-top { left: clamp(22px, 7vw, 110px); top: clamp(100px, 16vh, 160px); max-width: 390px; }
-  .eyebrow { margin: 0 0 14px; color: #d5a95b; font: 10px/1.2 var(--font-mono, monospace); letter-spacing: .15em; text-transform: uppercase; }
-  h1, h2, h3, p { margin-top: 0; }
-  h1 { font: 400 clamp(40px, 6vw, 78px)/.94 var(--font-serif, Georgia, serif); letter-spacing: -.055em; }
-  em { color: #d6a6ff; font-style: italic; }
-  .lede { max-width: 280px; color: #aaa1b2; font: 14px/1.5 var(--font-sans, sans-serif); }
-  .skip { position: absolute; z-index: 3; top: 32px; right: clamp(22px, 7vw, 110px); color: #f0ebef; font: 11px var(--font-mono, monospace); text-decoration: none; border-bottom: 1px solid #64566b; padding-bottom: 7px; }
-  .skip span { color: #d5a95b; margin-left: 8px; }
-  .hud-bottom { left: clamp(22px, 7vw, 110px); right: clamp(22px, 7vw, 110px); bottom: 28px; display: flex; justify-content: space-between; color: #73697a; font: 10px var(--font-mono, monospace); text-transform: uppercase; letter-spacing: .1em; }
-  .project-card { position: absolute; z-index: 5; right: clamp(22px, 7vw, 110px); bottom: 100px; width: min(300px, calc(100vw - 44px)); padding: 22px; border: 1px solid #5b3d66; background: rgba(12, 8, 22, .84); backdrop-filter: blur(16px); box-shadow: 0 12px 60px #0008; }
-  .project-card h2 { font: 400 27px/1 var(--font-serif, Georgia, serif); letter-spacing: -.03em; }
-  .project-card p:not(.eyebrow) { color: #b5aabd; font: 14px/1.5 var(--font-sans, sans-serif); }
-  #close-card { position: absolute; top: 10px; right: 12px; border: 0; background: none; color: #b5aabd; font-size: 22px; cursor: pointer; }
-  .proof { max-width: 1100px; margin: 0 auto; padding: 130px clamp(22px, 7vw, 110px) 150px; }
-  .proof-intro h2 { font: 400 clamp(38px, 5vw, 66px)/.95 var(--font-serif, Georgia, serif); letter-spacing: -.05em; }
-  .proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 70px; background: #2a2031; border: 1px solid #2a2031; }
-  .proof-card { min-height: 190px; padding: 25px; background: #0d0917; border-top: 2px solid var(--accent); }
-  .proof-card span { color: var(--accent); font: 10px var(--font-mono, monospace); letter-spacing: .12em; }
-  .proof-card h3 { margin: 26px 0 10px; font: 400 25px var(--font-serif, Georgia, serif); }
-  .proof-card p { max-width: 390px; margin: 0; color: #9d93a7; font: 14px/1.55 var(--font-sans, sans-serif); }
-  @media (max-width: 680px) { .hud-top { top: 92px; } .hud-bottom { gap: 10px; flex-wrap: wrap; } .hud-bottom span:last-child { display: none; } .proof-grid { grid-template-columns: 1fr; } .project-card { bottom: 72px; } }
-  @media (prefers-reduced-motion: reduce) { :global(html) { scroll-behavior: auto; } }
+:global(*){box-sizing:border-box} :global(html){background:#080d10;color:#e6e7df;scroll-behavior:smooth} :global(body){margin:0;font-family:Arial,sans-serif} :global(a){color:inherit;text-decoration:none} :global(button){font:inherit;cursor:pointer} :global(a:focus-visible),:global(button:focus-visible){outline:2px solid #f4c580;outline-offset:5px} header{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff13;padding:0 4vw;font-size:13px}.brand{font-size:16px}.brand span{font:10px monospace;color:#8d9999;letter-spacing:.12em}.skip{font:11px monospace;color:#d6dfd7}.world{position:relative;min-height:860px;height:calc(100svh - 82px);max-height:1100px;overflow:hidden;background:radial-gradient(ellipse at 57% 41%,#15262980,transparent 57%)}.heading{position:absolute;top:53px;left:4vw;pointer-events:none;z-index:2}.eyebrow{font:10px/1.6 monospace;letter-spacing:.15em;color:#96aaa7}h1{font:400 clamp(42px,4.5vw,76px)/.98 Georgia,serif;letter-spacing:-.05em;margin:25px 0 22px}.intro{font-size:13px;line-height:1.75;color:#8a9b9c}.viewport{position:absolute;left:24%;right:0;top:0;bottom:195px}canvas{display:block;width:100%;height:100%;touch-action:pan-y}#hotspots{position:absolute;inset:0;pointer-events:none}#hotspots :global(button){position:absolute;width:32px;height:32px;border:1px solid var(--zone);border-radius:50%;background:#0b151be0;color:var(--zone);font:11px monospace;pointer-events:auto;box-shadow:0 0 24px #76b3a522}#hotspots :global(button[aria-pressed=true]){background:var(--zone);color:#081014;box-shadow:0 0 24px var(--zone)}#scene-status{position:absolute;bottom:30px;left:20%;font:11px monospace;color:#8fa4a0}.territories{position:absolute;left:4vw;top:340px;width:260px;z-index:3}.zone{display:flex;align-items:center;gap:14px;width:100%;border:0;border-top:1px solid #ffffff12;background:transparent;color:#9baba9;text-align:left;padding:13px 0;font-size:12px}.zone>span{font:10px monospace;color:var(--zone)}.zone>span:last-child{margin-left:auto}.zone small{display:block;font:9px monospace;color:#6e8385;margin-top:6px}.zone[aria-pressed=true]{color:#eff3e7}.zone[aria-pressed=true] div{color:var(--zone)}#detail{position:absolute;left:36%;right:5%;bottom:65px;padding:24px 0 0;border-top:1px solid var(--accent);z-index:3}.detail-meta{display:flex;justify-content:space-between;gap:10px;font:9px monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}#detail h2{font:400 29px Georgia,serif;margin:18px 0 10px}#detail p{color:#92a5a5;font-size:13px;line-height:1.7;max-width:570px;margin-bottom:16px}#detail a{font:11px monospace;color:var(--accent)}.scene-tools{position:absolute;top:24px;left:36%;right:4vw;display:flex;justify-content:space-between;align-items:center;color:#78908e;font:9px monospace;letter-spacing:.1em;z-index:4}.scene-tools button{background:none;border:0;color:#a3b6b3;font:10px monospace;padding:10px}.footnote{position:absolute;bottom:14px;left:4vw;right:4vw;font:9px monospace;color:#6c8283;display:flex;justify-content:space-between}#proof{max-width:1180px;margin:auto;padding:100px 4vw}#proof>h2{font:400 clamp(36px,5vw,60px) Georgia,serif;letter-spacing:-.04em}.proof-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:50px 65px;margin:60px 0}.proof-grid article{border-top:1px solid #ffffff23;padding-top:20px}.proof-grid h3{font:400 25px Georgia,serif}.proof-grid p:not(.eyebrow){font-size:14px;color:#95a5a4;line-height:1.8}.proof-grid a,.back{color:var(--accent,#e1c58c);font:12px monospace}
+@media(min-width:1500px){.territories{width:300px}.viewport{left:20%}}@media(max-width:900px){.world{height:auto;max-height:none;min-height:0;padding-bottom:70px}.heading{top:30px}h1{font-size:45px}.intro{font-size:12px}.viewport{position:relative;left:0;right:auto;top:auto;bottom:auto;width:100%;height:630px}.heading{z-index:2}.scene-tools{top:560px;left:4vw}.territories{position:relative;top:auto;left:auto;margin:0 4vw;width:auto;display:grid;grid-template-columns:1fr 1fr;gap:0 20px}.territories>.eyebrow{grid-column:1/-1}#detail{position:relative;left:auto;right:auto;bottom:auto;margin:30px 4vw 20px}.footnote{flex-direction:column;gap:8px}.drag-hint{display:none}.proof-grid{gap:30px}.brand span{display:none}}@media(max-width:500px){header{height:66px}.skip{font-size:9px}.viewport{height:550px}.heading{top:20px}h1{font-size:38px}.heading .intro{display:none}.scene-tools{top:492px}.zone{font-size:11px;gap:8px}.zone small{font-size:8px}.proof-grid{grid-template-columns:1fr}.detail-meta{font-size:8px}.footnote{font-size:8px}}
+@media(prefers-reduced-motion:reduce){:global(html){scroll-behavior:auto}}
 </style>
