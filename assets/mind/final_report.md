@@ -8,7 +8,9 @@ fonts, paper/ink tokens and theme control. The old brain experiment is not impor
 - Selected cortical parts separate outward; previous selection returns. Motion
   uses an interruptible 280 ms ease-in-out tween, with immediate reduced-motion updates.
 - Particles and labels follow the moving parts. Orbit drag does not select a project.
-- One detailed entry below the viewport, no side drawers, one summary list.
+- Fixed 50/50 desktop view: brain on the left, one paginated CV entry on the right.
+  One compact summary index, no page or panel scrolling. Mobile stacks the brain
+  above the reader and keeps the index collapsible within the same viewport.
 - Seven original projects plus education, skills, sport, awards and contact/about.
   All dates, nonempty bullets, team note, contact URLs and inline sources retained.
 - cv.ts remains the source of CV text. The summary selects one entry at a time;
@@ -70,3 +72,11 @@ dev preview is port 4321. Remote deployment still requires the server checkout.
 - Browser verified: all marker screen coordinates unchanged over 1.3–1.5 seconds
   while the signal animates; 2,708 particles; exactly one visible CV entry.
 - GLSL compilation, build, existing tests and local compiled-route probes pass.
+
+## Split-view verification
+Desktop 1440x1000: brain width 720 px, document height exactly 1000 px.
+Mobile 390x844: document exactly 390x844, no overflow; descriptions and YouTube
+remain accessible through page controls. Long GitHub cards paginate intact.
+All 12 summary entries remain selectable with exactly one visible CV article.
+CSS columns preserve the original content; off-page links are removed from tab
+order and restored when their page is selected. No scrollIntoView is used.
