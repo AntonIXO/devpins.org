@@ -66,6 +66,7 @@ export const cvProjects: CvProject[] = [
 			'Using the optiHealth platform infrastructure for continuous physiological data collection.',
 			'Research in collaboration with Yuri Rykov (scholar profile).',
 		],
+		team: "much honors to my team, here they are: claude, gpt, xiomi mimo, gemini"
 	},
 	{
 		title: 'optiHealth — personal N-of-1 biohacking platform',
@@ -119,9 +120,22 @@ export const cvProjects: CvProject[] = [
 		bullets: [
 			'Adapted proprietary Binder-based Android drivers to glibc through libhybris — every subsystem functional.',
 			'Over 2,000 downloads and a 200+ user community.',
+			'With this project I won multiple national competitions'
+		],
+	},
+	{
+		title: 'Development of custom firmware for Android devieces',
+		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
+		period: 'Jan 2021 – May 2021',
+		lede: 'Worked on improving stok features of my phone and hifi player to make it work faster and sound better.',
+		bullets: [
+			'Participated in community of 4pda. https://4pda.to/forum/index.php?showuser=5432820# over 500 posts and 100 repo.',
+			'',
 		],
 	},
 ];
+
+export const miscVibecode: MiscVibecode[] = []
 
 export const awards: CvAward[] = [
 	{
