@@ -1,57 +1,54 @@
-# Inner world — implementation and verification
+# Anatomical CV — final state
 
-Complete local scene at `/brain/`, linked from home. No eye/entry animation.
-Checkpoint of prior user work: 6e31e94. Old brain-atlas code and assets are not imported.
+Both /cv/ and /brain/ use MindLayout.astro, BaseHead, SiteNav, the existing IBM Plex
+fonts, paper/ink tokens and theme control. The old brain experiment is not imported.
 
-## Stages
-- Contract/reference: superior + lateral anatomical reference inspected; source pial
-  geometry chosen to preserve real folds rather than procedural sphere deformation.
-- Geometry: fsaverage5 left/right cortex prepared in Blender; original stylized
-  callosal bridge, cerebellum and brainstem added. These are not clinical segmentations.
-- Refinement/materials: smooth normals, teal cortical shading, selected-zone glow,
-  sampled surface particles, traveling signals along artistic communication paths.
-- Export: 47,616 triangles, 5 meshes, 758 KiB GLB. Editable blend opens and GLB
-  fresh-import validation passes. Source rebuild executed in clean Blender 5.2.3.
-- Visual: inspected desktop 1440×1000 and mobile 390×844 in Chrome; corrected mobile
-  canvas offset and surface transparency. Evidence: `.artifacts/mind/desktop.jpg`,
-  `.artifacts/mind/mobile.jpg`. Browser viewport emulation, not a physical-device test.
+## Interaction and complete content
+- Six atlas-labelled territories, raycast selection on the actual meshes.
+- Selected cortical parts separate outward; previous selection returns. Motion
+  uses an interruptible 280 ms ease-in-out tween, with immediate reduced-motion updates.
+- Particles and labels follow the moving parts. Orbit drag does not select a project.
+- One detailed entry below the viewport, no side drawers, one summary list.
+- Seven original projects plus education, skills, sport, awards and contact/about.
+  All dates, nonempty bullets, team note, contact URLs and inline sources retained.
+- cv.ts remains the source of CV text. The summary selects one entry at a time;
+  multiple projects in one territory remain independently accessible.
+- YouTube video loads on request; GitHub account/repository cards use a dated public
+  API snapshot. Other CV URLs use external link previews. Dream Walker has its
+  published preview image; its live iframe was blank in browser testing, so it is
+  not presented as an embedded working game. External links remain available. Switching entry unloads embedded frames. No hidden autoplay.
+- HTML contains all CV entries; noscript and print expose the complete text.
 
-## Checks
-- Six region controls select correct card, state and project URL.
-- Skip intro targets #proof; all six projects are HTML and readable without WebGL.
-- Reduced motion pauses procedural animation and autorotation; user can resume.
-- No horizontal overflow at inspected mobile and desktop sizes.
-- No shader/runtime errors in Chrome; shared shader compiled with glslangValidator.
-- Fresh Blender import: 5 named meshes, 47,616 triangles.
-- Existing Bun tests: 10 pass. Production build: pass (Three.js chunk size warning).
-- Production bundle served locally on port 4322 and loaded in Chrome.
+## Anatomy and asset
+Inspected the superior and lateral reference recorded in README.md. Source pial
+geometry preserves approximately 140 x 174 x 128 mm proportions by uniform scaling.
+The earlier squat appearance was foreshortening and translucent/veined shading.
+The new lateral/anterior camera and matte regional shading expose the silhouette.
 
-## Deployment limitation
-This checkout is on cachyos-redmi; the static-caddy Docker socket is absent.
-The local dist build therefore did not update the remote site. Public /brain/ returns
-404. Existing site and vitals remain reachable. Deploy probe now explicitly checks
-/brain/ and its GLB so it cannot report a false success for this feature.
+Left/right Destrieux fsaverage5 labels are grouped into frontal, motor, parietal,
+temporal, occipital and insular territories. Every original cortex triangle is
+assigned exactly once. Grouping and original label names are in regions.json.
+Parcel boundaries are smoothed, subdivided, decimated and given capped thickness
+for the exploded presentation. These are illustrative cortical shells, not a
+clinical volumetric segmentation. Neutral supporting forms are authored approximations
+and do not act as CV region targets. Project-region associations are metaphors.
 
-## Scope
-Six poetic anatomical mappings, one data source for labels/cards/plain HTML.
-No claims of live biometrics, medical localization or actual neural tractography.
-Motion pauses offscreen/in background; DPR capped at 1.6. Project/source content
-uses existing site URLs. Photo collection and jump scene remain outside this pass.
+Export: 17 named meshes, 241,432 triangles, about 4.2 MiB GLB. Fresh Blender import
+verifies evaluated modifier output and region metadata, not just the source mesh.
+Durable source: scripts/build_mind.py; editable asset: assets/mind/mind.blend.
 
-## Fullscreen health revision
-Supersedes the initial teal layout and the note about no biometric integration.
-- Edge-to-edge viewport, compact project chips, detail only on selection.
-- Shared homepage cardiac envelope, HRV normalization and plum/gold palette.
-- HR advances beat phase; HRV controls flow complexity and synthetic trace amplitude;
-  sleep retints filament colors using the existing sleep-shade function.
-- Procedural domain-warped filament texture, cortical rim light, atmospheric field.
-- Same /api/vitals.json contract and session cache as homepage; one-minute refresh,
-  bounded timeout, source/date labels and explicit fallback/cached state.
-- Dev API reads the public site's snapshot: observed 43 bpm, HRV 63, sleep 6.8 h,
-  asOf 2026-11-05. No actual EEG feed: trace explicitly labelled synthetic.
-- Chrome 1440x1000 and 390x844: canvas fills viewport, six nodes onscreen,
-  reduced motion, project selection and close verified; no console errors.
-- 13 Bun tests pass, standalone shader compiles with glslangValidator, build passes.
-- Shader controls: FIBER_SCALE texture density; FLOW_SPEED drift; RIM_POWER edge
-  softness. BPM/HRV/SLEEP preview constants are in shader-preview.glsl.
-- Production remains undeployed from this laptop checkout.
+## Health and verification
+Shared homepage health palette, sleep shading, cardiac envelope and HRV mapping.
+EEG-style trace is synthetic and labelled as such. optiHealth snapshot source/date
+or fallback status are shown. No raw EEG data is claimed.
+
+17 Bun tests pass; production build succeeds; standalone material compile checked
+with glslangValidator. Chrome desktop/mobile checks confirm exactly one visible
+entry, one summary, all seven projects and five supporting sections reachable,
+no horizontal overflow, working dark/light theme and selection movement.
+YouTube player rendered with the linked firmware video's poster. GitHub cards
+render source repositories; frames unload on switching. These are browser viewport
+checks, not physical-device certification.
+
+Production is not deployed from this laptop. Local compiled preview is port 4322;
+dev preview is port 4321. Remote deployment still requires the server checkout.

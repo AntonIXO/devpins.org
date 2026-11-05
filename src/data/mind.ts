@@ -1,10 +1,34 @@
-import { projects } from './projects';
-const link = (id: string) => projects.find(p => p.id === id)!.href;
+// Surface anchors are generated from atlas vertices in public/mind/regions.json.
 export const mindZones = [
- {id:'bridge', number:'01', area:'Corpus callosum', title:'Integration → invention', project:'Sensor Language Models', color:'#f4c580', position:[0,.45,.1], text:'The interesting step is a new primitive. A temporal encoder that lets a language model see biosignals directly, instead of reading a JSON summary.', built:'Reimplementing Sensor Language Models on a custom biometric dataset for mental-state detection.', href:link('slm'), action:'Research', status:'Research in progress'},
- {id:'motor', number:'02', area:'Motor cortex / hypothalamus', title:'Physical runtime', project:'optiHealth', color:'#78dfc0', position:[-.95,1.1,-.05], text:'Sleep, EEG, heart rate and glucose. One body, many sensors. A personal system for asking better questions of the data.', built:'A telemetry platform joining wearable data into one personal database. Six months of history syncs in twenty seconds.', href:link('optihealth'), action:'Open live demo', status:'Working system'},
- {id:'root', number:'03', area:'Brainstem', title:'Root access', project:'SailfishOS on ARM', color:'#86b9ff', position:[0,-1.35,.55], text:'Below the interface: kernels, drivers, bootloaders. Learning a system by taking responsibility for the parts nobody sees.', built:'A GNU/Linux port to Android hardware through libhybris. 2,000+ downloads and a 200-user community.', href:link('sailfish'), action:'View source', status:'OS port · 2021–25'},
- {id:'audio', number:'04', area:'Temporal lobe', title:'Sound, without interference', project:'Audio & movement', color:'#d3a1f7', position:[1.35,-.25,.1], text:'Custom player firmware, Sony IER-M9, Chord Mojo 2 and a dedicated postmarketOS audio path. Engineering as a way of listening.', built:'Next: learn the morphology of dance and turn movement and music into stage lighting.', href:'/cv/', action:'Read the full CV', status:'Practice → future pursuit'},
- {id:'vision', number:'05', area:'Visual cortex', title:'Doors of perception', project:'Dream Walker', color:'#f09f9d', position:[.7,.3,1.85], text:'Dreams as a place you can enter together. Art, perception and local reasoning agents meet in a shared mystery.', built:'A multiplayer dream thriller: one server, one dream, one secret, rendered in a retro pixel world.', href:link('dreamwalker'), action:'Enter Dream Walker', status:'Playable project'},
- {id:'frontal', number:'06', area:'Prefrontal cortex', title:'Ideas meet the world', project:'MineBit & writing', color:'#c8d980', position:[.65,.6,-1.5], text:'Build it, pitch it, write down what broke. A place for experiments with systems, incentives and the stories we tell ourselves.', built:'Voxel builds on TON: a Minestom server, Go bridge, FunC contracts and Telegram Web App.', href:link('minebit'), action:'Open MineBit', status:'Built · 2024'},
+ {id:'bridge',number:'01',area:'Parietal association cortex',color:'#8ca9c2',position:[1.35,.86,.89]},
+ {id:'motor',number:'02',area:'Precentral gyrus / motor cortex',color:'#83b89e',position:[1.19,1.07,.12]},
+ {id:'root',number:'03',area:'Insular cortex',color:'#80afb8',position:[1.04,.18,.03]},
+ {id:'audio',number:'04',area:'Temporal cortex',color:'#bb91ac',position:[1.53,-.19,.75]},
+ {id:'vision',number:'05',area:'Occipital cortex',color:'#a59dc4',position:[1.08,.17,1.79]},
+ {id:'frontal',number:'06',area:'Frontal cortex',color:'#c2ac86',position:[1.28,.36,-.54]},
+];
+
+// Every CV entry belongs to exactly one territory. Content stays in cv.ts.
+export const cvRegionProjects: Record<string, string[]> = {
+ bridge: ['sensorlm'], motor: ['optihealth'], root: ['sailfish'],
+ audio: ['firmware'], vision: ['dreamwalker', 'aireader'], frontal: ['minebit'],
+};
+export const cvRegionLabels: Record<string, string> = {
+ bridge: 'Research & learning', motor: 'Health & movement', root: 'Systems & skills',
+ audio: 'Audio & firmware', vision: 'Worlds & interfaces', frontal: 'Builds & identity',
+};
+
+export const cvSummary = [
+ {id:'sensorlm',region:'bridge',label:'Sensor Language Models'},
+ {id:'optihealth',region:'motor',label:'optiHealth'},
+ {id:'sailfish',region:'root',label:'SailfishOS on ARM'},
+ {id:'firmware',region:'audio',label:'Audio & Android firmware'},
+ {id:'dreamwalker',region:'vision',label:'Dream Walker'},
+ {id:'aireader',region:'vision',label:'AI Reader'},
+ {id:'minebit',region:'frontal',label:'MineBit'},
+ {id:'education',region:'bridge',label:'Education'},
+ {id:'skills',region:'root',label:'Skills'},
+ {id:'sport',region:'motor',label:'Sport'},
+ {id:'awards',region:'frontal',label:'Awards'},
+ {id:'about',region:'frontal',label:'About & contact'},
 ];

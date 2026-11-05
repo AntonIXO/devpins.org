@@ -20,6 +20,7 @@ import {
 } from '../consts';
 
 interface Props {
+	clientRouter?: boolean;
 	title: string;
 	description: string;
 	image?: ImageMetadata | string;
@@ -33,6 +34,7 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const {
+	clientRouter = true,
 	title,
 	description,
 	image,
@@ -181,4 +183,4 @@ const jsonLd =
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-<ClientRouter />
+{clientRouter && <ClientRouter />}

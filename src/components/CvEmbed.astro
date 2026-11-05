@@ -1,0 +1,26 @@
+---
+import github from '../data/cv-github.json';
+import { youtubeEmbed } from '../data/cv-media';
+interface Props { href: string; title: string; }
+const { href, title } = Astro.props;
+const url = new URL(href);
+const account = url.hostname === 'github.com' ? url.pathname.split('/')[1] : '';
+const profile = account === 'AntonIXO' ? github.AntonIXO : account === 'SailfishOS-miatoll' ? github['SailfishOS-miatoll'] : null;
+const repos = account === 'SailfishOS-miatoll' ? github['SailfishOS-miatoll'].repos.filter(r=>r.name !== '.github') : [];
+const video = youtubeEmbed(href);
+const frameUrl = video;
+const previewImage = url.hostname === 'dreamwalker.devpins.org' ? 'https://dreamwalker.devpins.org/logo.jpg' : null;
+---
+{profile ? <div class="github-card">
+ <a class="github-heading" href={href} target="_blank" rel="noopener noreferrer"><span class="github-icon" aria-hidden="true">⌘</span><span><small>GITHUB</small><strong>{profile.name ?? profile.login}</strong><span>@{profile.login} ↗</span></span></a>
+ {profile.bio && <p>{profile.bio}</p>}
+ {repos.length > 0 && <ul class="repo-list">{repos.map(repo=><li><a href={repo.html_url} target="_blank" rel="noopener noreferrer"><strong>{repo.name} ↗</strong>{repo.description && <span>{repo.description}</span>}{repo.language && <small>{repo.language}</small>}</a></li>)}</ul>}
+ <small class="snapshot">{profile.public_repos} public repositories · snapshot {github.fetchedAt.slice(0,10)}</small>
+</div> : frameUrl ? <div class="cv-embed" data-embed={frameUrl} data-embed-title={title}>
+ <button class="embed-load" type="button">{video ? <><span class="play">▶</span><span>Watch the firmware demo<small>YouTube · load video</small></span></> : <><span class="play">↗</span><span>{title}<small>Load interactive demo</small></span></>}</button>
+ <div class="embed-slot"></div>
+ <div class="embed-footer"><span>{video ? 'YouTube' : url.hostname}</span><a href={href} target="_blank" rel="noopener noreferrer">Open separately ↗</a></div>
+</div> : <a class="link-preview" href={href} target="_blank" rel="noopener noreferrer"><small>{url.hostname}</small>{previewImage && <img src={previewImage} alt="Dream Walker" loading="lazy" width="640" height="320"/>}<strong>{title}</strong><span>Open ↗</span></a>}
+<style>
+.github-card,.cv-embed,.link-preview{display:block;border:1px solid var(--rule);background:transparent;border-radius:0;overflow:hidden;margin:20px 0;color:var(--ink)}.github-card{padding:18px}.github-heading{display:flex;gap:14px;align-items:center;text-decoration:none!important}.github-icon{font-size:32px;color:var(--mute)}.github-heading>span:last-child{display:flex;flex-direction:column;gap:5px}.github-heading small,.snapshot{font:9px var(--font-mono);color:var(--mute)}.github-heading strong{font-size:16px;color:var(--ink)}.github-heading span span{font-size:11px}.github-card p{font-size:12px;line-height:1.6}.repo-list{list-style:none;padding:0!important;margin:16px 0!important}.repo-list li{border-top:1px solid var(--rule);padding:12px 0}.repo-list a{display:flex;flex-direction:column;gap:5px;text-decoration:none!important}.repo-list strong{font:11px var(--font-mono);color:var(--mute);overflow-wrap:anywhere}.repo-list span{font-size:12px;color:var(--mute)}.repo-list small{font:9px var(--font-mono);color:var(--mute)}.embed-load{width:100%;min-height:165px;display:flex;justify-content:center;align-items:center;gap:18px;background:transparent;border:0;color:var(--ink);text-align:left;padding:20px}.embed-load small{display:block;color:var(--mute);margin-top:8px;font:10px var(--font-mono)}.play{font-size:26px}.embed-footer{display:flex;justify-content:space-between;gap:8px;padding:12px 15px;font:9px var(--font-mono);border-top:1px solid var(--rule)}.embed-footer a{color:var(--mute)}.embed-slot :global(iframe){width:100%;height:320px;display:block;border:0;background:var(--mute)}.cv-embed[data-embed*="youtube"] .embed-slot :global(iframe){aspect-ratio:16/9;height:auto;min-height:205px}.link-preview{padding:18px;text-decoration:none!important;display:flex;flex-direction:column;gap:8px}.link-preview img{width:100%;height:180px;object-fit:cover}.link-preview small{font:10px var(--font-mono);color:var(--mute)}.link-preview strong{font-size:14px;color:var(--ink)}.link-preview>span{font:10px var(--font-mono);color:var(--mute)}@media(max-width:650px){.embed-slot :global(iframe){height:420px}}
+</style>

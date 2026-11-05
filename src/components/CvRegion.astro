@@ -1,0 +1,25 @@
+---
+import { cvIntro, cvLinks, cvProjects, education, awards, skills, miscVibecode } from '../data/cv';
+import { cvSummary, mindZones } from '../data/mind';
+import { inlineCvParts } from '../data/cv-media';
+import { SITE_AUTHOR, SITE_LOCATION } from '../consts';
+import CvEmbed from './CvEmbed.astro';
+const { entryId } = Astro.props as {entryId: string};
+const entry = cvSummary.find(e=>e.id===entryId)!;
+const region = entry.region;
+const zone = mindZones.find(z=>z.id === region)!;
+const projects = cvProjects.filter(p=>p.id === entryId);
+const skillGroups = entryId === 'skills' ? skills.filter(s=>s.label !== 'Sport') : entryId === 'sport' ? skills.filter(s=>s.label === 'Sport') : [];
+---
+<article id={`cv-entry-${entryId}`} class="cv-region" data-cv-entry={entryId} data-region={region} aria-labelledby={`title-${entryId}`} hidden={entryId !== 'sensorlm'}>
+ <p class="region-area">{zone.number} / {zone.area}</p><h2 id={`title-${entryId}`} tabindex="-1">{projects[0]?.title ?? entry.label}</h2>
+ {entryId === 'about' && <section class="identity"><h3>{SITE_AUTHOR}</h3><p>{cvIntro}</p><p class="period">{SITE_LOCATION}</p><div class="contacts">{cvLinks.map(link=><a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{link.label} ↗</a>)}</div><CvEmbed href={cvLinks.find(l=>l.href.includes('github.com'))!.href} title="GitHub · AntonIXO"/></section>}
+ {projects.map(project=><section class="cv-entry" data-cv-project={project.id}><p class="period">{project.period}</p><p>{project.lede}</p><ul>{project.bullets.filter(Boolean).map(bullet=><li>{inlineCvParts(bullet).map(part=>part.href ? <a href={part.href} target="_blank" rel="noopener noreferrer">{part.text}</a> : part.text)}</li>)}</ul>{project.team && <p class="team">{project.team}</p>}{project.href && <CvEmbed href={project.href} title={project.title}/>}</section>)}
+ {entryId === 'education' && <section class="cv-section">{education.map(item=><section class="cv-entry" data-cv-education><p class="period">{item.period}</p><h4>{item.title}</h4>{item.meta && <p>{item.metaHref ? <a href={item.metaHref} target="_blank" rel="noopener noreferrer">{item.meta} ↗</a> : item.meta}</p>}{item.bullets && <ul>{item.bullets.map(b=><li>{b}</li>)}</ul>}</section>)}</section>}
+ {entryId === 'awards' && <section class="cv-section">{awards.map(award=><div class="award" data-cv-award><span>{award.mark}</span><p>{award.text}{award.note && <em> — {award.note}</em>}</p></div>)}</section>}
+ {skillGroups.length > 0 && <section class="cv-section">{skillGroups.map(group=><div class="skills" data-cv-skill><h4>{group.label}</h4><div>{group.items.map(item=><span>{item}</span>)}</div></div>)}</section>}
+ {entryId === 'about' && miscVibecode.map(item=><section class="cv-entry"><h3>{item.title}</h3><p>{item.lede}</p><ul>{item.bullets.filter(Boolean).map(b=><li>{b}</li>)}</ul>{item.href && <CvEmbed href={item.href} title={item.title}/>}</section>)}
+</article>
+<style>
+.cv-region{color:var(--ink);font:14px/1.75 var(--font-sans);overflow-wrap:anywhere}.region-area{font:9px var(--font-mono);text-transform:uppercase;letter-spacing:.13em;color:var(--mute)}.cv-region h2{font:400 clamp(28px,4vw,38px)/1.1 var(--font-serif);color:var(--ink);letter-spacing:-.025em;margin:20px 0}.cv-region h2:focus{outline:none}.region-description{color:var(--mute);font-size:13px}.cv-region h3{font:400 23px/1.3 var(--font-serif);color:var(--ink);margin:12px 0}.cv-region h4{font-size:15px;line-height:1.5;color:var(--ink);margin:10px 0}.cv-region p{margin:12px 0}.cv-region a{color:var(--mute);text-underline-offset:4px;text-decoration:underline;text-decoration-color:var(--rule)}.cv-entry,.cv-section,.identity{border-top:1px solid var(--rule);margin-top:28px;padding-top:20px}.cv-entry .period,.period{font:10px/1.5 var(--font-mono);color:var(--mute)}.cv-region ul{padding-left:18px}.cv-region li{margin:9px 0}.team{font-size:12px;color:var(--mute)}.contacts{display:flex;flex-wrap:wrap;gap:12px 18px;font:11px var(--font-mono);margin:20px 0}.award{padding:12px 0;border-bottom:1px solid var(--rule)}.award>span{font:10px var(--font-mono);color:var(--mute)}.award p{margin:7px 0}.award em{font-style:normal;color:var(--mute)}.skills h4{font:10px var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}.skills>div{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 22px}.skills span{border:1px solid var(--rule);padding:5px 9px;border-radius:0;font-size:12px}
+</style>

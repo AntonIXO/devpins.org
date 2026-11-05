@@ -1,0 +1,57 @@
+{
+  "AntonIXO": {
+    "login": "AntonIXO",
+    "name": "Anton Ivanov",
+    "bio": null,
+    "html_url": "https://github.com/AntonIXO",
+    "public_repos": 50,
+    "avatar_url": "https://avatars.githubusercontent.com/u/25568560?v=4"
+  },
+  "SailfishOS-miatoll": {
+    "login": "SailfishOS-miatoll",
+    "name": null,
+    "bio": "Full feature SailfishOS port to miatoll(Redmi Note 9 Pro/9S/Pro Max) devices!",
+    "html_url": "https://github.com/SailfishOS-miatoll",
+    "public_repos": 20,
+    "avatar_url": "https://avatars.githubusercontent.com/u/146732534?v=4",
+    "repos": [
+      {
+        "name": "droid-system-miatoll",
+        "description": null,
+        "html_url": "https://github.com/SailfishOS-miatoll/droid-system-miatoll",
+        "language": "Vim Script"
+      },
+      {
+        "name": ".github",
+        "description": null,
+        "html_url": "https://github.com/SailfishOS-miatoll/.github",
+        "language": null
+      },
+      {
+        "name": "sfbootstrap",
+        "description": "The all-in-one Sailfish OS local development bootstrapping script",
+        "html_url": "https://github.com/SailfishOS-miatoll/sfbootstrap",
+        "language": "Shell"
+      },
+      {
+        "name": "droid-configs-miatoll",
+        "description": null,
+        "html_url": "https://github.com/SailfishOS-miatoll/droid-configs-miatoll",
+        "language": "BitBake"
+      },
+      {
+        "name": "droid-hal-version-miatoll",
+        "description": null,
+        "html_url": "https://github.com/SailfishOS-miatoll/droid-hal-version-miatoll",
+        "language": null
+      },
+      {
+        "name": "android_device_xiaomi_miatoll",
+        "description": null,
+        "html_url": "https://github.com/SailfishOS-miatoll/android_device_xiaomi_miatoll",
+        "language": "Makefile"
+      }
+    ]
+  },
+  "fetchedAt": "2026-11-05T23:04:19.863207+00:00"
+}

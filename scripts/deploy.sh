@@ -28,6 +28,8 @@ probe() {
 check() {
 	probe "$ORIGIN/" 200
 	probe "$ORIGIN/brain/" 200
+	probe "$ORIGIN/cv/" 200
+	probe "$ORIGIN/mind/regions.json" 200
 	probe "$ORIGIN/mind/mind.glb" 200
 	probe "$ORIGIN/favicon.svg" 200
 	probe "$ORIGIN/favicon.ico" 200

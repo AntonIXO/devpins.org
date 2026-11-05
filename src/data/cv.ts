@@ -12,6 +12,8 @@ export interface CvEducation {
 }
 
 export interface CvProject {
+	id: string;
+	team?: string;
 	title: string;
 	href?: string;
 	period: string;
@@ -59,6 +61,7 @@ export const education: CvEducation[] = [
 
 export const cvProjects: CvProject[] = [
 	{
+		id: 'sensorlm',
 		title: 'Sensor Language Models (SLM) research',
 		period: 'Jan 2026 – present',
 		lede: 'In progress: reimplementing Sensor Language Models on a custom biometric dataset for mental-state detection.',
@@ -69,6 +72,7 @@ export const cvProjects: CvProject[] = [
 		team: "much honors to my team, here they are: claude, gpt, xiomi mimo, gemini"
 	},
 	{
+		id: 'optihealth',
 		title: 'optiHealth — personal N-of-1 biohacking platform',
 		href: 'https://optihealth.devpins.org/demo',
 		period: 'July 2025 – present',
@@ -81,6 +85,7 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
+		id: 'dreamwalker',
 		title: 'Dream Walker — LLM-driven retro dream thriller',
 		href: 'https://dreamwalker.devpins.org',
 		period: 'Feb 2026 – present',
@@ -91,6 +96,7 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
+		id: 'aireader',
 		title: 'AI Reader PWA',
 		href: 'https://devpost.com/software/konspecterai',
 		period: 'Oct 2024 – Jan 2025',
@@ -101,6 +107,7 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
+		id: 'minebit',
 		title: 'MineBit — NFT marketplace for Minecraft builds (TON)',
 		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
 		period: 'May 2024 – July 2024',
@@ -113,6 +120,7 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
+		id: 'sailfish',
 		title: 'Low-level system engineering — Linux on mobile',
 		href: 'https://github.com/SailfishOS-miatoll',
 		period: 'Oct 2021 – May 2025',
@@ -124,10 +132,11 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
-		title: 'Development of custom firmware for Android devieces',
+		id: 'firmware',
+		title: 'Development of custom firmware for Android devices',
 		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
 		period: 'Jan 2021 – May 2021',
-		lede: 'Worked on improving stok features of my phone and hifi player to make it work faster and sound better.',
+		lede: 'Worked on improving stock features of my phone and hifi player to make it work faster and sound better.',
 		bullets: [
 			'Participated in community of 4pda. https://4pda.to/forum/index.php?showuser=5432820# over 500 posts and 100 repo.',
 			'',
@@ -135,7 +144,7 @@ export const cvProjects: CvProject[] = [
 	},
 ];
 
-export const miscVibecode: MiscVibecode[] = []
+export const miscVibecode: CvProject[] = []
 
 export const awards: CvAward[] = [
 	{

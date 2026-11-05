@@ -1,0 +1,126 @@
+{
+  "anchors": {
+    "motor": [
+      1.1965874433517456,
+      1.0730746984481812,
+      0.12444900721311569
+    ],
+    "bridge": [
+      1.3550053834915161,
+      0.8665860295295715,
+      0.8961253762245178
+    ],
+    "audio": [
+      1.5385479927062988,
+      -0.19778792560100555,
+      0.7507430911064148
+    ],
+    "vision": [
+      1.0800421237945557,
+      0.1780479997396469,
+      1.7984710931777954
+    ],
+    "frontal": [
+      1.2846287488937378,
+      0.3620399534702301,
+      -0.5440410375595093
+    ],
+    "root": [
+      1.0409600734710693,
+      0.18097564578056335,
+      0.032559238374233246
+    ]
+  },
+  "parcels": {
+    "motor": [
+      "G_and_S_paracentral",
+      "G_precentral",
+      "S_central",
+      "S_precentral-inf-part",
+      "S_precentral-sup-part"
+    ],
+    "bridge": [
+      "G_and_S_cingul-Mid-Post",
+      "G_cingul-Post-dorsal",
+      "G_cingul-Post-ventral",
+      "G_pariet_inf-Angular",
+      "G_pariet_inf-Supramar",
+      "G_parietal_sup",
+      "G_postcentral",
+      "G_precuneus",
+      "S_cingul-Marginalis",
+      "S_interm_prim-Jensen",
+      "S_intrapariet_and_P_trans",
+      "S_parieto_occipital",
+      "S_postcentral",
+      "S_subparietal"
+    ],
+    "audio": [
+      "G_oc-temp_lat-fusifor",
+      "G_oc-temp_med-Lingual",
+      "G_oc-temp_med-Parahip",
+      "G_temp_sup-G_T_transv",
+      "G_temp_sup-Lateral",
+      "G_temp_sup-Plan_polar",
+      "G_temp_sup-Plan_tempo",
+      "G_temporal_inf",
+      "G_temporal_middle",
+      "Pole_temporal",
+      "S_collat_transv_ant",
+      "S_collat_transv_post",
+      "S_oc-temp_lat",
+      "S_oc-temp_med_and_Lingual",
+      "S_temporal_inf",
+      "S_temporal_sup",
+      "S_temporal_transverse"
+    ],
+    "vision": [
+      "G_and_S_occipital_inf",
+      "G_cuneus",
+      "G_occipital_middle",
+      "G_occipital_sup",
+      "Pole_occipital",
+      "S_calcarine",
+      "S_oc_middle_and_Lunatus",
+      "S_oc_sup_and_transversal",
+      "S_occipital_ant"
+    ],
+    "frontal": [
+      "G_and_S_frontomargin",
+      "G_and_S_subcentral",
+      "G_and_S_transv_frontopol",
+      "G_and_S_cingul-Ant",
+      "G_and_S_cingul-Mid-Ant",
+      "G_front_inf-Opercular",
+      "G_front_inf-Orbital",
+      "G_front_inf-Triangul",
+      "G_front_middle",
+      "G_front_sup",
+      "G_orbital",
+      "G_rectus",
+      "G_subcallosal",
+      "Lat_Fis-ant-Horizont",
+      "Lat_Fis-ant-Vertical",
+      "S_front_inf",
+      "S_front_middle",
+      "S_front_sup",
+      "S_orbital_lateral",
+      "S_orbital_med-olfact",
+      "S_orbital-H_Shaped",
+      "S_suborbital"
+    ],
+    "root": [
+      "G_Ins_lg_and_S_cent_ins",
+      "G_insular_short",
+      "Lat_Fis-post",
+      "S_circular_insula_ant",
+      "S_circular_insula_inf",
+      "S_circular_insula_sup"
+    ],
+    "medial": [
+      "Unknown",
+      "Medial_wall",
+      "S_pericallosal"
+    ]
+  }
+}

@@ -1,3 +1,7 @@
+Destrieux 2009 cortical annotations in fsaverage5 space, via Nilearn/NITRC.
+Modified for display: atlas-grouped cortical shells, smoothed rims and thickness.
+Project associations are editorial, not scientific localizations.
+
 Modified fsaverage5 cortical mesh, prepared in Blender for the Inner World project.
 Source: FreeSurfer via Nilearn. Supporting structures are original stylizations.
 

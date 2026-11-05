@@ -1,0 +1,34 @@
+---
+import { mindZones, cvSummary } from '../data/mind';
+import BaseHead from '../components/BaseHead.astro';
+import SiteNav from '../components/SiteNav.astro';
+import CvRegion from '../components/CvRegion.astro';
+import { SITE_AUTHOR } from '../consts';
+---
+<!doctype html>
+<html lang="en">
+<head><BaseHead title="Curriculum vitae" description="Anton Ivanov — projects, education, and experience." type="profile" clientRouter={false}/></head>
+<body>
+<div class="site-header"><SiteNav/></div><a class="skip" href="#proof">Full CV ↓</a>
+<main>
+<h1 class="sr-only">{SITE_AUTHOR} — Curriculum vitae</h1>
+<section class="world" aria-label="Interactive project map">
+ <div class="viewport"><canvas id="mind-canvas" aria-label="Three-dimensional brain. Drag to rotate. Use region buttons to explore."></canvas><div id="hotspots" aria-label="Brain regions"></div><p id="scene-status" role="status">Assembling the inner world…</p></div>
+ <div class="scene-tools"><button id="rotate" type="button" aria-pressed="false">Pause</button><button id="reset" type="button">Reset ↗</button></div>
+ <div class="health"><p id="health-values">Reading vitals…</p><p id="health-source">Fallback</p><svg viewBox="0 0 320 40" role="img" aria-label="Synthetic EEG-style wave driven by HR, HRV and sleep; not measured EEG"><path id="eeg-trace" d="M0 20H320"/></svg><span>EEG-STYLE / SYNTHETIC</span></div>
+ <a class="selected-jump" id="selected-jump" href="#selection">Sensor Language Models ↓</a>
+ <p class="footnote">Drag to rotate · tap a region<span><a href="/mind/LICENSE.txt">Surface credits</a></span></p>
+</section>
+<section id="selection" tabindex="-1" aria-label="Selected CV entry">
+ <div id="selected-content">{cvSummary.map(entry=><CvRegion entryId={entry.id}/>)}</div>
+ <noscript><style is:inline>[data-cv-entry][hidden]{display:block!important}</style></noscript>
+</section>
+<nav id="proof" class="cv-summary" aria-label="CV summary"><p class="eyebrow">SUMMARY</p><ol>{cvSummary.map(entry=><li><a href={`#entry-${entry.id}`} data-entry={entry.id} aria-current={entry.id === 'sensorlm' ? 'true' : undefined}><span>{entry.label}</span><span>{mindZones.find(z=>z.id===entry.region)!.area} ↗</span></a></li>)}</ol></nav>
+</main>
+<script>import '../scripts/mind';</script>
+</body></html>
+<style>
+:global([hidden]){display:none!important}.site-header{position:absolute;top:0;left:0;right:0;padding:0 var(--page-pad-x);z-index:5;pointer-events:none}.site-header :global(nav){pointer-events:auto}.skip{position:absolute;top:73px;right:24px;z-index:5;font:12px var(--font-mono);color:var(--mute)}.world{position:relative;height:100svh;min-height:580px;overflow:hidden}.viewport{position:absolute;inset:0}canvas{display:block;width:100%;height:100%;touch-action:pan-y}#hotspots{position:absolute;inset:0;pointer-events:none}#hotspots :global(button){position:absolute;width:34px;height:34px;border:1px solid var(--rule);border-radius:50%;background:var(--paper);color:var(--ink);font:11px var(--font-mono);pointer-events:auto}#hotspots :global(button[aria-pressed=true]){border-color:var(--pulse);color:var(--pulse)}#scene-status{position:absolute;top:45%;width:100%;text-align:center;font:12px var(--font-mono);color:var(--mute)}.scene-tools{position:absolute;right:24px;top:110px;z-index:4;display:flex;gap:18px}.scene-tools button{font:11px var(--font-mono);color:var(--mute)}.health{position:absolute;top:76px;left:24px;width:240px;pointer-events:none}.health p{margin:0 0 7px;font:11px var(--font-mono);color:var(--ink)}#health-source{font-size:9px;color:var(--mute)}.health svg{width:100%;height:34px;margin-top:10px}.health path{stroke:var(--pulse);fill:none;stroke-width:1;opacity:.65}.health>span{font:8px var(--font-mono);letter-spacing:.06em;color:var(--mute)}.footnote{position:absolute;bottom:17px;left:24px;right:24px;display:flex;justify-content:space-between;font:9px var(--font-mono);color:var(--mute);pointer-events:none}.footnote a{pointer-events:auto}.eyebrow{font:11px var(--font-mono);letter-spacing:.08em;color:var(--mute)}#selection,#proof{max-width:var(--page-max);margin:0 auto;padding:60px 24px;scroll-margin-top:25px}.selected-jump{position:absolute;bottom:65px;left:24px;right:24px;text-align:center;font:13px var(--font-mono);color:var(--ink)}.cv-summary ol{list-style:none;margin-top:22px}.cv-summary li{border-top:1px solid var(--rule)}.cv-summary a{display:flex;justify-content:space-between;gap:18px;padding:15px 0;font-size:14px}.cv-summary a>span:last-child{font:10px var(--font-mono);color:var(--mute);text-align:right}.cv-summary a[aria-current=true]{color:var(--pulse)}#proof>h2{font:400 36px var(--font-serif);letter-spacing:-.03em;margin:18px 0 28px}
+@media(max-width:650px){.health{top:95px;left:24px;width:190px}.health p{font-size:10px}.skip{top:80px}.scene-tools{top:120px;gap:12px}.footnote{font-size:8px}.health svg{height:25px}.world{min-height:650px}}
+@media print{:global([data-cv-entry][hidden]){display:block!important}.site-header,.skip,.world,#proof{padding:0}}
+</style>

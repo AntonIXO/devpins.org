@@ -1,10 +1,23 @@
 {
   "objects": [
-    "Cortex-left",
-    "Cortex-right",
+    "left-motor",
+    "left-bridge",
+    "left-audio",
+    "left-vision",
+    "left-frontal",
+    "left-root",
+    "left-medial",
+    "right-motor",
+    "right-bridge",
+    "right-audio",
+    "right-vision",
+    "right-frontal",
+    "right-root",
+    "right-medial",
     "Cerebellum",
     "Brainstem",
     "Corpus-callosum"
   ],
-  "triangles": 47616
+  "sourceCortexTriangles": 40960,
+  "triangles": 241432
 }

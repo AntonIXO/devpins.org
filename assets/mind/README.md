@@ -20,3 +20,19 @@ Contract: smooth recognizable brain, about 50k triangles, six keyboard-accessibl
 project regions, orbit without scroll capture, teal/amber neural shader and traveling
 signals. No eye or camera-entry animation. Review perspective, lateral and mobile.
 Deliver: durable build script, editable blend, GLB, source shaders and browser evidence.
+
+## Atlas partition revision
+Cortical labels: Destrieux 2009, fsaverage5, as distributed by FreeSurfer/Nilearn.
+https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_surf_destrieux.html
+https://www.nitrc.org/frs/download.php/9343/lh.aparc.a2009s.annot
+https://www.nitrc.org/frs/download.php/9342/rh.aparc.a2009s.annot
+
+Each original cortex triangle is assigned once by majority vertex label. Exact
+parcel groupings and surface-derived anchors are in public/mind/regions.json.
+The source geometry uses uniform /45 scaling, preserving its roughly 140 × 174 ×
+128 mm proportions. A right lateral/anterior view replaces the foreshortened rear
+view. Shell boundaries are smoothed, subdivided once and thickened for a readable
+exploded display; it is an illustrative anatomical surface, not a clinical model.
+Cerebellum/brainstem/callosal supporting forms remain authored approximations;
+they are neutral and not used as project-region hit targets. All six interactive
+territories are based on cortical atlas parcels. CV associations are metaphors.

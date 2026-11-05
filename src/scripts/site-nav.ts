@@ -1,5 +1,8 @@
 import { bindThemeControls, readTheme, THEME_EVENT } from './theme';
 
+// Also bind on pages that intentionally do not mount ClientRouter.
+bindThemeControls();
+
 document.addEventListener('astro:page-load', () => {
 	bindThemeControls();
 });
