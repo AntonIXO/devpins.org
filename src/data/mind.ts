@@ -1,11 +1,11 @@
 // Surface anchors are generated from atlas vertices in public/mind/regions.json.
 export const mindZones = [
- {id:'bridge',number:'01',area:'Parietal association cortex',color:'#8ca9c2',position:[1.35,.86,.89]},
- {id:'motor',number:'02',area:'Precentral gyrus / motor cortex',color:'#83b89e',position:[1.19,1.07,.12]},
- {id:'root',number:'03',area:'Insular cortex',color:'#80afb8',position:[1.04,.18,.03]},
- {id:'audio',number:'04',area:'Temporal cortex',color:'#bb91ac',position:[1.53,-.19,.75]},
- {id:'vision',number:'05',area:'Occipital cortex',color:'#a59dc4',position:[1.08,.17,1.79]},
- {id:'frontal',number:'06',area:'Frontal cortex',color:'#c2ac86',position:[1.28,.36,-.54]},
+ {id:'bridge',number:'01',area:'Parietal association cortex',color:'#568cff',position:[1.35,.86,.89]},
+ {id:'motor',number:'02',area:'Precentral gyrus / motor cortex',color:'#4bd4a1',position:[1.19,1.07,.12]},
+ {id:'root',number:'03',area:'Insular cortex',color:'#e48155',position:[1.04,.18,.03]},
+ {id:'audio',number:'04',area:'Temporal cortex',color:'#d16eaa',position:[1.53,-.19,.75]},
+ {id:'vision',number:'05',area:'Occipital cortex',color:'#9c78e4',position:[1.08,.17,1.79]},
+ {id:'frontal',number:'06',area:'Frontal cortex',color:'#dfab5e',position:[1.28,.36,-.54]},
 ];
 
 // Every CV entry belongs to exactly one territory. Content stays in cv.ts.

@@ -1,3 +1,4 @@
+import { mountVessels } from './mind-vessels';
 import { animate } from 'motion';
 import { readTheme, THEME_EVENT } from './theme';
 import { mountMindCv } from './mind-cv';
@@ -29,7 +30,6 @@ async function init() {
  function syncMotion(){controls.autoRotate=false;rotate.textContent=paused?'Resume':'Pause';rotate.setAttribute('aria-pressed',String(paused));}
  reduced.addEventListener('change',()=>{paused=reduced.matches;syncMotion();});
  rotate.addEventListener('click',()=>{paused=!paused;syncMotion();});
- controls.addEventListener('start',()=>{paused=true;syncMotion();});
  document.querySelector('#reset')!.addEventListener('click',home);
  home();syncMotion();
  let vitals={...FALLBACK_VITALS};
@@ -62,26 +62,33 @@ async function init() {
  let selectionAnimation: {stop:()=>void}|undefined;
  brain.updateMatrixWorld(true);
  brain.traverse(object=>{if(object instanceof THREE.Mesh){const original=object.material as THREE.MeshStandardMaterial;
- const surface=material.clone();surface.uniforms={...uniforms,uRegionColor:{value:original.color.clone()},uSelection:{value:0}};object.material=surface;
+ const surface=material.clone();surface.uniforms={...uniforms,uRegionColor:{value:new THREE.Color(mindZones.find(z=>z.id===object.userData.region)?.color ?? '#352a36')},uSelection:{value:0}};object.material=surface;
  const center=new THREE.Box3().setFromObject(object).getCenter(new THREE.Vector3());
  const direction=center.clone().sub(modelCenter).normalize();
  direction.x=object.name.startsWith('left-')?-Math.max(.65,Math.abs(direction.x)):Math.max(.65,Math.abs(direction.x));
  direction.normalize();
  regionMaterials.push({region:object.userData.region,material:surface,mesh:object,base:object.position.clone(),direction});
  }});
- const pointsMat=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,uniforms,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
- vertexShader:`uniform float uTime;uniform float uPulse;uniform float uTone;out float energy;void main(){energy=.2+uPulse*.35+(.3+uTone*.3)*pow(.5+.5*sin(position.y*8.0+position.z*4.0-uTime*1.4),6.0);vec4 p=modelViewMatrix*vec4(position,1.0);gl_Position=projectionMatrix*p;gl_PointSize=min(5.0,(10.0+energy*15.0)/max(.1,-p.z));}`,
- fragmentShader:`in float energy;out vec4 outColor;void main(){float d=length(gl_PointCoord-.5);float a=1.0-smoothstep(.1,.5,d);outColor=vec4(mix(vec3(.48,.1,.36),vec3(1.0,.78,.42),energy),a*(.25+energy*.6));}`});
- // Particle children inherit the exact regional mesh transforms.
- regionMaterials.forEach(({mesh})=>{const a=mesh.geometry.getAttribute('position');const positions:number[]=[];for(let j=0;j<a.count;j+=Math.max(3,Math.ceil(a.count/1800)))positions.push(a.getX(j),a.getY(j),a.getZ(j));const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));const particles=new THREE.Points(geometry,pointsMat);particles.raycast=()=>{};mesh.add(particles);});
+ const vascular=await mountVessels(brain,uniforms);
+ canvas.dataset.particles=String(vascular.particleCount);
+ // An intact inset cortex prevents the small region lift from exposing hollow cut faces.
+ const coreResponse=await fetch('/mind/cortex-core.json');
+ if(coreResponse.ok){
+  const cores=await coreResponse.json() as {positions:number[];indices:number[]}[];
+  for(const core of cores){
+   const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(core.positions,3));geometry.setIndex(core.indices);geometry.computeVertexNormals();
+   const innerMaterial=material.clone();innerMaterial.uniforms={...uniforms,uRegionColor:{value:new THREE.Color(.08,.025,.07)},uSelection:{value:0}};
+   const inner=new THREE.Mesh(geometry,innerMaterial);inner.raycast=()=>{};brain.add(inner);
+  }
+ }
  const anchors=mindZones.map(z=>new THREE.Vector3().fromArray(regionalData.anchors[z.id] ?? z.position));
- const buttons=mindZones.map((z,i)=>{const b=document.createElement('button');b.textContent=z.number;b.title=`${z.area}: ${cvRegionLabels[z.id]}`;b.setAttribute('aria-label',b.title);b.style.setProperty('--zone',z.color);b.addEventListener('click',()=>document.dispatchEvent(new CustomEvent('mind:open',{detail:i})));document.querySelector('#hotspots')!.append(b);return b;});
+ const buttons=mindZones.map((z,i)=>{const b=document.createElement('button');b.textContent=z.number;b.title=`${z.area}: ${cvRegionLabels[z.id]}`;b.setAttribute('aria-label',b.title);b.style.setProperty('--zone',z.color);b.style.borderColor=z.color;b.addEventListener('click',()=>document.dispatchEvent(new CustomEvent('mind:open',{detail:i})));document.querySelector('#hotspots')!.append(b);return b;});
  function select(i:number|null){
   selectionAnimation?.stop();
   const starts=regionMaterials.map(entry=>entry.mesh.position.clone());
   const targets=regionMaterials.map(entry=>{
    const interactive=mindZones.some(z=>z.id===entry.region);
-   const amount=interactive?(i!==null&&entry.region===mindZones[i].id?(entry.mesh.name.startsWith('right-')?0.75:0.18):0.04):0;
+   const amount=interactive?(i!==null&&entry.region===mindZones[i].id?(entry.mesh.name.startsWith('right-')?0.20:0.06):0):0;
    return entry.base.clone().addScaledVector(entry.direction,amount);
   });
   const move=(progress:number)=>{regionMaterials.forEach((entry,index)=>entry.mesh.position.lerpVectors(starts[index],targets[index],progress));brain.updateMatrixWorld(true);};
@@ -113,17 +120,20 @@ async function init() {
  let bpm=vitals.bpm,hrv=vitals.hrv,sleep=vitals.sleepHours;
  const trace=document.querySelector('#eeg-trace')!;
  let lastTrace=0;
- renderer.setAnimationLoop((now)=>{const dt=Math.min((now-last)/1000,.05);last=now;if(document.hidden||!visible)return;const ease=1-Math.exp(-dt*2);bpm+=(vitals.bpm-bpm)*ease;hrv+=(vitals.hrv-hrv)*ease;sleep+=(vitals.sleepHours-sleep)*ease;
-  if(!paused){time+=dt;phaseTime+=dt*bpm/60;}
+ renderer.setAnimationLoop((now)=>{const elapsedDt=last?Math.min((now-last)/1000,1):0;const dt=Math.min(elapsedDt,.05);last=now;if(document.hidden||!visible)return;const ease=1-Math.exp(-dt*2);bpm+=(vitals.bpm-bpm)*ease;hrv+=(vitals.hrv-hrv)*ease;sleep+=(vitals.sleepHours-sleep)*ease;
+  if(!paused){time+=elapsedDt;phaseTime+=elapsedDt*bpm/60;}
   const health=healthStyle({...vitals,bpm,hrv,sleepHours:sleep});
-  uniforms.uTime.value=time;uniforms.uPulse.value=paused?0:cardiac(phaseTime%1);uniforms.uTone.value=health.tone;
+  uniforms.uTime.value=time;uniforms.uPulse.value=paused?0:cardiac(phaseTime%1);
+  vascular.update(phaseTime,health.tone);
+  // Heartbeat modulates light only. Geometry and labels stay still between selections.
+  brain.updateMatrixWorld(true);uniforms.uTone.value=health.tone;
   uniforms.uLow.value.fromArray(health.low);uniforms.uHigh.value.fromArray(health.high);
   if(now-lastTrace>50){lastTrace=now;let d='';for(let x=0;x<=320;x+=2){const t=x*.045-time;const amplitude=5+health.tone*5;const y=20+amplitude*(Math.sin(t*(2.2+health.rest*.4))*.6+Math.sin(t*7.3+Math.sin(t*.7))*.24+Math.sin(t*13.1)*(.08+.1*health.tone))+uniforms.uPulse.value*2*Math.sin(x*.04);d+=`${x===0?'M':'L'}${x} ${y.toFixed(2)} `;}trace.setAttribute('d',d);}
   controls.update(dt);camera.updateMatrixWorld();
   anchors.forEach((p,i)=>{const part=regionMaterials.find(entry=>entry.region===mindZones[i].id&&entry.mesh.name.startsWith('right-'));
- const shifted=p.clone();if(part)shifted.add(part.mesh.position).sub(part.base);const v=shifted.project(camera);buttons[i].style.left=`${(v.x*.5+.5)*canvas.clientWidth}px`;buttons[i].style.top=`${(-v.y*.5+.5)*canvas.clientHeight}px`;buttons[i].style.transform='translate(-50%,-50%)';buttons[i].hidden=Math.abs(v.z)>1;});renderer.render(scene,camera);
+ const shifted=p.clone();if(part)shifted.add(part.mesh.position).sub(part.base);const v=brain.localToWorld(shifted).project(camera);buttons[i].style.left=`${(v.x*.5+.5)*canvas.clientWidth}px`;buttons[i].style.top=`${(-v.y*.5+.5)*canvas.clientHeight}px`;buttons[i].style.transform='translate(-50%,-50%)';buttons[i].hidden=Math.abs(v.z)>1;});renderer.render(scene,camera);
  });
  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();renderer.setAnimationLoop(null);status.hidden=false;status.textContent='3D paused. All projects are available below.';});
- window.addEventListener('pagehide',()=>{selectionAnimation?.stop();stopVitals();document.removeEventListener(THEME_EVENT,onTheme);renderer.setAnimationLoop(null);controls.dispose();renderer.dispose();},{once:true});
+ window.addEventListener('pagehide',()=>{selectionAnimation?.stop();vascular.dispose();stopVitals();document.removeEventListener(THEME_EVENT,onTheme);renderer.setAnimationLoop(null);controls.dispose();renderer.dispose();},{once:true});
 }
 init().catch(error=>{console.error('[inner-world]',error);const status=document.querySelector<HTMLElement>('#scene-status')!;status.textContent='3D unavailable. Explore every project below.';});

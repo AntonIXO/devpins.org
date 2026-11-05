@@ -52,3 +52,21 @@ checks, not physical-device certification.
 
 Production is not deployed from this laptop. Local compiled preview is port 4322;
 dev preview is port 4321. Remote deployment still requires the server checkout.
+
+## Vascular motion repair
+- Added 390 artistic vessel branches following shortest paths over the source pial
+  topology, generated reproducibly by scripts/build_vessels.py. These are not
+  measured angiographic vessels. Tube geometry and 2,708 moving particles are
+  attached to their atlas parcels, so they follow region selection.
+- Region separation reduced to 0.20 scene units on the near hemisphere and 0.06
+  on the far side. An intact cortex inset along its normals fills deep cut gaps.
+- Six stable, distinct region hues replace the nearly uniform plum surface.
+- Heartbeat affects light only: no recurring scaling or displacement of geometry
+  or labels. Particle size is constant. Explicit pause freezes the visual clock;
+  orbit and selection no longer silently pause it. Low FPS does not slow the
+  physiological clock (elapsed time is separate from control damping time).
+- HR controls beat/particle timing; HRV controls flow speed and trace complexity;
+  sleep retains the shared filament tint mapping.
+- Browser verified: all marker screen coordinates unchanged over 1.3–1.5 seconds
+  while the signal animates; 2,708 particles; exactly one visible CV entry.
+- GLSL compilation, build, existing tests and local compiled-route probes pass.
