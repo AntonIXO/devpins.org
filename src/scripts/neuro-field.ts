@@ -1,3 +1,4 @@
+import { DARK_PALETTE, cardiac, hrvAmount } from './health-visual';
 import fragmentSource from '../shaders/neuro-noise.frag?raw';
 import vertexSource from '../shaders/fullscreen.vert?raw';
 import {
@@ -26,13 +27,6 @@ const THEME_LERP_MS = 400;
 const BPM_LERP_MS = 1000;
 const CACHE_KEY = 'devpins-vitals';
 const DPR_CAP = 1.5;
-
-const DARK_PALETTE = [
-	[0.55, 0.09, 0.28],
-	[0.14, 0.03, 0.2],
-	[0.027, 0.012, 0.051],
-	[1.0, 0.855, 0.475],
-] as const;
 
 const LIGHT_PALETTE = [
 	[0.965, 0.94, 0.932],
@@ -101,22 +95,7 @@ function mixPalette(a: readonly Vec3[], b: readonly Vec3[], t: number): number[]
 	return out;
 }
 
-function beat(phase: number, start: number, end: number, amp: number): number {
-	if (phase < start || phase > end) return 0;
-	const t = (phase - start) / (end - start);
-	const env = t < 0.22 ? t / 0.22 : Math.exp(-(t - 0.22) * 11);
-	return amp * env;
-}
-
-function cardiac(phase: number): number {
-	return Math.max(beat(phase, 0, 0.16, 1), beat(phase, 0.2, 0.34, 0.42));
-}
-
 const SLEEP_REF = FALLBACK_SLEEP_HOURS;
-
-function hrvAmount(ms: number): number {
-	return clamp((ms - 20) / 70, 0, 1);
-}
 
 function readCachedVitals(): Vitals | null {
 	try {

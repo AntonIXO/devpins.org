@@ -37,3 +37,21 @@ Six poetic anatomical mappings, one data source for labels/cards/plain HTML.
 No claims of live biometrics, medical localization or actual neural tractography.
 Motion pauses offscreen/in background; DPR capped at 1.6. Project/source content
 uses existing site URLs. Photo collection and jump scene remain outside this pass.
+
+## Fullscreen health revision
+Supersedes the initial teal layout and the note about no biometric integration.
+- Edge-to-edge viewport, compact project chips, detail only on selection.
+- Shared homepage cardiac envelope, HRV normalization and plum/gold palette.
+- HR advances beat phase; HRV controls flow complexity and synthetic trace amplitude;
+  sleep retints filament colors using the existing sleep-shade function.
+- Procedural domain-warped filament texture, cortical rim light, atmospheric field.
+- Same /api/vitals.json contract and session cache as homepage; one-minute refresh,
+  bounded timeout, source/date labels and explicit fallback/cached state.
+- Dev API reads the public site's snapshot: observed 43 bpm, HRV 63, sleep 6.8 h,
+  asOf 2026-11-05. No actual EEG feed: trace explicitly labelled synthetic.
+- Chrome 1440x1000 and 390x844: canvas fills viewport, six nodes onscreen,
+  reduced motion, project selection and close verified; no console errors.
+- 13 Bun tests pass, standalone shader compiles with glslangValidator, build passes.
+- Shader controls: FIBER_SCALE texture density; FLOW_SPEED drift; RIM_POWER edge
+  softness. BPM/HRV/SLEEP preview constants are in shader-preview.glsl.
+- Production remains undeployed from this laptop checkout.

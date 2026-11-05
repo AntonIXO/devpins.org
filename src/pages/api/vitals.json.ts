@@ -12,13 +12,13 @@ function json(body: Vitals, status = 200) {
 }
 
 export const GET: APIRoute = async () => {
-	const upstream = import.meta.env.PUBLIC_VITALS_URL;
+	const upstream = import.meta.env.PUBLIC_VITALS_URL || (import.meta.env.DEV ? 'https://devpins.org/api/vitals.json' : undefined);
 	if (typeof upstream === 'string' && upstream.length > 0) {
 		try {
-			const response = await fetch(upstream, { headers: { accept: 'application/json' } });
+			const response = await fetch(upstream, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(8000) });
 			if (response.ok) {
 				const parsed = parseVitals(await response.json());
-				if (parsed) return json({ ...parsed, source: 'optihealth' });
+				if (parsed) return json(parsed);
 			}
 		} catch {
 			// stay on fallback
