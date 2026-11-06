@@ -15,8 +15,21 @@ export interface ProjectEntry {
 
 export const projects: ProjectEntry[] = [
 	{
-		id: 'optihealth',
+		id: 'vibescience',
 		n: '01',
+		title: 'vibescience — research vault graph',
+		tag: 'vibescience',
+		date: '2026',
+		k: 'k',
+		href: '/vibescience/',
+		summary:
+			'An interactive map of the vibescience-EiV research vault — 715 notes, 1,769 links, one view of the evidence trail.',
+		period: '2026 · live preview',
+		featured: true,
+	},
+	{
+		id: 'optihealth',
+		n: '02',
 		title: 'optiHealth — demo account',
 		tag: 'optiHealth',
 		date: 'live',
@@ -29,7 +42,7 @@ export const projects: ProjectEntry[] = [
 	},
 	{
 		id: 'dreamwalker',
-		n: '02',
+		n: '03',
 		title: 'Dream Walker — LLM-driven dream thriller',
 		tag: 'Dream Walker',
 		date: 'live',
@@ -51,7 +64,7 @@ export const projects: ProjectEntry[] = [
 	},
 	{
 		id: 'minebit',
-		n: '04',
+		n: '05',
 		title: 'MineBit — voxel builds as NFTs on TON',
 		tag: 'MineBit',
 		date: '2024',
@@ -73,7 +86,7 @@ export const projects: ProjectEntry[] = [
 	},
 	{
 		id: 'sailfish',
-		n: '06',
+		n: '07',
 		title: 'SailfishOS on a Xiaomi ARM phone',
 		tag: 'K',
 		date: '2021—25',

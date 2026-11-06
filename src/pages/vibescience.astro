@@ -1,0 +1,768 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import graph from '../data/vibescience-graph.json';
+
+const kindLabels: Record<string, string> = {
+	diagnostics: 'Diagnostics',
+	experiments: 'Experiments',
+	hypotheses: 'Hypotheses',
+	interventions: 'Interventions',
+	papers: 'Papers',
+	problems: 'Problems',
+	rule_outs: 'Rule-outs',
+	runbooks: 'Runbooks',
+	tags: 'Tags',
+	root: 'Root',
+};
+
+const kindOrder = Object.keys(kindLabels);
+const kinds = kindOrder
+	.filter((kind) => graph.nodes.some((node) => node.kind === kind))
+	.map((kind) => ({
+		id: kind,
+		label: kindLabels[kind],
+		count: graph.nodes.filter((node) => node.kind === kind).length,
+	}));
+
+const graphData = JSON.stringify(graph).replace(/</g, '\\u003c');
+---
+
+<SiteLayout
+	title="vibescience · vault graph"
+	description="An interactive graph of the vibescience research vault."
+	atmosphere="blank"
+>
+	<div class="vault-page">
+		<header class="vault-header">
+			<div>
+				<a class="back-link" href="/">← devpins</a>
+				<p class="eyebrow">Vibescience / vault graph</p>
+				<h1>One graph for the whole research memory.</h1>
+				<p class="lede">
+					A WebGL map of the <a href="https://github.com/AntonIXO/vibescience-EiV" target="_blank" rel="noopener noreferrer">vibescience-EiV vault</a>.
+					Drag a note, hover a cluster, or search for a thread.
+				</p>
+			</div>
+			<div class="snapshot" aria-label="Vault snapshot">
+				<span class="snapshot__dot"></span>
+				<span>snapshot · 28 oct 2026</span>
+			</div>
+		</header>
+
+		<section class="vault-layout" aria-label="Interactive vault graph">
+			<div class="graph-card">
+				<div class="graph-toolbar">
+					<label class="search-field">
+						<span class="sr-only">Search notes</span>
+						<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+						<input data-vault-search type="search" placeholder="Search notes…" autocomplete="off" spellcheck="false" />
+						<span class="search-count" data-vault-search-count></span>
+					</label>
+					<div class="graph-actions" aria-label="Graph controls">
+						<button type="button" data-vault-action="reset" title="Reset view">Reset</button>
+						<button type="button" data-vault-action="zoom-out" aria-label="Zoom out">−</button>
+						<button type="button" data-vault-action="zoom-in" aria-label="Zoom in">+</button>
+					</div>
+				</div>
+
+				<div class="graph-stage">
+					<div class="graph-canvas" data-vibescience-graph></div>
+					<div class="graph-loading" data-vault-loading>
+						<span class="loading-ring" aria-hidden="true"></span>
+						<span>Mapping {graph.source.noteCount} notes…</span>
+					</div>
+					<p class="graph-error" data-vault-error hidden>Graph renderer unavailable in this browser.</p>
+					<div class="graph-hint">scroll to zoom <span>·</span> drag to pan <span>·</span> click to inspect</div>
+				</div>
+				<script id="vibescience-graph-data" type="application/json" set:html={graphData}></script>
+			</div>
+
+			<aside class="vault-sidebar">
+				<div class="sidebar-block sidebar-overview">
+					<div class="sidebar-heading">
+						<span>Vault index</span>
+						<span class="live-badge"><span></span> live</span>
+					</div>
+					<div class="metrics">
+						<div><strong>{graph.source.noteCount}</strong><span>notes</span></div>
+						<div><strong>{graph.source.edgeCount}</strong><span>links</span></div>
+						<div><strong>{kinds.length}</strong><span>sections</span></div>
+					</div>
+				</div>
+
+				<div class="sidebar-block">
+					<div class="sidebar-heading"><span>Sections</span><span class="mono muted" data-vault-visible>{graph.source.noteCount} shown</span></div>
+					<div class="section-list">
+						<button type="button" class="section-filter is-active" data-vault-filter="all"><span class="section-swatch all"></span><span>All notes</span><span class="section-count">{graph.source.noteCount}</span></button>
+						{ kinds.map((kind) => <button type="button" class="section-filter" data-vault-filter={kind.id}><span class:list={['section-swatch', `swatch-${kind.id}`]}></span><span>{kind.label}</span><span class="section-count">{kind.count}</span></button>) }
+					</div>
+				</div>
+
+				<div class="sidebar-block selected-note" data-vault-detail>
+					<div class="sidebar-heading"><span>Selected note</span><span class="mono muted">click a node</span></div>
+					<div class="detail-empty" data-vault-empty>
+						<p>Pick a node to see its neighborhood.</p>
+						<span>Labels appear as you zoom in.</span>
+					</div>
+					<div class="detail-content" data-vault-content hidden>
+						<p class="detail-kind" data-vault-kind></p>
+						<h2 data-vault-title></h2>
+						<p class="detail-path mono" data-vault-path></p>
+						<div class="detail-meta"><span data-vault-status></span><span data-vault-degree></span></div>
+						<div class="neighbor-heading"><span>Connected notes</span><span class="mono muted" data-vault-neighbor-count></span></div>
+						<ul class="neighbor-list" data-vault-neighbors></ul>
+					</div>
+				</div>
+
+				<div class="sidebar-footer">
+					<p><span class="mono">source</span> <a href="https://github.com/AntonIXO/vibescience-EiV" target="_blank" rel="noopener noreferrer">github.com/AntonIXO/vibescience-EiV ↗</a></p>
+					<p>Generated as a public index. Note contents stay in the vault.</p>
+				</div>
+			</aside>
+		</section>
+	</div>
+
+	<script>
+		import { mountVibescienceGraph } from '../scripts/vibescience-graph';
+
+		let cleanup: (() => void) | undefined;
+		const mount = () => {
+			cleanup?.();
+			cleanup = mountVibescienceGraph();
+		};
+		document.addEventListener('astro:page-load', mount);
+		document.addEventListener('astro:before-swap', () => cleanup?.());
+		if (document.readyState !== 'loading') mount();
+	</script>
+</SiteLayout>
+
+<style>
+	:global(.page.wide) :global(main) {
+		max-width: 1180px !important;
+	}
+
+	.vault-page {
+		--vault-bg: #090a0d;
+		--vault-panel: rgba(18, 20, 25, 0.86);
+		--vault-panel-strong: rgba(22, 24, 30, 0.95);
+		--vault-border: rgba(237, 236, 232, 0.13);
+		--vault-border-strong: rgba(237, 236, 232, 0.23);
+		--vault-fg: #eeeae2;
+		--vault-muted: #8c8a86;
+		--vault-dim: #575960;
+		--vault-accent: #d6aa5b;
+		--vault-accent-soft: rgba(214, 170, 91, 0.16);
+		padding: 68px 0 32px;
+	}
+
+	:global(html[data-theme='light']) .vault-page {
+		--vault-bg: #ebe7e2;
+		--vault-panel: rgba(250, 248, 244, 0.9);
+		--vault-panel-strong: rgba(255, 253, 249, 0.96);
+		--vault-border: rgba(20, 20, 19, 0.13);
+		--vault-border-strong: rgba(20, 20, 19, 0.23);
+		--vault-fg: #171716;
+		--vault-muted: #6b6862;
+		--vault-dim: #9b9891;
+		--vault-accent: #8a5428;
+		--vault-accent-soft: rgba(138, 84, 40, 0.12);
+	}
+
+	.vault-header {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 32px;
+		margin: 0 auto 30px;
+		max-width: 1180px;
+	}
+
+	.back-link,
+	.eyebrow,
+	.snapshot,
+	.sidebar-heading,
+	.mono,
+	.graph-hint,
+	.sidebar-footer,
+	.search-field input,
+	.graph-actions button,
+	.section-filter,
+	.detail-kind,
+	.detail-meta,
+	.neighbor-heading {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.035em;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-bottom: 24px;
+		color: var(--vault-muted);
+	}
+
+	.back-link:hover,
+	.lede a:hover,
+	.sidebar-footer a:hover {
+		color: var(--vault-fg);
+	}
+
+	.eyebrow {
+		margin-bottom: 13px;
+		color: var(--vault-accent);
+		text-transform: uppercase;
+		font-size: 10px;
+		letter-spacing: 0.14em;
+	}
+
+	h1 {
+		max-width: 650px;
+		color: var(--vault-fg);
+		font-family: var(--font-serif);
+		font-size: clamp(2.2rem, 5vw, 4rem);
+		font-weight: 400;
+		letter-spacing: -0.045em;
+		line-height: 0.98;
+	}
+
+	.lede {
+		max-width: 560px;
+		margin-top: 18px;
+		color: var(--vault-muted);
+		font-size: 15px;
+		line-height: 1.55;
+	}
+
+	.lede a {
+		color: var(--vault-fg);
+		text-decoration: underline;
+		text-decoration-color: var(--vault-border-strong);
+		text-underline-offset: 0.18em;
+	}
+
+	.snapshot {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		flex: 0 0 auto;
+		padding: 8px 10px;
+		border: 1px solid var(--vault-border);
+		border-radius: 999px;
+		color: var(--vault-muted);
+		white-space: nowrap;
+	}
+
+	.snapshot__dot,
+	.live-badge span {
+		display: inline-block;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: #8fb46d;
+		box-shadow: 0 0 0 3px rgba(143, 180, 109, 0.12);
+	}
+
+	.vault-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 294px;
+		gap: 14px;
+		width: min(1180px, 100%);
+		margin: 0 auto;
+	}
+
+	.graph-card,
+	.vault-sidebar {
+		border: 1px solid var(--vault-border);
+		border-radius: 18px;
+		background: var(--vault-panel);
+		box-shadow: 0 18px 70px rgba(0, 0, 0, 0.2);
+		backdrop-filter: blur(18px);
+		-webkit-backdrop-filter: blur(18px);
+	}
+
+	.graph-card {
+		position: relative;
+		min-width: 0;
+		overflow: hidden;
+	}
+
+	.graph-toolbar {
+		position: absolute;
+		top: 14px;
+		left: 14px;
+		right: 14px;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		pointer-events: none;
+	}
+
+	.search-field,
+	.graph-actions {
+		pointer-events: auto;
+		border: 1px solid var(--vault-border);
+		background: var(--vault-panel-strong);
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.14);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+	}
+
+	.search-field {
+		display: flex;
+		align-items: center;
+		gap: 9px;
+		width: min(300px, calc(100% - 120px));
+		padding: 0 10px;
+		border-radius: 8px;
+	}
+
+	.search-field svg {
+		width: 14px;
+		height: 14px;
+		fill: none;
+		stroke: var(--vault-muted);
+		stroke-width: 1.6;
+		flex: 0 0 auto;
+	}
+
+	.search-field input {
+		min-width: 0;
+		width: 100%;
+		height: 34px;
+		border: 0;
+		outline: 0;
+		background: transparent;
+		color: var(--vault-fg);
+	}
+
+	.search-field input::placeholder {
+		color: var(--vault-muted);
+	}
+
+	.search-count {
+		color: var(--vault-accent);
+		font-family: var(--font-mono);
+		font-size: 10px;
+		white-space: nowrap;
+	}
+
+	.graph-actions {
+		display: flex;
+		align-items: center;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.graph-actions button {
+		min-width: 34px;
+		height: 34px;
+		border-left: 1px solid var(--vault-border);
+		color: var(--vault-muted);
+		transition: color 160ms ease, background 160ms ease;
+	}
+
+	.graph-actions button:first-child {
+		min-width: 58px;
+		padding: 0 10px;
+		border-left: 0;
+		font-size: 10px;
+	}
+
+	.graph-actions button:hover,
+	.graph-actions button:focus-visible {
+		background: var(--vault-accent-soft);
+		color: var(--vault-fg);
+	}
+
+	.graph-stage {
+		position: relative;
+		min-height: 680px;
+		height: min(76vh, 820px);
+		background-color: var(--vault-bg);
+		background-image:
+			radial-gradient(circle at 52% 48%, rgba(93, 109, 145, 0.12), transparent 31%),
+			radial-gradient(circle at 18% 78%, rgba(197, 138, 76, 0.07), transparent 30%),
+			radial-gradient(rgba(237, 236, 232, 0.07) 0.7px, transparent 0.7px);
+		background-size: auto, auto, 22px 22px;
+	}
+
+	:global(html[data-theme='light']) .graph-stage {
+		background-image:
+			radial-gradient(circle at 52% 48%, rgba(95, 120, 155, 0.12), transparent 31%),
+			radial-gradient(circle at 18% 78%, rgba(197, 138, 76, 0.08), transparent 30%),
+			radial-gradient(rgba(20, 20, 19, 0.08) 0.7px, transparent 0.7px);
+	}
+
+	.graph-canvas,
+	.graph-canvas :global(.force-graph-container),
+	.graph-canvas :global(canvas) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.graph-canvas :global(.force-graph-container) {
+		position: absolute !important;
+		overflow: hidden;
+	}
+
+	.graph-loading,
+	.graph-error {
+		position: absolute;
+		inset: 50% auto auto 50%;
+		z-index: 1;
+		transform: translate(-50%, -50%);
+		color: var(--vault-muted);
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.04em;
+		white-space: nowrap;
+	}
+
+	.graph-loading {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		transition: opacity 220ms ease;
+	}
+
+	.graph-loading.is-hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.loading-ring {
+		width: 14px;
+		height: 14px;
+		border: 1px solid var(--vault-border-strong);
+		border-top-color: var(--vault-accent);
+		border-radius: 50%;
+		animation: spin 700ms linear infinite;
+	}
+
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
+
+	.graph-hint {
+		position: absolute;
+		bottom: 14px;
+		left: 16px;
+		z-index: 1;
+		color: var(--vault-dim);
+		font-size: 10px;
+		pointer-events: none;
+	}
+
+	.graph-hint span {
+		padding: 0 5px;
+		color: var(--vault-accent);
+	}
+
+	.vault-sidebar {
+		display: flex;
+		flex-direction: column;
+		min-height: 680px;
+		padding: 18px 16px 15px;
+		color: var(--vault-fg);
+	}
+
+	.sidebar-block {
+		padding: 0 0 17px;
+		border-bottom: 1px solid var(--vault-border);
+	}
+
+	.sidebar-block + .sidebar-block {
+		padding-top: 17px;
+	}
+
+	.sidebar-heading,
+	.neighbor-heading {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		color: var(--vault-fg);
+		text-transform: uppercase;
+		font-size: 10px;
+		letter-spacing: 0.1em;
+	}
+
+	.muted {
+		color: var(--vault-muted);
+		text-transform: none;
+		letter-spacing: 0.02em;
+	}
+
+	.live-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: #8fb46d;
+		font-size: 9px;
+		letter-spacing: 0.08em;
+	}
+
+	.live-badge span {
+		width: 5px;
+		height: 5px;
+		box-shadow: none;
+	}
+
+	.metrics {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
+		margin-top: 17px;
+	}
+
+	.metrics div {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.metrics strong {
+		font-family: var(--font-serif);
+		font-size: 24px;
+		font-weight: 400;
+		letter-spacing: -0.04em;
+	}
+
+	.metrics span,
+	.section-count {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--vault-muted);
+	}
+
+	.section-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		margin-top: 11px;
+	}
+
+	.section-filter {
+		display: grid;
+		grid-template-columns: 9px minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		padding: 6px 7px;
+		border-radius: 6px;
+		color: var(--vault-muted);
+		text-align: left;
+		transition: color 140ms ease, background 140ms ease;
+	}
+
+	.section-filter:hover,
+	.section-filter.is-active {
+		background: var(--vault-accent-soft);
+		color: var(--vault-fg);
+	}
+
+	.section-filter.is-active .section-count {
+		color: var(--vault-accent);
+	}
+
+	.section-swatch {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--vault-dim);
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--vault-dim) 18%, transparent);
+	}
+
+	.section-swatch.all {
+		background: linear-gradient(135deg, #d6aa5b, #8677b5 48%, #6e9ea6);
+	}
+
+	.swatch-diagnostics { background: #c28b5a; }
+	.swatch-experiments { background: #c4a15b; }
+	.swatch-hypotheses { background: #8f83c1; }
+	.swatch-interventions { background: #7fb29e; }
+	.swatch-papers { background: #6e9eae; }
+	.swatch-problems { background: #c46c6c; }
+	.swatch-rule_outs { background: #b37c9e; }
+	.swatch-runbooks { background: #7898c1; }
+	.swatch-tags { background: #8b8e97; }
+	.swatch-root { background: #c9c2b4; }
+
+	.selected-note {
+		min-height: 205px;
+	}
+
+	.detail-empty {
+		padding: 27px 4px 8px;
+		color: var(--vault-muted);
+		font-size: 13px;
+		line-height: 1.45;
+	}
+
+	.detail-empty span {
+		display: block;
+		margin-top: 7px;
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--vault-dim);
+	}
+
+	.detail-content {
+		padding-top: 15px;
+	}
+
+	.detail-kind {
+		margin-bottom: 6px;
+		color: var(--vault-accent);
+		font-size: 9px;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+	}
+
+	.detail-content h2 {
+		font-size: 17px;
+		font-weight: 500;
+		line-height: 1.22;
+	}
+
+	.detail-path {
+		overflow: hidden;
+		margin-top: 7px;
+		color: var(--vault-muted);
+		font-size: 10px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.detail-meta {
+		display: flex;
+		gap: 9px;
+		margin-top: 11px;
+		color: var(--vault-muted);
+		font-size: 10px;
+	}
+
+	.detail-meta span + span {
+		padding-left: 9px;
+		border-left: 1px solid var(--vault-border);
+	}
+
+	.neighbor-heading {
+		margin-top: 20px;
+		font-size: 9px;
+	}
+
+	.neighbor-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+		max-height: 145px;
+		margin-top: 7px;
+		overflow: auto;
+	}
+
+	.neighbor-list button {
+		display: block;
+		overflow: hidden;
+		width: 100%;
+		padding: 4px 0;
+		color: var(--vault-muted);
+		font-size: 11px;
+		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.neighbor-list button:hover {
+		color: var(--vault-fg);
+	}
+
+	.sidebar-footer {
+		margin-top: auto;
+		padding-top: 17px;
+		color: var(--vault-dim);
+		font-size: 10px;
+		line-height: 1.5;
+	}
+
+	.sidebar-footer p + p {
+		margin-top: 8px;
+	}
+
+	.sidebar-footer a {
+		color: var(--vault-muted);
+	}
+
+	@media (max-width: 940px) {
+		.vault-page {
+			padding-top: 48px;
+		}
+
+		.vault-layout {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.vault-sidebar {
+			min-height: 0;
+		}
+
+		.section-list {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.selected-note {
+			min-height: 0;
+		}
+	}
+
+	@media (max-width: 620px) {
+		.vault-page {
+			padding-top: 32px;
+		}
+
+		.vault-header {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 18px;
+			margin-bottom: 22px;
+		}
+
+		.snapshot {
+			font-size: 10px;
+		}
+
+		.graph-stage,
+		.vault-sidebar {
+			min-height: 560px;
+		}
+
+		.graph-stage {
+			height: 68vh;
+		}
+
+		.graph-toolbar {
+			top: 10px;
+			left: 10px;
+			right: 10px;
+		}
+
+		.search-field {
+			width: calc(100% - 106px);
+		}
+
+		.graph-hint {
+			font-size: 9px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.loading-ring {
+			animation: none;
+		}
+	}
+</style>

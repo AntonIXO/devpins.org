@@ -19,6 +19,7 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.4.5",
+    "force-graph": "^1.52.0",
     "katex": "^0.19.1",
     "motion": "^14.9.1",
     "rehype-katex": "^7.0.1",

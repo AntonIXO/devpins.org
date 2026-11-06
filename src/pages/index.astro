@@ -15,10 +15,42 @@ import { getPublishedPosts } from '../data/nav';
 import { featuredWork } from '../data/projects';
 import WritingLanguageSwitch from '../components/WritingLanguageSwitch.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
+import VibesciencePreview from '../components/VibesciencePreview.astro';
+import vibescienceGraph from '../data/vibescience-graph.json';
 
 const posts = await getPublishedPosts();
 
+const previewNodes = [...vibescienceGraph.nodes]
+	.sort((a, b) => b.degree - a.degree)
+	.slice(0, 120)
+	.map((node) => ({
+		id: node.id,
+		label: node.label,
+		degree: node.degree,
+		val: node.size,
+		color:
+			node.kind === 'diagnostics'
+				? '#c28b5a'
+				: node.kind === 'experiments'
+					? '#c4a15b'
+					: node.kind === 'hypotheses'
+						? '#8f83c1'
+						: node.kind === 'problems'
+							? '#c46c6c'
+								: node.kind === 'papers'
+									? '#6e9eae'
+										: '#8b8e97',
+		x: node.x,
+		y: node.y,
+	}));
+const previewNodeIds = new Set(previewNodes.map((node) => node.id));
+const previewLinks = vibescienceGraph.edges
+	.filter((edge) => previewNodeIds.has(edge.source) && previewNodeIds.has(edge.target))
+	.map((edge) => ({ source: edge.source, target: edge.target, weight: edge.weight }));
+const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: previewLinks }).replace(/</g, '\\u003c');
+
 const workTitle: Record<string, string> = {
+	vibescience: 'vibescience',
 	optihealth: 'optiHealth',
 	dreamwalker: 'Dream Walker',
 	minebit: 'MineBit',
@@ -46,17 +78,18 @@ const workTitle: Record<string, string> = {
 	<ul class="list">
 		{
 			featuredWork.map((project) => (
-				<li>
+				<li class:list={{ 'vibescience-row': project.id === 'vibescience' }}>
 					<a
 						href={project.href}
-						target="_blank"
-						rel="noopener noreferrer"
+						target={project.href.startsWith('http') ? '_blank' : undefined}
+						rel={project.href.startsWith('http') ? 'noopener noreferrer' : undefined}
 						data-umami-event="project-click"
 						data-umami-event-name={project.id}
 					>
 						<span class="list__title">{workTitle[project.id] ?? project.title}</span>
 						<span class="list__note">{project.summary}</span>
 					</a>
+					{project.id === 'vibescience' && <VibesciencePreview data={vibesciencePreviewData} />}
 				</li>
 			))
 		}
@@ -124,6 +157,16 @@ const workTitle: Record<string, string> = {
 		display: flex;
 		flex-direction: column;
 		max-width: 40rem;
+	}
+
+	.vibescience-row {
+		position: relative;
+		z-index: 1;
+	}
+
+	.vibescience-row:hover,
+	.vibescience-row:focus-within {
+		z-index: 4;
 	}
 
 	.list a {
