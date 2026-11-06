@@ -19,6 +19,7 @@ type VaultLink = LinkObject<VaultNode> & {
 
 type VaultGraphData = {
 	source: {
+		url: string;
 		noteCount: number;
 		edgeCount: number;
 	};
@@ -113,6 +114,9 @@ const shortLabel = (label: string, maxLength = 44): string => {
 	return `${label.slice(0, maxLength - 1).trimEnd()}…`;
 };
 
+const githubNoteUrl = (repository: string, path: string): string =>
+	`${repository.replace(/\/$/, '')}/blob/main/${path.split('/').map(encodeURIComponent).join('/')}`;
+
 export function mountVibescienceGraph(): (() => void) | undefined {
 	const stage = document.querySelector<GraphStage>('[data-vibescience-graph]');
 	const data = parseData();
@@ -134,6 +138,7 @@ export function mountVibescienceGraph(): (() => void) | undefined {
 	const detailKind = page.querySelector<HTMLElement>('[data-vault-kind]');
 	const detailTitle = page.querySelector<HTMLElement>('[data-vault-title]');
 	const detailPath = page.querySelector<HTMLElement>('[data-vault-path]');
+	const detailSourceLink = page.querySelector<HTMLAnchorElement>('[data-vault-source-link]');
 	const detailStatus = page.querySelector<HTMLElement>('[data-vault-status]');
 	const detailDegree = page.querySelector<HTMLElement>('[data-vault-degree]');
 	const neighborCount = page.querySelector<HTMLElement>('[data-vault-neighbor-count]');
@@ -283,6 +288,7 @@ export function mountVibescienceGraph(): (() => void) | undefined {
 		if (detailKind) detailKind.textContent = labelForKind(node.kind);
 		if (detailTitle) detailTitle.textContent = node.label;
 		if (detailPath) detailPath.textContent = node.path;
+		if (detailSourceLink) detailSourceLink.href = githubNoteUrl(data.source.url, node.path);
 		if (detailStatus) detailStatus.textContent = node.status || 'no status';
 		if (detailDegree) detailDegree.textContent = `${node.degree} links`;
 
@@ -354,7 +360,13 @@ export function mountVibescienceGraph(): (() => void) | undefined {
 		else neighborhood = new Set<string>();
 		refresh();
 	};
-	const onClick = (node: VaultNode) => focusNode(node.id);
+	const openNodeFile = (node: VaultNode) => {
+		window.open(githubNoteUrl(data.source.url, node.path), '_blank', 'noopener,noreferrer');
+	};
+	const onClick = (node: VaultNode) => {
+		focusNode(node.id);
+		openNodeFile(node);
+	};
 	const onBackgroundClick = () => showDetails(null);
 	renderer.onNodeHover(onEnter).onNodeClick(onClick).onBackgroundClick(onBackgroundClick);
 
