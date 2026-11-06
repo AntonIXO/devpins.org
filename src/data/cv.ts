@@ -78,7 +78,7 @@ export const cvProjects: CvProject[] = [
 		lede: 'Research system that turns audio into stage lighting: causal audio features drive motion descriptors, fixture parameters, and DMX output.',
 		bullets: [
 			'Built the streaming audio feature bus, motion-to-fixture conductor, 512-channel DMX encoder, and headless 3D renderer.',
-			'Demo shows a 20-second own-song window alongside the actual emitted DMX lighting.',
+			'Full-track Shpongle demo shows the own-song window alongside the actual emitted DMX lighting.',
 		],
 		video: {
 			src: '/projects/lightsem-demo.mp4',
