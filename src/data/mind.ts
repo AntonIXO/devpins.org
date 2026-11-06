@@ -11,7 +11,7 @@ export const mindZones = [
 // Every CV entry belongs to exactly one territory. Content stays in cv.ts.
 export const cvRegionProjects: Record<string, string[]> = {
  bridge: ['sensorlm'], motor: ['optihealth'], root: ['sailfish'],
- audio: ['firmware'], vision: ['dreamwalker', 'aireader'], frontal: ['minebit'],
+ audio: ['firmware', 'player'], vision: ['dreamwalker', 'aireader'], frontal: ['minebit'],
 };
 export const cvRegionLabels: Record<string, string> = {
  bridge: 'Research & learning', motor: 'Health & movement', root: 'Systems & skills',
@@ -23,6 +23,7 @@ export const cvSummary = [
  {id:'optihealth',region:'motor',label:'optiHealth'},
  {id:'sailfish',region:'root',label:'SailfishOS on ARM'},
  {id:'firmware',region:'audio',label:'Audio & Android firmware'},
+ {id:'player',region:'audio',label:'Bit-perfect Player'},
  {id:'dreamwalker',region:'vision',label:'Dream Walker'},
  {id:'aireader',region:'vision',label:'AI Reader'},
  {id:'minebit',region:'frontal',label:'MineBit'},
@@ -30,5 +31,6 @@ export const cvSummary = [
  {id:'skills',region:'root',label:'Skills'},
  {id:'sport',region:'motor',label:'Sport'},
  {id:'awards',region:'frontal',label:'Awards'},
+ {id:'misc-vibe',region:'frontal',label:'Misc vibe coding'},
  {id:'about',region:'frontal',label:'About & contact'},
 ];

@@ -21,6 +21,13 @@ export interface CvProject {
 	bullets: string[];
 }
 
+export interface CvMiscProject {
+	id: string;
+	title: string;
+	href: string;
+	lede: string;
+}
+
 export interface CvAward {
 	mark: string;
 	text: string;
@@ -70,6 +77,17 @@ export const cvProjects: CvProject[] = [
 			'Research in collaboration with Yuri Rykov (scholar profile).',
 		],
 		team: "much honors to my team, here they are: claude, gpt, xiomi mimo, gemini"
+	},
+	{
+		id: 'player',
+		title: 'Player — bit-perfect music player in Rust',
+		href: 'https://github.com/AntonIXO/player',
+		period: 'May 2026 – present',
+		lede: 'Hi-fi music player for Linux and postmarketOS that writes lossless audio directly to ALSA hardware without resampling, mixing, dither, or software volume.',
+		bullets: [
+			'Rust workspace with a headless playback engine, gapless queues, DSD/DoP support, library search, and a GTK shell.',
+			'Target hardware is a Poco F1 running postmarketOS with a Chord Mojo 2 USB DAC.',
+		],
 	},
 	{
 		id: 'optihealth',
@@ -144,7 +162,44 @@ export const cvProjects: CvProject[] = [
 	},
 ];
 
-export const miscVibecode: CvProject[] = []
+export const miscVibecode: CvMiscProject[] = [
+	{
+		id: 'matan2',
+		title: 'matan2 — mathematical analysis exam notes',
+		href: 'https://github.com/AntonIXO/matan2',
+		lede: 'Typst study guide that extracts theorem proofs from lecture subtitles and links the mathematical-analysis syllabus into one navigable chain.',
+	},
+	{
+		id: 'deep-sleep-cube-app',
+		title: 'Deep Sleep Cube app',
+		href: 'https://github.com/AntonIXO/Deep-Sleep-Cube-app',
+		lede: 'Open-source Android alternative to the Deep Sleep Cube app.',
+	},
+	{
+		id: 'vibescience-mcp',
+		title: 'vibescience-mcp',
+		href: 'https://github.com/AntonIXO/vibescience-mcp',
+		lede: 'Scientific experiment-log MCP server for AI coding and research agents, with Markdown as the source of truth and a queryable causal map.',
+	},
+	{
+		id: 'iherb-api',
+		title: 'iherb-api',
+		href: 'https://github.com/AntonIXO/iherb-api',
+		lede: 'Typed, unofficial iHerb product search and supplement-label extraction package for Bun and Node.js.',
+	},
+	{
+		id: 'unblock',
+		title: 'unblock',
+		href: 'https://github.com/AntonIXO/unblock',
+		lede: 'Fabric mod that lets Minecraft connect to servers banned by Mojang.',
+	},
+	{
+		id: 'exist-activitywatch',
+		title: 'exist-activitywatch',
+		href: 'https://github.com/AntonIXO/exist-activitywatch',
+		lede: 'Python sync service that pushes ActivityWatch metrics and focus analysis to Exist.io.',
+	},
+];
 
 export const awards: CvAward[] = [
 	{

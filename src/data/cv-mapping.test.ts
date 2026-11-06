@@ -26,5 +26,5 @@ test('single summary covers every project and supporting CV section once',()=>{
  const ids=cvSummary.map(e=>e.id);
  expect(ids.length).toBe(new Set(ids).size);
  for(const p of cvProjects)expect(ids).toContain(p.id);
- for(const id of ['education','skills','sport','awards','about'])expect(ids).toContain(id);
+ for(const id of ['education','skills','sport','awards','misc-vibe','about'])expect(ids).toContain(id);
 });
