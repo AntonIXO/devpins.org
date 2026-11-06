@@ -30,7 +30,7 @@ const graphData = JSON.stringify(graph).replace(/</g, '\\u003c');
 <SiteLayout
 	title="vibescience · vault graph"
 	description="An interactive graph of the vibescience research vault."
-	atmosphere="field"
+	atmosphere="blank"
 >
 	<div class="vault-page">
 		<header class="vault-header">
@@ -153,7 +153,7 @@ const graphData = JSON.stringify(graph).replace(/</g, '\\u003c');
 		--vault-dim: color-mix(in srgb, var(--mute) 72%, transparent);
 		--vault-accent: var(--pulse);
 		--vault-accent-soft: color-mix(in srgb, var(--pulse) 17%, transparent);
-		padding: 68px 0 32px;
+		padding: 24px 0 32px;
 	}
 
 	:global(html[data-theme='light']) .vault-page {

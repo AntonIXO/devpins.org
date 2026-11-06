@@ -83,7 +83,7 @@ export const cvProjects: CvProject[] = [
 			'Some interesting findings: my mood follows an hourly curve, and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length);',
 			'Polygala, GABA, and NAC ↔ Oura sleep score.',
 			'Multivitamins ↔ HRV.',
-			'<a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">Cerebrolysin ↔ HR</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">Cerebrolysin ↔ sleep</a>.',
+			'<a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">Cerebrolysin ↔ Sleep</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">Cerebrolysin ↔ RHR</a>.',
 		],
 	},
 	{
@@ -94,7 +94,7 @@ export const cvProjects: CvProject[] = [
 		bullets: [
 			'Using the optiHealth platform infrastructure for continuous physiological data collection.',
 			'Research in collaboration with Yuri Rykov (scholar profile).',
-			'Applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> — check the graph.',
+			'Applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> <- graph.',
 		],
 	},
 	{
@@ -103,7 +103,7 @@ export const cvProjects: CvProject[] = [
 		period: 'Sept 2026 – present',
 		lede: 'I don\'t like stage lighting, especially algorithmic lighting, so I tried to build one learned from dancing.',
 		bullets: [
-			'Pulled all the Just Dance footage I could find from YouTube, extracted the motions, and wired up <a href="https://github.com/tencent-ailab/muq" target="_blank" rel="noopener noreferrer">MuQ</a> alongside other features.',
+			'Pulled all the Just Dance from YouTube, extracted the motions, and wired up <a href="https://github.com/tencent-ailab/muq" target="_blank" rel="noopener noreferrer">MuQ</a> alongside other features.',
 			'Though it did not work well and collapsed. I\'ll fix it in my free time.',
 		],
 	},
@@ -113,9 +113,9 @@ export const cvProjects: CvProject[] = [
 		period: 'May 2026 – June 2026',
 		lede: 'High-end music player for postmarketOS on a Poco F1 running a mainline Linux kernel.',
 		bullets: [
-			'Writes audio bits directly to the kernel through the shortest path 🙏. Inspired by <a href="https://github.com/sam0402/ArchQ" target="_blank" rel="noopener noreferrer">ArchQ</a>.',
+			'Writes audio bits directly to the kernel, shortest path 🙏. Inspired by <a href="https://github.com/sam0402/ArchQ" target="_blank" rel="noopener noreferrer">ArchQ</a>.',
 			'Target hardware: a Poco F1 running postmarketOS with a mainline Linux kernel and a Chord Mojo 2.',
-			'My inner audiophile is finally happy.',
+			'Inner audiophile is finally happy.',
 		],
 	},
 	{
@@ -142,7 +142,7 @@ export const cvProjects: CvProject[] = [
 	{
 		title: 'MineBit — NFT marketplace for Minecraft builds',
 		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
-		period: 'May 2024 – July 2024',
+		period: 'May 2024 – August 2024',
 		lede: 'Marketplace letting creators mint and sell builds as NFTs.',
 		bullets: [
 			'Implemented custom server logic with Minestom and Kotlin, replacing the official Microsoft codebase.',
@@ -159,7 +159,7 @@ export const cvProjects: CvProject[] = [
 		period: 'Oct 2021 – May 2025',
 		lede: 'Ported a complete GNU/Linux (SailfishOS) system to an ARM Android smartphone.',
 		bullets: [
-			'Adapted proprietary Binder-based Android drivers to glibc through libhybris — every subsystem functional.',
+			'Adapted proprietary Android HAL drivers to glibc through libhybris — every subsystem functional.',
 			'Over 2,000 downloads and a 200+ user community on <a href="https://t.me/Sailfish_miatoll" target="_blank" rel="noopener noreferrer">Telegram</a>.',
 		],
 	},
@@ -181,14 +181,14 @@ export const miscVibeProjects: CvMiscProject[] = [
 		lede: 'A compact, navigable home for mathematical-analysis notes, proofs, and exam preparation.',
 	},
 	{
-		title: 'Deep Sleep Cube (Schumann-wave machine)',
+		title: 'Deep sleep cube  (Schumann-wave machine) app',
 		href: 'https://github.com/AntonIXO/Deep-Sleep-Cube-app',
 		lede: 'The official one was broken, so I vibed my own.',
 	},
 	{
 		title: 'vibescience-mcp',
 		href: 'https://github.com/AntonIXO/vibescience-mcp',
-		lede: 'Scientific experiment-log MCP server for AI coding and research agents, with Markdown as the source of truth and a queryable causal map.',
+		lede: 'Scientific experiment-log MCP server for agents. with Markdown as the source of truth and a obsidian compatible vault.',
 	},
 	{
 		title: 'iherb-api',
