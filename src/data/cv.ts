@@ -84,7 +84,7 @@ export const cvProjects: CvProject[] = [
 			src: '/projects/lightsem-demo.mp4',
 			webm: '/projects/lightsem-demo.webm',
 			poster: '/projects/lightsem-demo.jpg',
-			label: 'LightSem demo — actual emitted DMX lighting',
+			label: 'SSL Shpongle demo — actual emitted DMX lighting',
 		},
 	},
 	{
