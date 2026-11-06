@@ -1,0 +1,8 @@
+{
+  "blenderVersion": "5.2.3 LTS",
+  "checks": [
+    "python",
+    "save",
+    "reopen"
+  ]
+}

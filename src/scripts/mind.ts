@@ -1,4 +1,3 @@
-import { mountVessels } from './mind-vessels';
 import { animate } from 'motion';
 import { readTheme, THEME_EVENT } from './theme';
 import { mountMindCv } from './mind-cv';
@@ -34,7 +33,7 @@ async function init() {
  home();syncMotion();
  let vitals={...FALLBACK_VITALS};
  const style=healthStyle(vitals);
- const uniforms={uLight:{value:readTheme()==='light'?1:0},uRegionColor:{value:new THREE.Color(.4,.4,.4)},uSelection:{value:0},uTime:{value:0},uPulse:{value:0},uTone:{value:style.tone},uLow:{value:new THREE.Vector3().fromArray(style.low)},uHigh:{value:new THREE.Vector3().fromArray(style.high)},uResolution:{value:new THREE.Vector2(1,1)},uFocus:{value:new THREE.Vector3(...mindZones[0].position)},uColor:{value:new THREE.Color(mindZones[0].color)}};
+ const uniforms={uLight:{value:readTheme()==='light'?1:0},uRegionColor:{value:new THREE.Color(.4,.4,.4)},uSelection:{value:0},uTime:{value:0},uPulse:{value:0},uTone:{value:style.tone},uWash:{value:new THREE.Vector3().fromArray(style.wash)},uMiddle:{value:new THREE.Vector3().fromArray(style.middle)},uLow:{value:new THREE.Vector3().fromArray(style.low)},uHigh:{value:new THREE.Vector3().fromArray(style.high)},uResolution:{value:new THREE.Vector2(1,1)},uFocus:{value:new THREE.Vector3(...mindZones[0].position)},uColor:{value:new THREE.Color(mindZones[0].color)}};
  const stopVitals=watchMindVitals((next,cached)=>{
   vitals=next;
   const label=document.querySelector<HTMLElement>('#health-values')!;
@@ -50,9 +49,9 @@ async function init() {
   fragmentShader:`precision highp float;precision highp int;uniform vec2 uResolution;uniform float uLight;uniform float uTime;uniform float uPulse;uniform float uTone;uniform vec3 uLow;uniform vec3 uHigh;out vec4 outColor;${cortexShader}void main(){vec2 uv=(2.0*gl_FragCoord.xy-uResolution)/uResolution.y;outColor=vec4(mix(neuralAtmosphere(uv,uTime,uPulse,uTone,uLow,uHigh),vec3(.965,.94,.932),uLight),1.0);}`
  }));backdrop.frustumCulled=false;backdrop.renderOrder=-10;scene.add(backdrop);
  const material=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,uniforms,side:THREE.DoubleSide,transparent:false,depthWrite:true,
- vertexShader:`out vec3 vP; out vec3 vN; out vec3 vV; void main(){vec4 mv=modelViewMatrix*vec4(position,1.0);vP=(modelMatrix*vec4(position,1.0)).xyz;vN=normalize(normalMatrix*normal);vV=-mv.xyz;gl_Position=projectionMatrix*mv;}`,
- fragmentShader:`precision highp float; precision highp int; in vec3 vP; in vec3 vN; in vec3 vV; uniform vec3 uRegionColor;uniform float uSelection;uniform float uTime; uniform float uPulse; uniform float uTone;uniform vec3 uLow;uniform vec3 uHigh; uniform vec3 uFocus; uniform vec3 uColor; out vec4 outColor; ${cortexShader}
- void main(){float focus=exp(-dot(vP-uFocus,vP-uFocus)*2.5);vec3 c=corticalLight(vP,normalize(vN),normalize(vV),uTime,uPulse,uTone,uLow,uHigh,uRegionColor,uSelection);outColor=vec4(c,1.0);}`});
+ vertexShader:`out vec3 vP; out vec3 vLocalN; out vec3 vN; out vec3 vV; void main(){vec4 mv=modelViewMatrix*vec4(position,1.0);vP=position;vLocalN=normal;vN=normalize(normalMatrix*normal);vV=-mv.xyz;gl_Position=projectionMatrix*mv;}`,
+ fragmentShader:`precision highp float; precision highp int; in vec3 vP; in vec3 vLocalN; in vec3 vN; in vec3 vV; uniform vec3 uRegionColor;uniform float uSelection;uniform float uTime; uniform float uPulse; uniform float uTone;uniform vec3 uLow;uniform vec3 uHigh;uniform vec3 uWash;uniform vec3 uMiddle; uniform vec3 uFocus; uniform vec3 uColor; out vec4 outColor; ${cortexShader}
+ void main(){float focus=exp(-dot(vP-uFocus,vP-uFocus)*2.5);vec3 c=corticalLight(vP,normalize(vN),normalize(vV),uTime,uPulse,uTone,uLow,uHigh,uRegionColor,uSelection,uWash,uMiddle,normalize(vLocalN));c+=(corticalGrain(floor(gl_FragCoord.xy))-.5)*.065;outColor=vec4(clamp(c,0.0,1.0),1.0);}`});
  const regionalData=await fetch('/mind/regions.json').then(r=>{if(!r.ok)throw new Error('Regions unavailable');return r.json();});
  const gltf=await new GLTFLoader().loadAsync('/mind/mind.glb').catch(error=>{stopVitals();throw error;});
  const brain=gltf.scene;scene.add(brain);
@@ -69,8 +68,6 @@ async function init() {
  direction.normalize();
  regionMaterials.push({region:object.userData.region,material:surface,mesh:object,base:object.position.clone(),direction});
  }});
- const vascular=await mountVessels(brain,uniforms);
- canvas.dataset.particles=String(vascular.particleCount);
  // An intact inset cortex prevents the small region lift from exposing hollow cut faces.
  const coreResponse=await fetch('/mind/cortex-core.json');
  if(coreResponse.ok){
@@ -122,11 +119,11 @@ async function init() {
  let lastTrace=0;
  renderer.setAnimationLoop((now)=>{const elapsedDt=last?Math.min((now-last)/1000,1):0;const dt=Math.min(elapsedDt,.05);last=now;if(document.hidden||!visible)return;const ease=1-Math.exp(-dt*2);bpm+=(vitals.bpm-bpm)*ease;hrv+=(vitals.hrv-hrv)*ease;sleep+=(vitals.sleepHours-sleep)*ease;
   if(!paused){time+=elapsedDt;phaseTime+=elapsedDt*bpm/60;}
-  const health=healthStyle({...vitals,bpm,hrv,sleepHours:sleep});
+  const health=healthStyle({...vitals,bpm,hrv,sleepHours:sleep},uniforms.uLight.value>.5?'light':'dark');
   uniforms.uTime.value=time;uniforms.uPulse.value=paused?0:cardiac(phaseTime%1);
-  vascular.update(phaseTime,health.tone);
   // Heartbeat modulates light only. Geometry and labels stay still between selections.
   brain.updateMatrixWorld(true);uniforms.uTone.value=health.tone;
+  uniforms.uWash.value.fromArray(health.wash);uniforms.uMiddle.value.fromArray(health.middle);
   uniforms.uLow.value.fromArray(health.low);uniforms.uHigh.value.fromArray(health.high);
   if(now-lastTrace>50){lastTrace=now;let d='';for(let x=0;x<=320;x+=2){const t=x*.045-time;const amplitude=5+health.tone*5;const y=20+amplitude*(Math.sin(t*(2.2+health.rest*.4))*.6+Math.sin(t*7.3+Math.sin(t*.7))*.24+Math.sin(t*13.1)*(.08+.1*health.tone))+uniforms.uPulse.value*2*Math.sin(x*.04);d+=`${x===0?'M':'L'}${x} ${y.toFixed(2)} `;}trace.setAttribute('d',d);}
   controls.update(dt);camera.updateMatrixWorld();
@@ -134,6 +131,6 @@ async function init() {
  const shifted=p.clone();if(part)shifted.add(part.mesh.position).sub(part.base);const v=brain.localToWorld(shifted).project(camera);buttons[i].style.left=`${(v.x*.5+.5)*canvas.clientWidth}px`;buttons[i].style.top=`${(-v.y*.5+.5)*canvas.clientHeight}px`;buttons[i].style.transform='translate(-50%,-50%)';buttons[i].hidden=Math.abs(v.z)>1;});renderer.render(scene,camera);
  });
  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();renderer.setAnimationLoop(null);status.hidden=false;status.textContent='3D paused. All projects are available below.';});
- window.addEventListener('pagehide',()=>{selectionAnimation?.stop();vascular.dispose();stopVitals();document.removeEventListener(THEME_EVENT,onTheme);renderer.setAnimationLoop(null);controls.dispose();renderer.dispose();},{once:true});
+ window.addEventListener('pagehide',()=>{selectionAnimation?.stop();stopVitals();document.removeEventListener(THEME_EVENT,onTheme);renderer.setAnimationLoop(null);controls.dispose();renderer.dispose();},{once:true});
 }
 init().catch(error=>{console.error('[inner-world]',error);const status=document.querySelector<HTMLElement>('#scene-status')!;status.textContent='3D unavailable. Explore every project below.';});

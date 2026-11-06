@@ -22,3 +22,11 @@ export function hrvAmount(ms: number): number {
 	return clamp((ms - 20) / 70, 0, 1);
 }
 
+
+export const LIGHT_PALETTE = [
+	[0.965, 0.94, 0.932],
+	[0.78, 0.5, 0.48],
+	[0.4, 0.1, 0.12],
+	[0.74, 0.16, 0.15],
+] as const;
+

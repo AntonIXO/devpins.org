@@ -1,0 +1,47 @@
+{
+  "status": "pass",
+  "outputDir": "/home/antonix/Projects/devpins.org/.artifacts/blender-setup-2",
+  "checks": [
+    {
+      "name": "bun",
+      "status": "pass",
+      "message": "Bun 1.4.4; requires 1.3.5 or newer"
+    },
+    {
+      "name": "executable",
+      "status": "pass",
+      "message": "/usr/bin/blender (from PATH)"
+    },
+    {
+      "name": "blender-version",
+      "status": "pass",
+      "message": "Blender 5.2.3 LTS; 5.2 LTS is the tested version. Other versions may differ."
+    },
+    {
+      "name": "python",
+      "status": "pass",
+      "message": "Completed in the local Blender process"
+    },
+    {
+      "name": "save",
+      "status": "pass",
+      "message": "Completed in the local Blender process"
+    },
+    {
+      "name": "reopen",
+      "status": "pass",
+      "message": "Completed in the local Blender process"
+    },
+    {
+      "name": "cpu-render",
+      "status": "skip",
+      "message": "Not requested; rendering has NOT been verified"
+    },
+    {
+      "name": "host-integration",
+      "status": "pass",
+      "message": "Reached through the plugin's MCP server. GPU rendering, network assets and the optional Rust runtime are not checked."
+    }
+  ],
+  "executable": "/usr/bin/blender"
+}

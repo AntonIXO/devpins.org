@@ -1,0 +1,2359 @@
+{
+  "actions": [],
+  "blender": {
+    "background": true,
+    "build_hash": "e13b728c6880",
+    "version": "5.2.3 LTS",
+    "version_tuple": [
+      5,
+      2,
+      3
+    ]
+  },
+  "hard_gate_pass": true,
+  "input": "/home/antonix/Projects/devpins.org/public/brain/brain-atlas.glb",
+  "issues": [],
+  "material_details": [
+    {
+      "image_texture_nodes": 0,
+      "images": [],
+      "name": "Brainstem",
+      "node_count": 2,
+      "use_nodes": true
+    },
+    {
+      "image_texture_nodes": 0,
+      "images": [],
+      "name": "Cerebellum",
+      "node_count": 2,
+      "use_nodes": true
+    },
+    {
+      "image_texture_nodes": 0,
+      "images": [],
+      "name": "Cortex / left",
+      "node_count": 2,
+      "use_nodes": true
+    },
+    {
+      "image_texture_nodes": 0,
+      "images": [],
+      "name": "Cortex / right",
+      "node_count": 2,
+      "use_nodes": true
+    },
+    {
+      "image_texture_nodes": 0,
+      "images": [],
+      "name": "Inner structures",
+      "node_count": 2,
+      "use_nodes": true
+    },
+    {
+      "image_texture_nodes": 0,
+      "images": [],
+      "name": "Project nodes",
+      "node_count": 2,
+      "use_nodes": true
+    },
+    {
+      "image_texture_nodes": 0,
+      "images": [],
+      "name": "Sulci",
+      "node_count": 2,
+      "use_nodes": true
+    }
+  ],
+  "materials": [
+    "Brainstem",
+    "Cerebellum",
+    "Cortex / left",
+    "Cortex / right",
+    "Inner structures",
+    "Project nodes",
+    "Sulci"
+  ],
+  "meshes": [
+    {
+      "boundary_edges": 88,
+      "connected_components": 1,
+      "data_name": "Icosphere.003",
+      "degenerate_faces": 0,
+      "edges": 524,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Brainstem"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Brainstem",
+      "non_manifold_edges": 88,
+      "polygons": 320,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 320,
+      "source_polygons": 320,
+      "source_vertices": 205,
+      "triangles": 320,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 205,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.28,
+          0.38,
+          -1.6
+        ],
+        [
+          0.28,
+          1.06,
+          -0.04
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 88,
+      "connected_components": 1,
+      "data_name": "Icosphere.002",
+      "degenerate_faces": 0,
+      "edges": 524,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Cerebellum"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Cerebellum",
+      "non_manifold_edges": 88,
+      "polygons": 320,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 320,
+      "source_polygons": 320,
+      "source_vertices": 205,
+      "triangles": 320,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 205,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.72,
+          0.6,
+          -0.78
+        ],
+        [
+          0.72,
+          1.76,
+          0.34
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 176,
+      "connected_components": 1,
+      "data_name": "Icosphere",
+      "degenerate_faces": 0,
+      "edges": 2008,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Cortex / left"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Cerebral hemisphere L",
+      "non_manifold_edges": 176,
+      "polygons": 1280,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 1280,
+      "source_polygons": 1280,
+      "source_vertices": 729,
+      "triangles": 1280,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 729,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -2.1,
+          -1.53,
+          -0.7
+        ],
+        [
+          0.46,
+          1.63,
+          1.74
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 176,
+      "connected_components": 1,
+      "data_name": "Icosphere.001",
+      "degenerate_faces": 0,
+      "edges": 2008,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Cortex / right"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Cerebral hemisphere R",
+      "non_manifold_edges": 176,
+      "polygons": 1280,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 1280,
+      "source_polygons": 1280,
+      "source_vertices": 729,
+      "triangles": 1280,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 729,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.46,
+          -1.53,
+          -0.7
+        ],
+        [
+          2.1,
+          1.63,
+          1.74
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 88,
+      "connected_components": 1,
+      "data_name": "Icosphere.004",
+      "degenerate_faces": 0,
+      "edges": 524,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Inner structures"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Corpus callosum",
+      "non_manifold_edges": 88,
+      "polygons": 320,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 320,
+      "source_polygons": 320,
+      "source_vertices": 205,
+      "triangles": 320,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 205,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.25,
+          -0.87,
+          0.21
+        ],
+        [
+          0.25,
+          0.97,
+          0.69
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 00",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 00",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.636869,
+          -1.172243,
+          0.075621
+        ],
+        [
+          -0.510859,
+          -0.707757,
+          0.424379
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 01",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 01",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.882014,
+          -0.925113,
+          0.216928
+        ],
+        [
+          -0.688394,
+          -0.467855,
+          0.581043
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 02",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 02",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -1.076492,
+          -0.685053,
+          0.030973
+        ],
+        [
+          -0.827874,
+          -0.229635,
+          0.389094
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 03",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 03",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -1.201324,
+          -0.451678,
+          -0.063568
+        ],
+        [
+          -0.918264,
+          -0.004522,
+          0.27994
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 04",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 04",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -1.244333,
+          -0.212131,
+          0.143113
+        ],
+        [
+          -0.948897,
+          0.250805,
+          0.503952
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 05",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 05",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -1.201324,
+          0.030066,
+          0.187672
+        ],
+        [
+          -0.918835,
+          0.492078,
+          0.552335
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 06",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 06",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -1.076492,
+          0.285315,
+          -0.023669
+        ],
+        [
+          -0.827707,
+          0.732226,
+          0.319848
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 07",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 07",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.882014,
+          0.509491,
+          -0.019553
+        ],
+        [
+          -0.687739,
+          0.965199,
+          0.337952
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus L 08",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus L 08",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.636869,
+          0.747214,
+          0.196766
+        ],
+        [
+          -0.5112,
+          1.205735,
+          0.561279
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 00",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 00",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.510859,
+          -1.172243,
+          0.075621
+        ],
+        [
+          0.636869,
+          -0.707757,
+          0.424379
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 01",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 01",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.688394,
+          -0.925113,
+          0.216928
+        ],
+        [
+          0.882014,
+          -0.467855,
+          0.581043
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 02",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 02",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.827874,
+          -0.685053,
+          0.030973
+        ],
+        [
+          1.076492,
+          -0.229635,
+          0.389094
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 03",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 03",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.918264,
+          -0.451678,
+          -0.063568
+        ],
+        [
+          1.201324,
+          -0.004522,
+          0.27994
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 04",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 04",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.948897,
+          -0.212131,
+          0.143113
+        ],
+        [
+          1.244333,
+          0.250805,
+          0.503952
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 05",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 05",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.918835,
+          0.030066,
+          0.187672
+        ],
+        [
+          1.201324,
+          0.492079,
+          0.552335
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 06",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 06",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.827707,
+          0.285315,
+          -0.023669
+        ],
+        [
+          1.076492,
+          0.732226,
+          0.319848
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 07",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 07",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.687739,
+          0.509491,
+          -0.019553
+        ],
+        [
+          0.882014,
+          0.965199,
+          0.337952
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 40,
+      "connected_components": 1,
+      "data_name": "Sulcus R 08",
+      "degenerate_faces": 0,
+      "edges": 308,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Sulci"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Sulcus R 08",
+      "non_manifold_edges": 40,
+      "polygons": 192,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 192,
+      "source_polygons": 192,
+      "source_vertices": 117,
+      "triangles": 192,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 117,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.5112,
+          0.747214,
+          0.196766
+        ],
+        [
+          0.636869,
+          1.205735,
+          0.561279
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 88,
+      "connected_components": 1,
+      "data_name": "Icosphere.005",
+      "degenerate_faces": 0,
+      "edges": 524,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Inner structures"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "Thalamus",
+      "non_manifold_edges": 88,
+      "polygons": 320,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 320,
+      "source_polygons": 320,
+      "source_vertices": 205,
+      "triangles": 320,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 205,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.34,
+          -0.52,
+          -0.16
+        ],
+        [
+          0.34,
+          0.32,
+          0.52
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 44,
+      "connected_components": 1,
+      "data_name": "Icosphere.011",
+      "degenerate_faces": 0,
+      "edges": 142,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Project nodes"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "node-audio",
+      "non_manifold_edges": 44,
+      "polygons": 80,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 80,
+      "source_polygons": 80,
+      "source_vertices": 63,
+      "triangles": 80,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 63,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.844894,
+          0.02,
+          0.08
+        ],
+        [
+          1.035106,
+          0.22,
+          0.28
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 44,
+      "connected_components": 1,
+      "data_name": "Icosphere.008",
+      "degenerate_faces": 0,
+      "edges": 142,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Project nodes"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "node-dreamwalker",
+      "non_manifold_edges": 44,
+      "polygons": 80,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 80,
+      "source_polygons": 80,
+      "source_vertices": 63,
+      "triangles": 80,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 63,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.664894,
+          0.48,
+          1.1
+        ],
+        [
+          0.855106,
+          0.68,
+          1.3
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 44,
+      "connected_components": 1,
+      "data_name": "Icosphere.009",
+      "degenerate_faces": 0,
+      "edges": 142,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Project nodes"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "node-minebit",
+      "non_manifold_edges": 44,
+      "polygons": 80,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 80,
+      "source_polygons": 80,
+      "source_vertices": 63,
+      "triangles": 80,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 63,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          0.924894,
+          -0.62,
+          0.6
+        ],
+        [
+          1.115106,
+          -0.42,
+          0.8
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 44,
+      "connected_components": 1,
+      "data_name": "Icosphere.007",
+      "degenerate_faces": 0,
+      "edges": 142,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Project nodes"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "node-optihealth",
+      "non_manifold_edges": 44,
+      "polygons": 80,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 80,
+      "source_polygons": 80,
+      "source_vertices": 63,
+      "triangles": 80,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 63,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -1.075106,
+          0.08,
+          1.08
+        ],
+        [
+          -0.884894,
+          0.28,
+          1.28
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 44,
+      "connected_components": 1,
+      "data_name": "Icosphere.010",
+      "degenerate_faces": 0,
+      "edges": 142,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Project nodes"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "node-sailfish",
+      "non_manifold_edges": 44,
+      "polygons": 80,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 80,
+      "source_polygons": 80,
+      "source_vertices": 63,
+      "triangles": 80,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 63,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -1.035106,
+          0.66,
+          0.56
+        ],
+        [
+          -0.844894,
+          0.86,
+          0.76
+        ]
+      ],
+      "zero_length_edges": 0
+    },
+    {
+      "boundary_edges": 44,
+      "connected_components": 1,
+      "data_name": "Icosphere.006",
+      "degenerate_faces": 0,
+      "edges": 142,
+      "flat_polygons": 0,
+      "invalid_vertices": 0,
+      "isolated_vertices": 0,
+      "material_slots": [
+        "Project nodes"
+      ],
+      "missing_material_faces": 0,
+      "modifiers": [],
+      "name": "node-sensorlm",
+      "non_manifold_edges": 44,
+      "polygons": 80,
+      "refinement_modifiers": [],
+      "shape_keys": 0,
+      "smooth_polygon_ratio": 1.0,
+      "smooth_polygons": 80,
+      "source_polygons": 80,
+      "source_vertices": 63,
+      "triangles": 80,
+      "uv_layers": 1,
+      "vertex_groups": 0,
+      "vertices": 63,
+      "weighted_vertices": 0,
+      "wire_edges": 0,
+      "world_bounds": [
+        [
+          -0.815106,
+          -0.82,
+          1.14
+        ],
+        [
+          -0.624894,
+          -0.62,
+          1.34
+        ]
+      ],
+      "zero_length_edges": 0
+    }
+  ],
+  "objects": [
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.56,
+        0.68,
+        1.56
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.72,
+        -0.82
+      ],
+      "name": "Brainstem",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        1.44,
+        1.16,
+        1.12
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        1.18,
+        -0.22
+      ],
+      "name": "Cerebellum",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        2.56,
+        3.16,
+        2.44
+      ],
+      "hidden_render": false,
+      "location": [
+        -0.82,
+        0.05,
+        0.52
+      ],
+      "name": "Cerebral hemisphere L",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        2.56,
+        3.16,
+        2.44
+      ],
+      "hidden_render": false,
+      "location": [
+        0.82,
+        0.05,
+        0.52
+      ],
+      "name": "Cerebral hemisphere R",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.5,
+        1.84,
+        0.48
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.05,
+        0.45
+      ],
+      "name": "Corpus callosum",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.12601,
+        0.464486,
+        0.348758
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 00",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.19362,
+        0.457258,
+        0.364115
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 01",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.248618,
+        0.455417,
+        0.358121
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 02",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.28306,
+        0.447156,
+        0.343508
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 03",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.295436,
+        0.462936,
+        0.36084
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 04",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.282488,
+        0.462012,
+        0.364663
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 05",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.248785,
+        0.446911,
+        0.343517
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 06",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.194275,
+        0.455708,
+        0.357506
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 07",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.125669,
+        0.458521,
+        0.364512
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus L 08",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.12601,
+        0.464486,
+        0.348758
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 00",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.19362,
+        0.457258,
+        0.364115
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 01",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.248618,
+        0.455417,
+        0.358121
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 02",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.28306,
+        0.447156,
+        0.343508
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 03",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.295436,
+        0.462936,
+        0.36084
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 04",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.282488,
+        0.462012,
+        0.364663
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 05",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.248785,
+        0.446911,
+        0.343517
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 06",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.194275,
+        0.455708,
+        0.357506
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 07",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.125669,
+        0.458521,
+        0.364512
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "Sulcus R 08",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.68,
+        0.84,
+        0.68
+      ],
+      "hidden_render": false,
+      "location": [
+        0.0,
+        -0.1,
+        0.18
+      ],
+      "name": "Thalamus",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.190212,
+        0.2,
+        0.2
+      ],
+      "hidden_render": false,
+      "location": [
+        0.94,
+        0.12,
+        0.18
+      ],
+      "name": "node-audio",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.190212,
+        0.2,
+        0.2
+      ],
+      "hidden_render": false,
+      "location": [
+        0.76,
+        0.58,
+        1.2
+      ],
+      "name": "node-dreamwalker",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.190212,
+        0.2,
+        0.2
+      ],
+      "hidden_render": false,
+      "location": [
+        1.02,
+        -0.52,
+        0.7
+      ],
+      "name": "node-minebit",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.190212,
+        0.2,
+        0.2
+      ],
+      "hidden_render": false,
+      "location": [
+        -0.98,
+        0.18,
+        1.18
+      ],
+      "name": "node-optihealth",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.190212,
+        0.2,
+        0.2
+      ],
+      "hidden_render": false,
+      "location": [
+        -0.94,
+        0.76,
+        0.66
+      ],
+      "name": "node-sailfish",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    },
+    {
+      "action": null,
+      "collections": [
+        "Scene Collection"
+      ],
+      "dimensions": [
+        0.190212,
+        0.2,
+        0.2
+      ],
+      "hidden_render": false,
+      "location": [
+        -0.72,
+        -0.72,
+        1.24
+      ],
+      "name": "node-sensorlm",
+      "parent": null,
+      "rotation_euler": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transform_is_finite": true,
+      "type": "MESH"
+    }
+  ],
+  "scene": {
+    "bounds": {
+      "dimensions": [
+        4.2,
+        3.29,
+        3.34
+      ],
+      "max": [
+        2.1,
+        1.76,
+        1.74
+      ],
+      "min": [
+        -2.1,
+        -1.53,
+        -1.6
+      ]
+    },
+    "fps": 24.0,
+    "frame_end": 250,
+    "frame_start": 1,
+    "name": "Scene"
+  },
+  "schema_version": 3,
+  "totals": {
+    "actions": 0,
+    "armatures": 0,
+    "bones": 0,
+    "boundary_edges": 1688,
+    "cameras": 0,
+    "constraints": 0,
+    "degenerate_faces": 0,
+    "edges": 12508,
+    "flat_polygons": 0,
+    "geometry_nodes_modifiers": 0,
+    "images": 0,
+    "invalid_vertices": 0,
+    "isolated_vertices": 0,
+    "lights": 0,
+    "materials": 7,
+    "mesh_objects": 30,
+    "missing_material_faces": 0,
+    "node_materials": 7,
+    "non_manifold_edges": 1688,
+    "objects": 30,
+    "polygons": 7776,
+    "refinement_modifiers": 0,
+    "rigid_body_objects": 0,
+    "shape_keys": 0,
+    "simulation_modifiers": 0,
+    "smooth_polygons": 7776,
+    "textured_materials": 0,
+    "triangles": 7776,
+    "uv_mapped_meshes": 30,
+    "vertices": 4762,
+    "weighted_meshes": 0,
+    "wire_edges": 0,
+    "zero_length_edges": 0
+  }
+}

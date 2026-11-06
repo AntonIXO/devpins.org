@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/usr/bin/blender",
+    "--background",
+    "--factory-startup",
+    "--disable-autoexec",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/home/antonix/.claude/plugins/cache/blender-agent-studio/blender-agent-studio/0.6.4/scripts/setup-probe.py",
+    "--",
+    "/home/antonix/Projects/devpins.org/.artifacts/blender-setup-2",
+    "--skip-render"
+  ],
+  "cwd": "/home/antonix/.claude/plugins/cache/blender-agent-studio/blender-agent-studio/0.6.4/scripts",
+  "exitCode": 0,
+  "durationMs": 994,
+  "stdout": "00:00.652  blend            | Read blend: \"/home/antonix/Projects/devpins.org/.artifacts/blender-setup-2/setup-check.blend\"\nInfo: Saved as \"setup-check.blend\"\nBlender 5.2.3 LTS (hash e13b728c6880 built 2026-10-26 14:00:03)\n\nBlender quit\n",
+  "stderr": "/home/antonix/.claude/plugins/cache/blender-agent-studio/blender-agent-studio/0.6.4/scripts/setup-probe.py:55: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0\n  material.use_nodes = True\n",
+  "timedOut": false
+}

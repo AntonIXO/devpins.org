@@ -30,7 +30,6 @@ check() {
 	probe "$ORIGIN/brain/" 200
 	probe "$ORIGIN/cv/" 200
 	probe "$ORIGIN/mind/regions.json" 200
-	probe "$ORIGIN/mind/vessels.json" 200
 	probe "$ORIGIN/mind/cortex-core.json" 200
 	probe "$ORIGIN/mind/mind.glb" 200
 	probe "$ORIGIN/favicon.svg" 200

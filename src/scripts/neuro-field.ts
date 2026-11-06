@@ -1,5 +1,7 @@
-import { DARK_PALETTE, cardiac, hrvAmount } from './health-visual';
-import fragmentSource from '../shaders/neuro-noise.frag?raw';
+import { DARK_PALETTE, LIGHT_PALETTE, cardiac, hrvAmount } from './health-visual';
+import fragmentTemplate from '../shaders/neuro-noise.frag?raw';
+import neuroKernel from '../shaders/neuro-kernel.glsl?raw';
+const fragmentSource = fragmentTemplate.replace('// @neuro-kernel', neuroKernel);
 import vertexSource from '../shaders/fullscreen.vert?raw';
 import {
 	FALLBACK_HRV,
@@ -27,13 +29,6 @@ const THEME_LERP_MS = 400;
 const BPM_LERP_MS = 1000;
 const CACHE_KEY = 'devpins-vitals';
 const DPR_CAP = 1.5;
-
-const LIGHT_PALETTE = [
-	[0.965, 0.94, 0.932],
-	[0.78, 0.5, 0.48],
-	[0.4, 0.1, 0.12],
-	[0.74, 0.16, 0.15],
-] as const;
 
 type Vec3 = readonly [number, number, number];
 

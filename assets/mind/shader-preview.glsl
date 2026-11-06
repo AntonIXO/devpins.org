@@ -1,5 +1,4 @@
-// Surface detail is a shading effect; branching vessels are separate surface-following geometry.
-#define DEBUG_MODE 0
+
 
 // Library code below is bundled from shader-skills (MIT): https://github.com/gokayfem/shader-skills
 // ---- shader-skills library: common ----
@@ -34,11 +33,6 @@ float hash12(vec2 p) {
     uvec2 q = uvec2(ivec2(floor(p)));
     return uintToUnit(pcgHash(q.x + pcgHash(q.y)));
 }
-// Random float in [0,1) for an integer-valued 3D input.
-float hash13(vec3 p) {
-    uvec3 q = uvec3(ivec3(floor(p)));
-    return uintToUnit(pcgHash(q.x + pcgHash(q.y + pcgHash(q.z))));
-}
 // Random vec3 in [0,1)^3 for an integer-valued 3D input.
 vec3 hash33(vec3 p) { return uintToUnit(pcg3d(uvec3(ivec3(floor(p))))); }
 
@@ -49,29 +43,6 @@ vec3 quinticFade(vec3 f) { return f * f * f * (f * (f * 6.0 - 15.0) + 10.0); }
 // Derivative of quinticFade: 30 t^2 (t - 1)^2.
 vec2 quinticFadeDeriv(vec2 f) { return 30.0 * f * f * (f * (f - 2.0) + 1.0); }
 vec3 quinticFadeDeriv(vec3 f) { return 30.0 * f * f * (f * (f - 2.0) + 1.0); }
-// 2D value noise with analytic derivatives. Returns vec3(value, d/dx, d/dy).
-vec3 valueNoiseD(vec2 p) {
-    vec2 i = floor(p), f = fract(p);
-    vec2 u = quinticFade(f), du = quinticFadeDeriv(f);
-    float a = hash12(i);
-    float b = hash12(i + vec2(1.0, 0.0));
-    float c = hash12(i + vec2(0.0, 1.0));
-    float d = hash12(i + vec2(1.0, 1.0));
-    float k1 = b - a, k2 = c - a, k3 = a - b - c + d;
-    return vec3(a + k1 * u.x + k2 * u.y + k3 * u.x * u.y,
-                du * vec2(k1 + k3 * u.y, k2 + k3 * u.x));
-}
-// 2D value noise.
-float valueNoise(vec2 p) { return valueNoiseD(p).x; }
-// 3D value noise.
-float valueNoise(vec3 p) {
-    vec3 i = floor(p), f = fract(p);
-    vec3 u = quinticFade(f);
-    return mix(mix(mix(hash13(i + vec3(0, 0, 0)), hash13(i + vec3(1, 0, 0)), u.x),
-                   mix(hash13(i + vec3(0, 1, 0)), hash13(i + vec3(1, 1, 0)), u.x), u.y),
-               mix(mix(hash13(i + vec3(0, 0, 1)), hash13(i + vec3(1, 0, 1)), u.x),
-                   mix(hash13(i + vec3(0, 1, 1)), hash13(i + vec3(1, 1, 1)), u.x), u.y), u.z);
-}
 // Unit gradient for a 2D lattice point.
 vec2 latticeGradient(vec2 cell) {
     float a = TAU * hash12(cell);
@@ -188,45 +159,81 @@ vec3 linearToSrgb(vec3 c) {
     return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(0.0031308, c));
 }
 
-// ---- shader-skills library: post ----
-// Natural (cos^4) vignette for a pinhole camera: uv is the screen point, focal the camera focal length. Wider lenses vignette more. Multiply HDR color before tonemapping.
-float vignette(vec2 uv, float focal) {
-    float f2 = focal * focal;
-    float k = f2 / (f2 + dot(uv, uv));
-    return k * k;
+// ---- shader ----
+// Shared Neuro Noise field, extracted unchanged from neuro-noise.frag.
+// Adapted from Paper Shaders / 21st.dev Shader Builder, Apache-2.0.
+// https://github.com/paper-design/shaders
+// Periodic trigonometric domain deformation, not a sine-based random hash.
+float neuroField(vec2 p, float t, float intensity, float paramA, float seed) {
+  vec2 q = p * (1.6 + intensity * 2.4);
+  float field = 0.0;
+  float weight = 0.55;
+  for (int i = 0; i < 6; i++) {
+    float fi = float(i);
+    q += vec2(
+      sin(q.y * (1.7 + fi * 0.09) + t * (0.35 + fi * 0.04) + seed),
+      cos(q.x * (1.5 + fi * 0.11) - t * (0.28 + fi * 0.03))
+    ) * (0.22 + intensity * 0.14);
+    float filaments = abs(sin(q.x + q.y + fi * 0.72));
+    field += weight / (0.08 + filaments);
+    weight *= 0.62;
+    q = q.yx * vec2(-1.08, 1.04);
+  }
+  float glow = 1.0 - exp(-field * (0.018 + paramA * 0.04));
+  return clamp(glow, 0.0, 1.0);
 }
 
-// ---- shader ----
-const float FIBER_SCALE = 13.0;
-const float FLOW_SPEED = 0.12;
-const float RIM_POWER = 2.5;
-vec3 corticalLight(vec3 p, vec3 n, vec3 viewDir, float time, float pulse, float tone, vec3 low, vec3 high, vec3 regionColor, float selection) {
- float rim=pow(1.0-clamp(abs(dot(n,viewDir)),0.0,1.0),RIM_POWER);
- vec3 lamp=normalize(vec3(-0.7,1.5,2.0));
- float diffuse=0.25+0.75*max(dot(n,lamp),0.0);
- float grain=fbm(p*3.5,3,2.0,0.5);
- float capillary=1.0-smoothstep(.012,.055,abs(valueNoise(p*FIBER_SCALE+vec3(grain*2.0))-.5));
- vec3 tissue=regionColor*(.25+selection*.12)+low*.028;
- float specular=pow(max(dot(reflect(-lamp,n),viewDir),0.0),30.0);
- vec3 color=tissue*diffuse;
- color+=regionColor*rim*(.12+selection*.15);
- color+=high*(rim*.025+capillary*(.008+tone*.006)+specular*.045);
- color+=mix(vec3(.28,.025,.12),high,.25)*selection*.06;
- color*=1.0+pulse*.06;
+// Same six-stage field and palette progression as the homepage. The only 3D
+// adaptation is triplanar sampling plus anatomical lighting. No tubes or sprites.
+#define DEBUG_MODE 0
+const float NEURO_SCALE = 0.64;
+const float NEURO_TIME_SCALE = 0.28;
+const float REGION_TINT = 0.28;
+
+vec3 neuroPalette(float x, vec3 wash, vec3 low, vec3 middle, vec3 high) {
+ float f=clamp(x,0.0,1.0)*3.0;
+ vec3 c=mix(wash,low,smoothstep(0.0,1.0,clamp(f,0.0,1.0)));
+ c=mix(c,middle,smoothstep(0.0,1.0,clamp(f-1.0,0.0,1.0)));
+ return mix(c,high,smoothstep(0.0,1.0,clamp(f-2.0,0.0,1.0)));
+}
+float corticalField(vec2 p,float time,float pulse,float tone) {
+ float angle=1.94;
+ p=mat2(cos(angle),-sin(angle),sin(angle),cos(angle))*p;
+ float detail=2.05+0.9*tone;
+ // Verified noise helpers provide the small organic warp; the main field is
+ // the exact shared homepage recurrence, not a newly invented vessel pattern.
+ p+=(0.04+0.1*tone)*(vec2(fbm(p*detail+1.0,3),fbm(p*detail+vec2(5.2,1.3),3))-.5);
+ return neuroField(p,time*NEURO_TIME_SCALE,.86,.32+.38*pulse*(.65+.5*tone),1.0);
+}
+vec3 corticalLight(vec3 p,vec3 n,vec3 viewDir,float time,float pulse,float tone,vec3 low,vec3 high,vec3 regionColor,float selection,vec3 wash,vec3 middle,vec3 surfaceNormal) {
+ vec3 w=pow(abs(surfaceNormal),vec3(6.0));w/=max(w.x+w.y+w.z,.001);
+ p*=NEURO_SCALE;
+ float field= w.x*corticalField(p.zy,time,pulse,tone)
+             +w.y*corticalField(p.xz,time,pulse,tone)
+             +w.z*corticalField(p.xy,time,pulse,tone);
+ vec3 c=neuroPalette(field,wash,low,middle,high);
+ float lambert=max(dot(n,normalize(vec3(-.6,1.1,2.0))),0.0);
+ float rim=pow(1.0-clamp(abs(dot(n,viewDir)),0.0,1.0),2.8);
+ // Keep the field's colour language, with stable regional tint for navigation.
+ c=mix(c,linearToSrgb(regionColor)*(.35+field*.12),REGION_TINT);
+ c*=.72+.28*lambert;
+ c+=high*rim*(.065+selection*.10)+regionColor*selection*.035;
+ c=(c-.5)*(1.0+.06*pulse)+.5;
  #if DEBUG_MODE == 2
  return n*.5+.5;
  #elif DEBUG_MODE == 5
- return vec3(capillary);
+ return vec3(field);
  #else
- return linearToSrgb(color);
+ return clamp(c,0.0,1.0);
  #endif
 }
-vec3 neuralAtmosphere(vec2 uv,float time,float pulse,float tone,vec3 low,vec3 high){
- float field=fbm(vec3(uv*2.0,time*.025),3,2.0,.5);
- float threads=1.0-smoothstep(.012,.06,abs(sin(uv.x*3.0+uv.y*2.0+field*5.0)));
- float vignette=exp(-dot(uv,uv)*.6);
- return mix(vec3(.018,.009,.026),low*.3,field*vignette*.7)+high*threads*vignette*(.008+tone*.006+pulse*.009);
+vec3 neuralAtmosphere(vec2 uv,float time,float pulse,float tone,vec3 low,vec3 high) {
+ float field=corticalField(uv*.7,time,pulse,tone);
+ vec3 c=neuroPalette(field,vec3(.55,.09,.28),low,vec3(.027,.012,.051),high);
+ return mix(vec3(.025,.018,.030),c,.075);
 }
+
+float corticalGrain(vec2 pixel) { return hash12(pixel); }
 // Preview controls: BPM = beat frequency; HRV = flow complexity; SLEEP = filament tint.
 const float BPM = 43.0;
 const float HRV = 63.0;
@@ -239,6 +246,6 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
  vec3 high=vec3(1.0,0.855,0.475)*(1.0+min(0.0,(SLEEP-7.2)/2.4)*0.55);
  vec3 color=neuralAtmosphere(uv,iTime,pulse,tone,low,high);
  float r=length(uv);
- if(r<0.85){vec3 n=normalize(vec3(uv,sqrt(max(0.001,0.85*0.85-r*r))));color=corticalLight(vec3(uv,n.z),n,vec3(0.0,0.0,1.0),iTime,pulse,tone,low,high,vec3(0.4,0.3,0.2),0.0);}
+ if(r<0.85){vec3 n=normalize(vec3(uv,sqrt(max(0.001,0.85*0.85-r*r))));color=corticalLight(vec3(uv,n.z),n,vec3(0.0,0.0,1.0),iTime,pulse,tone,low,high,vec3(0.4,0.3,0.2),0.0,vec3(.55,.09,.28),vec3(.027,.012,.051),n);}
  fragColor=vec4(color,1.0);
 }

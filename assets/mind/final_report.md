@@ -7,7 +7,7 @@ fonts, paper/ink tokens and theme control. The old brain experiment is not impor
 - Six atlas-labelled territories, raycast selection on the actual meshes.
 - Selected cortical parts separate outward; previous selection returns. Motion
   uses an interruptible 280 ms ease-in-out tween, with immediate reduced-motion updates.
-- Particles and labels follow the moving parts. Orbit drag does not select a project.
+- Object-space neural texture and labels follow the moving parts. Orbit drag does not select a project.
 - Fixed 50/50 desktop view: brain on the left, one paginated CV entry on the right.
   One compact summary index, no page or panel scrolling. Mobile stacks the brain
   above the reader and keeps the index collapsible within the same viewport.
@@ -55,23 +55,17 @@ checks, not physical-device certification.
 Production is not deployed from this laptop. Local compiled preview is port 4322;
 dev preview is port 4321. Remote deployment still requires the server checkout.
 
-## Vascular motion repair
-- Added 390 artistic vessel branches following shortest paths over the source pial
-  topology, generated reproducibly by scripts/build_vessels.py. These are not
-  measured angiographic vessels. Tube geometry and 2,708 moving particles are
-  attached to their atlas parcels, so they follow region selection.
-- Region separation reduced to 0.20 scene units on the near hemisphere and 0.06
-  on the far side. An intact cortex inset along its normals fills deep cut gaps.
-- Six stable, distinct region hues replace the nearly uniform plum surface.
-- Heartbeat affects light only: no recurring scaling or displacement of geometry
-  or labels. Particle size is constant. Explicit pause freezes the visual clock;
-  orbit and selection no longer silently pause it. Low FPS does not slow the
-  physiological clock (elapsed time is separate from control damping time).
-- HR controls beat/particle timing; HRV controls flow speed and trace complexity;
-  sleep retains the shared filament tint mapping.
-- Browser verified: all marker screen coordinates unchanged over 1.3–1.5 seconds
-  while the signal animates; 2,708 particles; exactly one visible CV entry.
-- GLSL compilation, build, existing tests and local compiled-route probes pass.
+## Neuro Noise material (replaces the vascular experiment)
+Removed the 390-branch TubeGeometry overlay, all 2,708 dot sprites and their loader.
+The homepage's original six-stage Neuro Noise field now lives in neuro-kernel.glsl
+and is used by both the homepage and the 3D material. Homepage equations and field
+parameters are unchanged. The 3D adaptation uses object-space triplanar sampling,
+verified library noise for the small domain warp, anatomical lighting and mild
+regional tint. Same palette progression, time scale, grain and health mapping.
+No geometry/label pulsation, no literal wires or bead particles. Region selection,
+50/50 layout and pagination remain intact. Apache-2.0 attribution is retained.
+Regenerate the bundle/preview with scripts/build_neuro_shader.py and the skill's
+glsl_tools.py path. A source consistency test prevents generated-kernel drift.
 
 ## Split-view verification
 Desktop 1440x1000: brain width 720 px, document height exactly 1000 px.
