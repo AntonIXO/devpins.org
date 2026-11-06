@@ -42,6 +42,9 @@ export interface CvSkillGroup {
 export const cvIntro =
 	'Applied maths and AI student building health-data infrastructure — from ARM kernel ports to vector embeddings of my own biometrics.';
 
+export const cvInterests =
+	'Audiophilia · modern art · biohacking · half-marathons · real rock climbing · mycology · cyberpunk.';
+
 export const cvLinks: CvLink[] = [
 	{ label: 'antonix@devpins.org', href: 'mailto:antonix@devpins.org' },
 	{ label: 'X · @9Rasp', href: 'https://x.com/9Rasp' },
