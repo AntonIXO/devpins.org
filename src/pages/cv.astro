@@ -1,8 +1,39 @@
 ---
 import SectionLabel from '../components/SectionLabel.astro';
+import VibesciencePreview from '../components/VibesciencePreview.astro';
 import { SITE_AUTHOR, SITE_LOCATION } from '../consts';
 import { awards, cvLinks, cvProjects, cvProjectsNote, education, miscVibeProjects, skills } from '../data/cv';
+import vibescienceGraph from '../data/vibescience-graph.json';
 import SiteLayout from '../layouts/SiteLayout.astro';
+
+const previewNodes = [...vibescienceGraph.nodes]
+	.sort((a, b) => b.degree - a.degree)
+	.slice(0, 120)
+	.map((node) => ({
+		id: node.id,
+		label: node.label,
+		degree: node.degree,
+		val: node.size,
+		color:
+			node.kind === 'diagnostics'
+				? '#c28b5a'
+				: node.kind === 'experiments'
+					? '#c4a15b'
+					: node.kind === 'hypotheses'
+						? '#8f83c1'
+						: node.kind === 'problems'
+							? '#c46c6c'
+							: node.kind === 'papers'
+								? '#6e9eae'
+								: '#8b8e97',
+		x: node.x,
+		y: node.y,
+	}));
+const previewNodeIds = new Set(previewNodes.map((node) => node.id));
+const previewLinks = vibescienceGraph.edges
+	.filter((edge) => previewNodeIds.has(edge.source) && previewNodeIds.has(edge.target))
+	.map((edge) => ({ source: edge.source, target: edge.target, weight: edge.weight }));
+const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: previewLinks }).replace(/</g, '\\u003c');
 ---
 
 <SiteLayout
@@ -96,14 +127,20 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 						</div>
 						<p class="lede">{item.lede}</p>
 						<ul>
-							{item.bullets.map((bullet) => (
-								<li
-									set:html={bullet.replace(
-										'Yuri Rykov (scholar profile)',
-										'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer" data-umami-event="cv-scholar-click" data-umami-event-target="yuri-rykov">Yuri Rykov</a>',
-									)}
-								/>
-							))}
+							{item.bullets.map((bullet) => {
+								const isVibesciencePreview = item.preview === 'vibescience' && bullet === item.bullets[item.bullets.length - 1];
+								return (
+									<li class:list={{ 'vibescience-preview-row': isVibesciencePreview }}>
+										<span
+											set:html={bullet.replace(
+												'Yuri Rykov (scholar profile)',
+												'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer" data-umami-event="cv-scholar-click" data-umami-event-target="yuri-rykov">Yuri Rykov\'s scholar profile</a>',
+											)}
+										/>
+										{isVibesciencePreview && <VibesciencePreview data={vibesciencePreviewData} />}
+									</li>
+								);
+							})}
 						</ul>
 						{item.video && (
 							<figure class="project-video">
@@ -308,6 +345,16 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 
 	ul :global(a) {
 		border-bottom: 1px solid var(--rule);
+	}
+
+	.vibescience-preview-row {
+		position: relative;
+		z-index: 1;
+	}
+
+	.vibescience-preview-row:hover,
+	.vibescience-preview-row:focus-within {
+		z-index: 4;
 	}
 
 	.awards {

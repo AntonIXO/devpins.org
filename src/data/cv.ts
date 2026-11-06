@@ -17,6 +17,7 @@ export interface CvProject {
 	period: string;
 	lede: string;
 	bullets: string[];
+	preview?: 'vibescience';
 	video?: {
 		src: string;
 		webm: string;
@@ -43,7 +44,7 @@ export interface CvSkillGroup {
 }
 
 export const cvIntro =
-	'Applied maths and AI student building health-data infrastructure — from ARM kernel ports to vector embeddings of my own biometrics.';
+	'CS student obsessed with health optimization and analysis. Having fun building cool projects.';
 
 export const cvProjectsNote = 'All projects listed here were completed independently.';
 
@@ -72,62 +73,60 @@ export const education: CvEducation[] = [
 
 export const cvProjects: CvProject[] = [
 	{
-		title: 'LightSem — audio-to-stage-lighting research',
-		href: 'https://github.com/AntonIXO/lightsem',
-		period: 'Sept 2026 – present',
-		lede: 'Research system that turns audio into stage lighting: causal audio features drive motion descriptors, fixture parameters, and DMX output.',
-		bullets: [
-			'Built the streaming audio feature bus, motion-to-fixture conductor, 512-channel DMX encoder, and headless 3D renderer.',
-			'Full-track Shpongle demo shows the own-song window alongside the actual emitted DMX lighting.',
-		],
-		video: {
-			src: '/projects/lightsem-demo.mp4',
-			webm: '/projects/lightsem-demo.webm',
-			poster: '/projects/lightsem-demo.jpg',
-			label: 'SSL Shpongle demo — actual emitted DMX lighting',
-		},
-	},
-	{
-		title: 'Sensor Language Models (SLM) research',
-		period: 'Jan 2026 – present',
-		lede: 'In progress: reimplementing Sensor Language Models on a custom biometric dataset for mental-state detection.',
-		bullets: [
-			'Using the optiHealth platform infrastructure for continuous physiological data collection.',
-			'Research in collaboration with Yuri Rykov (scholar profile).',
-		],
-	},
-	{
 		title: 'optiHealth — personal N-of-1 biohacking platform',
 		href: 'https://optihealth.devpins.org/',
 		period: 'July 2025 – present',
-		lede: 'Single place to bring all my health data (vitals, sleep, trainings, tags, supplements, geo...) and search for insights in it.',
+		lede: 'A single place to bring together all my health data (vitals, sleep, training, tags, supplements, location, and more) and search it for insights.',
 		bullets: [
-			'Web, Android app, scalable database and analysis engine architecture',
-			'Classical statistical analysis engine that uses Spearman, BH-FDR. ',
-			'Some interesting findings: my mood follows the curve by hours, each later hour of bed stealing 5 mins of deep sleep (despite length), ',
+			'Web app, Android app, scalable database, and analysis-engine architecture.',
+			'Classical statistical analysis engine using Spearman correlation and BH-FDR.',
+			'Some interesting findings: my mood follows an hourly curve, and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length);',
 			'Polygala, GABA, and NAC ↔ Oura sleep score.',
 			'Multivitamins ↔ HRV.',
-			'Cerebrolysin ↔ sleep: <a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">insight 1</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">insight 2</a>.',
+			'<a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">Cerebrolysin ↔ HR</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">Cerebrolysin ↔ sleep</a>.',
+		],
+	},
+	{
+		title: 'Sensor Language Models (SLM) research',
+		period: 'March 2026 – present',
+		lede: 'Implementing SLMs — LLMs capable of understanding time-series data from wearables.',
+		preview: 'vibescience',
+		bullets: [
+			'Using the optiHealth platform infrastructure for continuous physiological data collection.',
+			'Research in collaboration with Yuri Rykov (scholar profile).',
+			'Applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> — check the graph.',
+		],
+	},
+	{
+		title: 'LightSem — audio-to-stage-lighting fun',
+		href: 'https://github.com/AntonIXO/lightsem',
+		period: 'Sept 2026 – present',
+		lede: 'I don\'t like stage lighting, especially algorithmic lighting, so I tried to build one learned from dancing.',
+		bullets: [
+			'Pulled all the Just Dance footage I could find from YouTube, extracted the motions, and wired up <a href="https://github.com/tencent-ailab/muq" target="_blank" rel="noopener noreferrer">MuQ</a> alongside other features.',
+			'Though it did not work well and collapsed. I\'ll fix it in my free time.',
 		],
 	},
 	{
 		title: 'Player — bit-perfect music player in Rust',
 		href: 'https://github.com/AntonIXO/player',
 		period: 'May 2026 – June 2026',
-		lede: 'High-end music player for Linux and postmarketOS that writes lossless audio directly to ALSA hardware without resampling, mixing, dither, or software volume.',
+		lede: 'High-end music player for postmarketOS on a Poco F1 running a mainline Linux kernel.',
 		bullets: [
-			'Rust workspace with a headless playback engine, gapless queues, DSD/DoP support, library search, and a GTK shell.',
-			'Target hardware is a Poco F1 running postmarketOS with a Chord Mojo 2.',
+			'Writes audio bits directly to the kernel through the shortest path 🙏. Inspired by <a href="https://github.com/sam0402/ArchQ" target="_blank" rel="noopener noreferrer">ArchQ</a>.',
+			'Target hardware: a Poco F1 running postmarketOS with a mainline Linux kernel and a Chord Mojo 2.',
+			'My inner audiophile is finally happy.',
 		],
 	},
 	{
 		title: 'Dream Walker — LLM-driven retro dream thriller',
 		href: 'https://dreamwalker.devpins.org',
-		period: 'Feb 2026 – present',
-		lede: 'Anton Dream Simulator powered by AI npc agents.',
+		period: 'June 2026 – Sep 2026',
+		lede: 'Anton Dream Simulator powered by AI NPC agents.',
 		bullets: [
 			'Custom PixiJS engine with dynamic tilemaps, shaders, and real-time state manipulation.',
-			'Self-contained agent runtime using Gemini 3.7 reasoning models for contextual NPC dialogue and world reactions.',
+			'Self-contained agent runtime for contextual NPC dialogue and world reactions.',
+			'Using jev for NPC decisions.',
 		],
 	},
 	{
@@ -141,15 +140,17 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
-		title: 'MineBit — NFT marketplace for Minecraft builds (TON)',
+		title: 'MineBit — NFT marketplace for Minecraft builds',
 		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
 		period: 'May 2024 – July 2024',
-		lede: 'Decentralised marketplace letting creators mint and sell voxel builds as NFTs.',
+		lede: 'Marketplace letting creators mint and sell builds as NFTs.',
 		bullets: [
-			'Reimplemented custom server logic with Minestom and Kotlin, replacing the official Microsoft codebase.',
-			'Go helper microservice for blockchain and FunC smart-contract integration.',
-			'Telegram bot using Web-App technology so users view their 3D builds on-device.',
-			'Highlighted at The Open League Hackathon.',
+			'Implemented custom server logic with Minestom and Kotlin, replacing the official Microsoft codebase.',
+			'Go microservice for blockchain integration.',
+			'Telegram bot with Next.js to show 3D builds in a mini app.',
+			'Highlighted at The Open League Hackathon. Received very good feedback from the crypto community.',
+			'NFTs in Minecraft were banned by Mojang, so development stopped.',
+			'Hand-coded during the pre-AI era 😮‍💨.',
 		],
 	},
 	{
@@ -159,14 +160,14 @@ export const cvProjects: CvProject[] = [
 		lede: 'Ported a complete GNU/Linux (SailfishOS) system to an ARM Android smartphone.',
 		bullets: [
 			'Adapted proprietary Binder-based Android drivers to glibc through libhybris — every subsystem functional.',
-			'Over 2,000 downloads and a 200+ user community.',
+			'Over 2,000 downloads and a 200+ user community on <a href="https://t.me/Sailfish_miatoll" target="_blank" rel="noopener noreferrer">Telegram</a>.',
 		],
 	},
 	{
 		title: 'Android hacking',
 		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
 		period: 'Jan 2021 – May 2021',
-		lede: 'Worked on improving stock features of my phone and hifi player to make it work faster and sound better.',
+		lede: 'Improved my phone\'s and hi-fi player\'s features with custom firmware and Magisk modules to make them run faster and sound better.',
 		bullets: [
 			'<a href="https://4pda.to/forum/index.php?showuser=5432820#" target="_blank" rel="noopener noreferrer" data-umami-event="cv-4pda-click">Participated in the 4pda community — over 500 posts and 100 repositories.</a>',
 		],
@@ -180,14 +181,9 @@ export const miscVibeProjects: CvMiscProject[] = [
 		lede: 'A compact, navigable home for mathematical-analysis notes, proofs, and exam preparation.',
 	},
 	{
-		title: 'matan2',
-		href: 'https://github.com/AntonIXO/matan2',
-		lede: 'Typst study guide that turns lecture material into a linked chain of mathematical-analysis definitions, theorems, and proofs.',
-	},
-	{
-		title: 'Deep Sleep Cube app',
+		title: 'Deep Sleep Cube (Schumann-wave machine)',
 		href: 'https://github.com/AntonIXO/Deep-Sleep-Cube-app',
-		lede: 'Open-source Android alternative to the Deep Sleep Cube app.',
+		lede: 'The official one was broken, so I vibed my own.',
 	},
 	{
 		title: 'vibescience-mcp',
@@ -197,17 +193,17 @@ export const miscVibeProjects: CvMiscProject[] = [
 	{
 		title: 'iherb-api',
 		href: 'https://github.com/AntonIXO/iherb-api',
-		lede: 'Typed, unofficial iHerb product search and supplement-label extraction package for Bun and Node.js.',
+		lede: 'iHerb product search used in optiHealth.',
 	},
 	{
 		title: 'unblock',
 		href: 'https://github.com/AntonIXO/unblock',
-		lede: 'Fabric mod that lets Minecraft connect to servers blocked by Mojang.',
+		lede: 'Minecraft mod that lets users connect to blocked servers.',
 	},
 	{
 		title: 'exist-activitywatch',
 		href: 'https://github.com/AntonIXO/exist-activitywatch',
-		lede: 'Python sync service that pushes ActivityWatch metrics and focus analysis to Exist.io.',
+		lede: 'Python service that pushes ActivityWatch data to Exist.io.',
 	},
 ];
 

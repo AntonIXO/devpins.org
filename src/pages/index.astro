@@ -12,50 +12,10 @@ import {
 import { cvIntro } from '../data/cv';
 import { FALLBACK_HRV, FALLBACK_RESTING_HR, FALLBACK_SLEEP_HOURS } from '../data/metrics';
 import { getPublishedPosts } from '../data/nav';
-import { featuredWork } from '../data/projects';
 import WritingLanguageSwitch from '../components/WritingLanguageSwitch.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import VibesciencePreview from '../components/VibesciencePreview.astro';
-import vibescienceGraph from '../data/vibescience-graph.json';
 
 const posts = await getPublishedPosts();
-
-const previewNodes = [...vibescienceGraph.nodes]
-	.sort((a, b) => b.degree - a.degree)
-	.slice(0, 120)
-	.map((node) => ({
-		id: node.id,
-		label: node.label,
-		degree: node.degree,
-		val: node.size,
-		color:
-			node.kind === 'diagnostics'
-				? '#c28b5a'
-				: node.kind === 'experiments'
-					? '#c4a15b'
-					: node.kind === 'hypotheses'
-						? '#8f83c1'
-						: node.kind === 'problems'
-							? '#c46c6c'
-								: node.kind === 'papers'
-									? '#6e9eae'
-										: '#8b8e97',
-		x: node.x,
-		y: node.y,
-	}));
-const previewNodeIds = new Set(previewNodes.map((node) => node.id));
-const previewLinks = vibescienceGraph.edges
-	.filter((edge) => previewNodeIds.has(edge.source) && previewNodeIds.has(edge.target))
-	.map((edge) => ({ source: edge.source, target: edge.target, weight: edge.weight }));
-const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: previewLinks }).replace(/</g, '\\u003c');
-
-const workTitle: Record<string, string> = {
-	vibescience: 'vibescience',
-	optihealth: 'optiHealth',
-	dreamwalker: 'Dream Walker',
-	minebit: 'MineBit',
-	sailfish: 'SailfishOS',
-};
 ---
 
 <SiteLayout title={SITE_TITLE} atmosphere="field">
@@ -74,26 +34,9 @@ const workTitle: Record<string, string> = {
 		</p>
 	</section>
 
-	<SectionLabel>Work</SectionLabel>
-	<ul class="list">
-		{
-			featuredWork.map((project) => (
-				<li class:list={{ 'vibescience-row': project.id === 'vibescience' }}>
-					<a
-						href={project.href}
-						target={project.href.startsWith('http') ? '_blank' : undefined}
-						rel={project.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-						data-umami-event="project-click"
-						data-umami-event-name={project.id}
-					>
-						<span class="list__title">{workTitle[project.id] ?? project.title}</span>
-						<span class="list__note">{project.summary}</span>
-					</a>
-					{project.id === 'vibescience' && <VibesciencePreview data={vibesciencePreviewData} />}
-				</li>
-			))
-		}
-	</ul>
+	<SectionLabel>
+		<a class="cv-link" href="/cv/" data-nav-link data-umami-event="cv-click">CV ↗</a>
+	</SectionLabel>
 
 	<SectionLabel>Writing</SectionLabel>
 	{posts.length === 0 ? <p class="empty">No posts yet.</p> : <WritingLanguageSwitch posts={posts} variant="list" />}
@@ -125,16 +68,11 @@ const workTitle: Record<string, string> = {
 	.meta,
 	.contacts,
 	.bpm,
-	.list__note,
 	.empty {
 		font-family: var(--font-mono);
 		font-size: 12.5px;
 		letter-spacing: 0.02em;
 		color: var(--mute);
-	}
-
-	.list__title {
-		min-width: 0;
 	}
 
 	.meta {
@@ -152,54 +90,8 @@ const workTitle: Record<string, string> = {
 		color: var(--ink);
 	}
 
-	.list {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		max-width: 40rem;
-	}
-
-	.vibescience-row {
-		position: relative;
-		z-index: 1;
-	}
-
-	.vibescience-row:hover,
-	.vibescience-row:focus-within {
-		z-index: 4;
-	}
-
-	.list a {
-		display: grid;
-		grid-template-columns: minmax(8.5rem, auto) minmax(0, 1fr);
-		gap: 12px 28px;
-		align-items: baseline;
-		padding: 11px 0;
-		border-top: 1px solid var(--rule);
+	.cv-link:hover {
 		color: var(--ink);
-	}
-
-	/* Writing rows carry a <time> date: title takes the flexible column,
-	   the date gets an auto column that never collapses. */
-	.list a:has(time) {
-		grid-template-columns: minmax(0, 1fr) auto;
-	}
-
-	.list a time {
-		white-space: nowrap;
-	}
-
-	.list li:last-child a {
-		border-bottom: 1px solid var(--rule);
-	}
-
-	.list__title {
-		font-size: 16px;
-		font-weight: 500;
-		letter-spacing: -0.015em;
-	}
-
-	.list a:hover .list__title {
 		text-decoration: underline;
 		text-underline-offset: 0.18em;
 	}
@@ -215,11 +107,6 @@ const workTitle: Record<string, string> = {
 	@media (max-width: 720px) {
 		.identity {
 			padding-top: 48px;
-		}
-
-		.list a {
-			grid-template-columns: 1fr;
-			gap: 4px;
 		}
 	}
 </style>
