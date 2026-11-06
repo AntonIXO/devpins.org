@@ -105,6 +105,16 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 								/>
 							))}
 						</ul>
+						{item.video && (
+							<figure class="project-video">
+								<video controls preload="metadata" playsinline poster={item.video.poster}>
+									<source src={item.video.webm} type="video/webm" />
+									<source src={item.video.src} type="video/mp4" />
+									Your browser does not support HTML video.
+								</video>
+								<figcaption>{item.video.label}</figcaption>
+							</figure>
+						)}
 					</div>
 				))
 			}
@@ -263,6 +273,26 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 		font-size: 15px;
 		line-height: 1.6;
 		margin-top: 10px;
+	}
+
+	.project-video {
+		margin: 24px 0 0;
+	}
+
+	.project-video video {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1280 / 680;
+		background: #050708;
+		border: 1px solid var(--rule);
+	}
+
+	.project-video figcaption {
+		margin-top: 8px;
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		color: var(--mute);
 	}
 
 	ul {

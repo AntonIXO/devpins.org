@@ -17,6 +17,12 @@ export interface CvProject {
 	period: string;
 	lede: string;
 	bullets: string[];
+	video?: {
+		src: string;
+		webm: string;
+		poster: string;
+		label: string;
+	};
 }
 
 export interface CvMiscProject {
@@ -65,6 +71,22 @@ export const education: CvEducation[] = [
 ];
 
 export const cvProjects: CvProject[] = [
+	{
+		title: 'LightSem — audio-to-stage-lighting research',
+		href: 'https://github.com/AntonIXO/lightsem',
+		period: 'Sept 2026 – present',
+		lede: 'Research system that turns audio into stage lighting: causal audio features drive motion descriptors, fixture parameters, and DMX output.',
+		bullets: [
+			'Built the streaming audio feature bus, motion-to-fixture conductor, 512-channel DMX encoder, and headless 3D renderer.',
+			'Demo shows a 20-second own-song window alongside the actual emitted DMX lighting.',
+		],
+		video: {
+			src: '/projects/lightsem-demo.mp4',
+			webm: '/projects/lightsem-demo.webm',
+			poster: '/projects/lightsem-demo.jpg',
+			label: 'LightSem demo — actual emitted DMX lighting',
+		},
+	},
 	{
 		title: 'Sensor Language Models (SLM) research',
 		period: 'Jan 2026 – present',
