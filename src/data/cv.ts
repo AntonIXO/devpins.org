@@ -19,6 +19,12 @@ export interface CvProject {
 	bullets: string[];
 }
 
+export interface CvMiscProject {
+	title: string;
+	href: string;
+	lede: string;
+}
+
 export interface CvAward {
 	mark: string;
 	text: string;
@@ -33,6 +39,8 @@ export interface CvSkillGroup {
 export const cvIntro =
 	'Applied maths and AI student building health-data infrastructure — from ARM kernel ports to vector embeddings of my own biometrics.';
 
+export const cvProjectsNote = 'All projects listed here were completed independently.';
+
 export const cvLinks: CvLink[] = [
 	{ label: 'antonix@devpins.org', href: 'mailto:antonix@devpins.org' },
 	{ label: 'X · @9Rasp', href: 'https://x.com/9Rasp' },
@@ -44,10 +52,9 @@ export const education: CvEducation[] = [
 	{
 		title: 'ITMO University — BSc, Applied Mathematics and Informatics',
 		period: 'Sept 2025 – June 2029',
-		meta: 'AI360 Program · St. Petersburg, Russia',
-		metaHref: 'https://360-ai.ru/',
+		meta: 'Computer Science Program · St. Petersburg, Russia',
 		bullets: [
-			'Elite AI & maths track built to grow fundamental AI researchers.',
+			'Foundational track built to grow elite engineers.',
 			'Mathematical analysis, linear algebra, discrete maths, probability theory, algorithms.',
 		],
 	},
@@ -69,21 +76,33 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'optiHealth — personal N-of-1 biohacking platform',
-		href: 'https://optihealth.devpins.org/demo',
+		href: 'https://optihealth.devpins.org/',
 		period: 'July 2025 – present',
-		lede: 'Full-stack data collection and analytics system tracking continuous health metrics (sleep, EEG, HR, HRV) to evaluate nootropic and training effects.',
+		lede: 'Single place to bring all my health data (vitals, sleep, trainings, tags, supplements, geo...) and search for insights in it.',
 		bullets: [
-			'Sync engine on Health Connect and Supabase Edge Functions with Zstandard compression — six months of HR, steps and sleep data in 20 seconds.',
-			'Automated analysis engine over the stored data in Python.',
-			'Next.js site for visualisation with interactive charts.',
-			'Currently building an “everything is a vector” paradigm: daily embeddings of user data for deeper, less biased insight.',
+			'Web, Android app, scalable database and analysis engine architecture',
+			'Classical statistical analysis engine that uses Spearman, BH-FDR. ',
+			'Some interesting findings: my mood follows the curve by hours, each later hour of bed stealing 5 mins of deep sleep (despite length), ',
+			'Polygala, GABA, and NAC ↔ Oura sleep score.',
+			'Multivitamins ↔ HRV.',
+			'Cerebrolysin ↔ sleep: <a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">insight 1</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">insight 2</a>.',
+		],
+	},
+	{
+		title: 'Player — bit-perfect music player in Rust',
+		href: 'https://github.com/AntonIXO/player',
+		period: 'May 2026 – June 2026',
+		lede: 'High-end music player for Linux and postmarketOS that writes lossless audio directly to ALSA hardware without resampling, mixing, dither, or software volume.',
+		bullets: [
+			'Rust workspace with a headless playback engine, gapless queues, DSD/DoP support, library search, and a GTK shell.',
+			'Target hardware is a Poco F1 running postmarketOS with a Chord Mojo 2.',
 		],
 	},
 	{
 		title: 'Dream Walker — LLM-driven retro dream thriller',
 		href: 'https://dreamwalker.devpins.org',
 		period: 'Feb 2026 – present',
-		lede: 'Interactive retro pixel-art dream mystery powered by autonomous LLM reasoning agents.',
+		lede: 'Anton Dream Simulator powered by AI npc agents.',
 		bullets: [
 			'Custom PixiJS engine with dynamic tilemaps, shaders, and real-time state manipulation.',
 			'Self-contained agent runtime using Gemini 3.7 reasoning models for contextual NPC dialogue and world reactions.',
@@ -96,7 +115,7 @@ export const cvProjects: CvProject[] = [
 		lede: 'Open-source progressive web app that folds LLMs into the reading flow.',
 		bullets: [
 			'RAG-based book search and automated quiz generation with the Vercel AI SDK and Supabase Edge Functions.',
-			'Built during the ChromeOS × Sirius Education Center hackathon.',
+			'Built during the ChromeAI and Sirius education center hackathon.',
 		],
 	},
 	{
@@ -120,6 +139,53 @@ export const cvProjects: CvProject[] = [
 			'Adapted proprietary Binder-based Android drivers to glibc through libhybris — every subsystem functional.',
 			'Over 2,000 downloads and a 200+ user community.',
 		],
+	},
+	{
+		title: 'Android hacking',
+		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
+		period: 'Jan 2021 – May 2021',
+		lede: 'Worked on improving stock features of my phone and hifi player to make it work faster and sound better.',
+		bullets: [
+			'<a href="https://4pda.to/forum/index.php?showuser=5432820#" target="_blank" rel="noopener noreferrer" data-umami-event="cv-4pda-click">Participated in the 4pda community — over 500 posts and 100 repositories.</a>',
+		],
+	},
+];
+
+export const miscVibeProjects: CvMiscProject[] = [
+	{
+		title: 'math.devpins.org — mathematical analysis notes',
+		href: 'https://math.devpins.org',
+		lede: 'A compact, navigable home for mathematical-analysis notes, proofs, and exam preparation.',
+	},
+	{
+		title: 'matan2',
+		href: 'https://github.com/AntonIXO/matan2',
+		lede: 'Typst study guide that turns lecture material into a linked chain of mathematical-analysis definitions, theorems, and proofs.',
+	},
+	{
+		title: 'Deep Sleep Cube app',
+		href: 'https://github.com/AntonIXO/Deep-Sleep-Cube-app',
+		lede: 'Open-source Android alternative to the Deep Sleep Cube app.',
+	},
+	{
+		title: 'vibescience-mcp',
+		href: 'https://github.com/AntonIXO/vibescience-mcp',
+		lede: 'Scientific experiment-log MCP server for AI coding and research agents, with Markdown as the source of truth and a queryable causal map.',
+	},
+	{
+		title: 'iherb-api',
+		href: 'https://github.com/AntonIXO/iherb-api',
+		lede: 'Typed, unofficial iHerb product search and supplement-label extraction package for Bun and Node.js.',
+	},
+	{
+		title: 'unblock',
+		href: 'https://github.com/AntonIXO/unblock',
+		lede: 'Fabric mod that lets Minecraft connect to servers blocked by Mojang.',
+	},
+	{
+		title: 'exist-activitywatch',
+		href: 'https://github.com/AntonIXO/exist-activitywatch',
+		lede: 'Python sync service that pushes ActivityWatch metrics and focus analysis to Exist.io.',
 	},
 ];
 

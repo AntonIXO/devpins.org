@@ -1,7 +1,7 @@
 ---
 import SectionLabel from '../components/SectionLabel.astro';
 import { SITE_AUTHOR, SITE_LOCATION } from '../consts';
-import { awards, cvLinks, cvProjects, education, skills } from '../data/cv';
+import { awards, cvLinks, cvProjects, cvProjectsNote, education, miscVibeProjects, skills } from '../data/cv';
 import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
@@ -71,6 +71,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 		</div>
 
 		<SectionLabel>Projects</SectionLabel>
+		<p class="section-note">{cvProjectsNote}</p>
 		<div class="stack">
 			{
 				cvProjects.map((item) => (
@@ -104,6 +105,28 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 								/>
 							))}
 						</ul>
+					</div>
+				))
+			}
+		</div>
+
+		<SectionLabel>Misc vibe</SectionLabel>
+		<div class="stack misc-vibe">
+			{
+				miscVibeProjects.map((item) => (
+					<div class="card">
+						<h2>
+							<a
+								href={item.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								data-umami-event="cv-misc-project-click"
+								data-umami-event-project={item.title}
+							>
+								{item.title}
+							</a>
+						</h2>
+						<p class="lede">{item.lede}</p>
 					</div>
 				))
 			}
@@ -145,6 +168,12 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 <style>
 	.cv {
 		padding: 72px 0 24px;
+	}
+
+	.section-note {
+		margin: 0 0 24px;
+		font-size: 13px;
+		color: var(--mute);
 	}
 
 	h1 {
