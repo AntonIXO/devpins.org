@@ -87,6 +87,18 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
+		title: 'BHWiki — PubMed literature review and drug-interaction graph',
+		href: 'https://bhwiki.devpins.org/',
+		period: 'September 2026 – present',
+		lede: 'A source-linked scientific knowledge base that turns PubMed literature into a structured wiki of substances, mechanisms, effects, and documented interactions.',
+		bullets: [
+			'PubMed literature-review server discovers papers, matches them to the canonical substance corpus, and produces auditable suggestions for human review before publication.',
+			'Role-bearing relationships and Cytoscape.js graph views connect drugs and other substances to biological mechanisms, outcomes, and evidence sources without inventing unsupported interactions.',
+			'OptiHealth integration maps canonical substance identities and leaves a privacy-preserving boundary for curated aggregates; raw personal health rows and outcomes are not published into the wiki.',
+			'Links: <a href="https://bhwiki.devpins.org/" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-site">live wiki</a> · <a href="https://github.com/AntonIXO/BHWiki" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-repository">source repository</a>.',
+		],
+	},
+	{
 		title: 'Sensor Language Models (SLM) research',
 		period: 'March 2026 – present',
 		lede: 'Implementing SLMs — LLMs capable of understanding time-series data from wearables.',
