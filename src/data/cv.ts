@@ -64,11 +64,7 @@ export const education: CvEducation[] = [
 			'Foundational track built to grow elite engineers.',
 			'Mathematical analysis, linear algebra, discrete maths, probability theory, algorithms.',
 		],
-	},
-	{
-		title: 'Y Combinator — Online Startup School',
-		period: 'Course',
-	},
+	}
 ];
 
 export const cvProjects: CvProject[] = [
@@ -80,22 +76,12 @@ export const cvProjects: CvProject[] = [
 		bullets: [
 			'Web app, Android app, scalable database, and analysis-engine architecture.',
 			'Classical statistical analysis engine using Spearman correlation and BH-FDR.',
-			'Some interesting findings: my mood follows an hourly curve, and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length);',
+			'Some interesting findings: my mood follows an hourly curve',
+			'and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length)',
 			'Polygala, GABA, and NAC ↔ Oura sleep score.',
 			'Multivitamins ↔ HRV.',
-			'<a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">Cerebrolysin ↔ Sleep</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">Cerebrolysin ↔ RHR</a>.',
-		],
-	},
-	{
-		title: 'BHWiki — PubMed drug-interaction graph',
-		href: 'https://bhwiki.devpins.org/',
-		period: 'September 2026 – present',
-		lede: 'Source-linked wiki of literature and interactions.',
-		bullets: [
-			'PubMed discovery; human-reviewed.',
-			'Cytoscape graph of substances and evidence.',
-			'OptiHealth mapping; privacy-preserving.',
-			'Links: <a href="https://bhwiki.devpins.org/" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-site">live wiki</a> · <a href="https://github.com/AntonIXO/BHWiki" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-repository">repository</a>.',
+			'<a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">Cerebrolysin ↔ Sleep</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">Cerebrolysin ↔ RHR</a>',
+			'and hundred more hypotheses to check:)',
 		],
 	},
 	{
@@ -104,9 +90,45 @@ export const cvProjects: CvProject[] = [
 		lede: 'Implementing SLMs — LLMs capable of understanding time-series data from wearables.',
 		preview: 'vibescience',
 		bullets: [
+			'14041 days, 24 channels (ACC, HR, HRV, sleep, RR...). PatchTST -> TimeLLM CrossModalProjector -> LoRA on top of soft-tokens over MedGemma 1.5 4b.',
+			'Currently solving problem of soft tokens LLM data extraction (attention head MAE: 0.8 bpm, LLM MAE: 3.8 bpm, Trivial MAE: 12 bpm)',
 			'Using the optiHealth platform infrastructure for continuous physiological data collection.',
-			'Research in collaboration with Yuri Rykov (scholar profile).',
-			'Applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> <- graph.',
+			'Essentially it\'s a "top-down learning": my advisor was Perplexity deep research, Gemini explained things,',
+			'Claude runned experiments: applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> <- graph.',
+		],
+	},
+	{
+		title: 'Low-level system engineering — Linux on mobile',
+		href: 'https://github.com/SailfishOS-miatoll',
+		period: 'Oct 2021 – May 2025',
+		lede: 'Ported a complete GNU/Linux (SailfishOS) system to an ARM Android (Xiaomi Redmi Note 9 Pro) smartphone.',
+		bullets: [
+			'Adapted proprietary Android HAL drivers to glibc through libhybris — every subsystem functional. End-to-end',
+			'Over 2,000 downloads and a 200+ user community on <a href="https://t.me/Sailfish_miatoll" target="_blank" rel="noopener noreferrer">Telegram</a>.',
+		],
+	},
+	{
+		title: 'BHWiki — open and modern Biohacking Wiki',
+		href: 'https://bhwiki.devpins.org/',
+		period: 'October 2026 – present',
+		lede: 'Decomposing medical publications pages linked together in graph.',
+		bullets: [
+			'Checks drugs interactions by utilizing graph of mechanisms and targets.',
+			'Linked to optiHealth outcomes and DB. Develop as parallel projects.',
+			'Open and available for contributions: <a href="https://bhwiki.devpins.org/" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-site">live wiki</a> · <a href="https://github.com/AntonIXO/BHWiki" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-repository">repository</a>.',
+		],
+	},
+	{
+		title: 'MineBit — NFT marketplace for Minecraft builds',
+		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
+		period: 'May 2024 – August 2024',
+		lede: 'Marketplace letting creators mint and sell builds as NFTs.',
+		bullets: [
+			'Implemented custom server logic with Minestom and Kotlin, replacing the official Microsoft codebase.',
+			'Go microservice for blockchain integration.',
+			'Telegram bot with Next.js to show 3D builds in a mini app.',
+			'Highlighted at The Open League Hackathon. Received very good feedback from the crypto community.',
+			'Hand-coded during the pre-AI era 😮‍💨.',
 		],
 	},
 	{
@@ -133,7 +155,7 @@ export const cvProjects: CvProject[] = [
 	{
 		title: 'Dream Walker — LLM-driven retro dream thriller',
 		href: 'https://dreamwalker.devpins.org',
-		period: 'June 2026 – Sep 2026',
+		period: 'August 2026 – Sep 2026',
 		lede: 'Anton Dream Simulator powered by AI NPC agents.',
 		bullets: [
 			'Custom PixiJS engine with dynamic tilemaps, shaders, and real-time state manipulation.',
@@ -151,30 +173,7 @@ export const cvProjects: CvProject[] = [
 			'Built during the ChromeAI and Sirius education center hackathon.',
 		],
 	},
-	{
-		title: 'MineBit — NFT marketplace for Minecraft builds',
-		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
-		period: 'May 2024 – August 2024',
-		lede: 'Marketplace letting creators mint and sell builds as NFTs.',
-		bullets: [
-			'Implemented custom server logic with Minestom and Kotlin, replacing the official Microsoft codebase.',
-			'Go microservice for blockchain integration.',
-			'Telegram bot with Next.js to show 3D builds in a mini app.',
-			'Highlighted at The Open League Hackathon. Received very good feedback from the crypto community.',
-			'NFTs in Minecraft were banned by Mojang, so development stopped.',
-			'Hand-coded during the pre-AI era 😮‍💨.',
-		],
-	},
-	{
-		title: 'Low-level system engineering — Linux on mobile',
-		href: 'https://github.com/SailfishOS-miatoll',
-		period: 'Oct 2021 – May 2025',
-		lede: 'Ported a complete GNU/Linux (SailfishOS) system to an ARM Android smartphone.',
-		bullets: [
-			'Adapted proprietary Android HAL drivers to glibc through libhybris — every subsystem functional.',
-			'Over 2,000 downloads and a 200+ user community on <a href="https://t.me/Sailfish_miatoll" target="_blank" rel="noopener noreferrer">Telegram</a>.',
-		],
-	},
+	
 	{
 		title: 'Android hacking',
 		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
@@ -200,7 +199,7 @@ export const miscVibeProjects: CvMiscProject[] = [
 	{
 		title: 'vibescience-mcp',
 		href: 'https://github.com/AntonIXO/vibescience-mcp',
-		lede: 'Scientific experiment-log MCP server for agents. with Markdown as the source of truth and a obsidian compatible vault.',
+		lede: 'While LLMs are good at running specific idea/paper verification, they struggles with what was done and how to learn from it. vibescience is an graph of your experiments',
 	},
 	{
 		title: 'iherb-api',
@@ -227,16 +226,16 @@ export const awards: CvAward[] = [
 	},
 	{
 		mark: 'Top 5%',
-		text: 'National prizewinner, Tier 1 “Vysshaya Proba” and Tier 2 “Technocup” informatics olympiads',
+		text: 'National competitive programming olympiads winner: Tier 1 <a href="https://olymp.hse.ru/mmo/it" target="_blank" rel="noopener noreferrer">“Vysshaya Proba”</a> and Tier 2 <a href="https://cups.online/ru/contests/technocup-25" target="_blank" rel="noopener noreferrer">“Technocup”</a>',
 		note: 'full BSc scholarship',
 	},
 	{
-		mark: 'Winner',
-		text: 'National project competitions: Big Challenges, Higher Pilot, Step into the Future',
+		mark: 'National project competitions winner',
+		text: '<a href="https://bigchallenges.ru/" target="_blank" rel="noopener noreferrer">Sirius Big Challenges</a>, <a href="https://pilotazh.hse.ru/" target="_blank" rel="noopener noreferrer">HSE Higher Pilot</a>, <a href="https://energo.bmstu.ru/step-into-the-future" target="_blank" rel="noopener noreferrer">BMSTU Step into the Future</a>',
 	},
 	{
-		mark: '1st place',
-		text: 'MEPhI Nuclear Hack · Central University Hackathon · OctusBridge deployment hackathon (Everscale)',
+		mark: 'Hackathons winner',
+		text: '<a href="https://github.com/AntonIXO/octusbridge-ansible" target="_blank" rel="noopener noreferrer">OctusBridge deployment hackathon (Everscale)</a> · <a href="https://goit.mephi.ru/nuclear-hack" target="_blank" rel="noopener noreferrer">MEPhI Nuclear Hack</a> · Central University Hackathon (team hack)',
 	},
 ];
 
@@ -247,14 +246,14 @@ export const skills: CvSkillGroup[] = [
 	},
 	{
 		label: 'Technologies',
-		items: ['Linux', 'Low-level Android OS', 'LLM applications', 'Prompt engineering', 'RAG'],
+		items: ['Linux', 'Low-level Android OS', "Multimodal Time-Series & Embeddings", 'LLM applications', 'Distributed Systems'],
 	},
 	{
 		label: 'Domains',
-		items: ['Biohacking & health analytics', 'Tech startups', 'Blockchain', 'Smart contracts'],
+		items: ['Biohacking & health analytics', 'Startups', 'Blockchain/Smart contracts'],
 	},
 	{
 		label: 'Sport',
-		items: ['Marathon training', 'Rock climbing'],
+		items: ['Running (half a marathon)', 'Rock climbing (6b+ on a rock)'],
 	},
 ];

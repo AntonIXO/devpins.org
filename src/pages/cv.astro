@@ -186,7 +186,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 					<div class="award">
 						<span>{item.mark}</span>
 						<p>
-							{item.text}
+							<span set:html={item.text} />
 							{item.note && <em> — {item.note}</em>}
 						</p>
 					</div>
@@ -391,6 +391,10 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 	.award em {
 		font-style: normal;
 		color: var(--mute);
+	}
+
+	.award :global(a) {
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.skills {
