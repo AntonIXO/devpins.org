@@ -87,15 +87,15 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
-		title: 'BHWiki — PubMed literature review and drug-interaction graph',
+		title: 'BHWiki — PubMed drug-interaction graph',
 		href: 'https://bhwiki.devpins.org/',
 		period: 'September 2026 – present',
-		lede: 'A source-linked scientific knowledge base that turns PubMed literature into a structured wiki of substances, mechanisms, effects, and documented interactions.',
+		lede: 'Source-linked wiki of literature and interactions.',
 		bullets: [
-			'PubMed literature-review server discovers papers, matches them to the canonical substance corpus, and produces auditable suggestions for human review before publication.',
-			'Role-bearing relationships and Cytoscape.js graph views connect drugs and other substances to biological mechanisms, outcomes, and evidence sources without inventing unsupported interactions.',
-			'OptiHealth integration maps canonical substance identities and leaves a privacy-preserving boundary for curated aggregates; raw personal health rows and outcomes are not published into the wiki.',
-			'Links: <a href="https://bhwiki.devpins.org/" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-site">live wiki</a> · <a href="https://github.com/AntonIXO/BHWiki" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-repository">source repository</a>.',
+			'PubMed discovery; human-reviewed.',
+			'Cytoscape graph of substances and evidence.',
+			'OptiHealth mapping; privacy-preserving.',
+			'Links: <a href="https://bhwiki.devpins.org/" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-site">live wiki</a> · <a href="https://github.com/AntonIXO/BHWiki" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-repository">repository</a>.',
 		],
 	},
 	{
