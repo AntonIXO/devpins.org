@@ -87,14 +87,14 @@ export const cvProjects: CvProject[] = [
 	{
 		title: 'Sensor Language Models (SLM) research',
 		period: 'March 2026 – present',
-		lede: 'Implementing SLMs — LLMs capable of understanding time-series data from wearables.',
+		lede: 'Implementing SLMs — LLMs capable of understanding time-series data from wearables. With open datasets, on the younger brother\'s RTX 5070',
 		preview: 'vibescience',
 		bullets: [
 			'14041 days, 24 channels (ACC, HR, HRV, sleep, RR...). PatchTST -> TimeLLM CrossModalProjector -> LoRA on top of soft-tokens over MedGemma 1.5 4b.',
 			'Currently solving problem of soft tokens LLM data extraction (attention head MAE: 0.8 bpm, LLM MAE: 3.8 bpm, Trivial MAE: 12 bpm)',
 			'Using the optiHealth platform infrastructure for continuous physiological data collection.',
-			'Essentially it\'s a "top-down learning": my advisor was Perplexity deep research, Gemini explained things,',
-			'Claude runned experiments: applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> <- graph.',
+			'Essentially it was a "top-down learning": my advisor was Perplexity deep research, Gemini explained things,',
+			'Claude run experiments: applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> <- graph.',
 		],
 	},
 	{
@@ -108,7 +108,7 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
-		title: 'BHWiki — open and modern Biohacking Wiki',
+		title: 'BHWiki — open and modern BioHacking Wiki',
 		href: 'https://bhwiki.devpins.org/',
 		period: 'October 2026 – present',
 		lede: 'Decomposing medical publications pages linked together in graph.',
@@ -153,27 +153,16 @@ export const cvProjects: CvProject[] = [
 		],
 	},
 	{
-		title: 'Dream Walker — LLM-driven retro dream thriller',
-		href: 'https://dreamwalker.devpins.org',
-		period: 'August 2026 – Sep 2026',
-		lede: 'Anton Dream Simulator powered by AI NPC agents.',
-		bullets: [
-			'Custom PixiJS engine with dynamic tilemaps, shaders, and real-time state manipulation.',
-			'Self-contained agent runtime for contextual NPC dialogue and world reactions.',
-			'Using jev for NPC decisions.',
-		],
-	},
-	{
-		title: 'AI Reader PWA',
+		title: 'KonspecterAI PWA',
 		href: 'https://devpost.com/software/konspecterai',
 		period: 'Oct 2024 – Jan 2025',
 		lede: 'Open-source progressive web app that folds LLMs into the reading flow.',
 		bullets: [
-			'RAG-based book search and automated quiz generation with the Vercel AI SDK and Supabase Edge Functions.',
+			'Book chat with RAG, quiz generation. Using the Vercel AI SDK and Supabase Edge Functions.',
 			'Built during the ChromeAI and Sirius education center hackathon.',
+			'Mostly web education project'
 		],
 	},
-	
 	{
 		title: 'Android hacking',
 		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
@@ -192,6 +181,11 @@ export const miscVibeProjects: CvMiscProject[] = [
 		lede: 'A compact, navigable home for mathematical-analysis notes, proofs, and exam preparation.',
 	},
 	{
+		title: 'Dream Walker — LLM-driven retro dream thriller',
+		href: 'https://dreamwalker.devpins.org',
+		lede: 'Anton Dream Simulator powered by LLM and jev — world, npc, events... Everything is randomized and generated at runtime. Each run is new!',
+	},
+	{
 		title: 'Deep sleep cube  (Schumann-wave machine) app',
 		href: 'https://github.com/AntonIXO/Deep-Sleep-Cube-app',
 		lede: 'The official one was broken, so I vibed my own.',
@@ -199,7 +193,7 @@ export const miscVibeProjects: CvMiscProject[] = [
 	{
 		title: 'vibescience-mcp',
 		href: 'https://github.com/AntonIXO/vibescience-mcp',
-		lede: 'While LLMs are good at running specific idea/paper verification, they struggles with what was done and how to learn from it. vibescience is an graph of your experiments',
+		lede: 'While LLMs are good at running specific idea/paper verification, they struggle with what was done and how to learn from it. vibescience is a graph of your experiments',
 	},
 	{
 		title: 'iherb-api',
@@ -214,7 +208,12 @@ export const miscVibeProjects: CvMiscProject[] = [
 	{
 		title: 'exist-activitywatch',
 		href: 'https://github.com/AntonIXO/exist-activitywatch',
-		lede: 'Python service that pushes ActivityWatch data to Exist.io.',
+		lede: 'Python service that pushes ActivityWatch data to <a href="https://exist.io" target="_blank" rel="noopener noreferrer">exist.io</a>.',
+	},
+	{
+		title: 'Telegram graph',
+		href: 'https://github.com/AntonIXO/telegram-group-graph-obsidian',
+		lede: 'Graph of all your telegram groups participants in C++ with TDlib use.',
 	},
 ];
 
