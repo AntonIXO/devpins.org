@@ -44,7 +44,7 @@ export interface CvSkillGroup {
 }
 
 export const cvIntro =
-	'CS student obsessed with health optimization and analysis. Having fun building cool projects.';
+	'CS student obsessed with health optimization to increase throughput for one goal: having fun building cool projects.';
 
 export const cvProjectsNote = 'All projects listed here were completed independently.';
 
@@ -59,10 +59,10 @@ export const education: CvEducation[] = [
 	{
 		title: 'ITMO University — BSc, Applied Mathematics and Informatics',
 		period: 'Sept 2025 – June 2029',
-		meta: 'Computer Science Program · St. Petersburg, Russia',
+		meta: 'Computer Science · St. Petersburg, Russia',
 		bullets: [
 			'Foundational track built to grow elite engineers.',
-			'Mathematical analysis, linear algebra, discrete maths, probability theory, algorithms.',
+			'Mathematical analysis, linear algebra, discrete maths, probability theory, algorithms...',
 		],
 	}
 ];
@@ -74,8 +74,8 @@ export const cvProjects: CvProject[] = [
 		period: 'July 2025 – present',
 		lede: 'A single place to bring together all my health data (vitals, sleep, training, tags, supplements, location, and more) and search it for insights.',
 		bullets: [
-			'Web app, Android app, scalable database, and analysis-engine architecture.',
-			'Classical statistical analysis engine using Spearman correlation and BH-FDR.',
+			'Web app, Android app, scalable database, and analysis-engine.',
+			'Classical statistical analysis using Spearman correlation and BH-FDR.',
 			'Some interesting findings: my mood follows an hourly curve',
 			'and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length)',
 			'Polygala, GABA, and NAC ↔ Oura sleep score.',
@@ -148,7 +148,7 @@ export const cvProjects: CvProject[] = [
 		lede: 'High-end music player for postmarketOS on a Poco F1 running a mainline Linux kernel.',
 		bullets: [
 			'Writes audio bits directly to the kernel, shortest path 🙏. Inspired by <a href="https://github.com/sam0402/ArchQ" target="_blank" rel="noopener noreferrer">ArchQ</a>.',
-			'Target hardware: a Poco F1 running postmarketOS with a mainline Linux kernel and a Chord Mojo 2.',
+			'Target hardware: a Poco F1 running postmarketOS with a mainline Linux kernel and a Chord Mojo 2. LTO + PGO + BOLT optimized',
 			'Inner audiophile is finally happy.',
 		],
 	},
@@ -178,22 +178,22 @@ export const miscVibeProjects: CvMiscProject[] = [
 	{
 		title: 'math.devpins.org — mathematical analysis notes',
 		href: 'https://math.devpins.org',
-		lede: 'A compact, navigable home for mathematical-analysis notes, proofs, and exam preparation.',
-	},
-	{
-		title: 'Dream Walker — LLM-driven retro dream thriller',
-		href: 'https://dreamwalker.devpins.org',
-		lede: 'Anton Dream Simulator powered by LLM and jev — world, npc, events... Everything is randomized and generated at runtime. Each run is new!',
-	},
-	{
-		title: 'Deep sleep cube  (Schumann-wave machine) app',
-		href: 'https://github.com/AntonIXO/Deep-Sleep-Cube-app',
-		lede: 'The official one was broken, so I vibed my own.',
+		lede: 'Visualizations + pdf with proofs to prepare to exams.',
 	},
 	{
 		title: 'vibescience-mcp',
 		href: 'https://github.com/AntonIXO/vibescience-mcp',
 		lede: 'While LLMs are good at running specific idea/paper verification, they struggle with what was done and how to learn from it. vibescience is a graph of your experiments',
+	},
+	{
+		title: 'Dream Walker — LLM-driven retro dream thriller',
+		href: 'https://dreamwalker.devpins.org',
+		lede: 'Anton Dream Emulator powered by LLM and jev — world, npc, events... Everything and generated at by models.',
+	},
+	{
+		title: 'Deep sleep cube (Schumann-wave machine) app',
+		href: 'https://github.com/AntonIXO/Deep-Sleep-Cube-app',
+		lede: 'The official one was broken, so I vibed my own.',
 	},
 	{
 		title: 'iherb-api',
@@ -213,7 +213,7 @@ export const miscVibeProjects: CvMiscProject[] = [
 	{
 		title: 'Telegram graph',
 		href: 'https://github.com/AntonIXO/telegram-group-graph-obsidian',
-		lede: 'Graph of all your telegram groups participants in C++ with TDlib use.',
+		lede: 'Graph of all your telegram groups participants in C++ with TDLib use.',
 	},
 ];
 
