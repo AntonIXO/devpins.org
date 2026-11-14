@@ -11,11 +11,11 @@ import {
 } from '../consts';
 import { cvIntro } from '../data/cv';
 import { FALLBACK_HRV, FALLBACK_RESTING_HR, FALLBACK_SLEEP_HOURS } from '../data/metrics';
-import { getPublishedPosts } from '../data/nav';
+import { getWritingPosts } from '../data/writing';
 import WritingLanguageSwitch from '../components/WritingLanguageSwitch.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
-const posts = await getPublishedPosts();
+const posts = await getWritingPosts();
 ---
 
 <SiteLayout title={SITE_TITLE} atmosphere="field">

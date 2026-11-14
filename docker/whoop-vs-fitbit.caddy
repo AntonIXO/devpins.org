@@ -1,0 +1,10 @@
+# Insert inside the existing devpins.org/www.devpins.org site block,
+# before its catch-all handle. This is an HTTP redirect, not an Astro page.
+@whoopFitbitEnglish path /blog/whoop-vs-fitbit /blog/whoop-vs-fitbit/
+redir @whoopFitbitEnglish https://optihealth.devpins.org/blog/whoop-vs-fitbit 301
+
+# The Russian article was deleted, not translated or moved.
+@whoopFitbitRussian path /blog/whoop-vs-fitbit-ru /blog/whoop-vs-fitbit-ru/
+handle @whoopFitbitRussian {
+	respond "Gone" 410
+}

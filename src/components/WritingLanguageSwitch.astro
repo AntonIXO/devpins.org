@@ -1,9 +1,9 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import type { WritingPost } from '../data/writing';
 import FormattedDate from './FormattedDate.astro';
 
 	type Props = {
-	posts: CollectionEntry<'blog'>[];
+	posts: WritingPost[];
 	variant?: 'rows' | 'list';
 	showControl?: boolean;
 };
@@ -49,8 +49,8 @@ const languages = [
 						<ul class="list">
 							{language.posts.map((post) => (
 								<li>
-									<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
-										<span class="list__title">{post.data.title}</span>
+									<a href={post.href ?? `/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
+										<span class="list__title">{post.data.title}{post.publication && ` · ${post.publication} ↗`}</span>
 										<span class="list__note"><FormattedDate date={post.data.pubDate} /></span>
 									</a>
 								</li>
@@ -60,8 +60,8 @@ const languages = [
 						<ul class="rows">
 							{language.posts.map((post) => (
 								<li>
-									<a href={`/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
-										<span class="title">{post.data.title}</span>
+									<a href={post.href ?? `/blog/${post.id}/`} data-umami-event="article-click" data-umami-event-slug={post.id}>
+										<span class="title">{post.data.title}{post.publication && ` · ${post.publication} ↗`}</span>
 										<span class="date"><FormattedDate date={post.data.pubDate} /></span>
 									</a>
 								</li>
