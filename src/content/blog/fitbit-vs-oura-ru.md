@@ -1,6 +1,6 @@
 ---
 title: "Fitbit Charge 6 и Oura Ring 4: одну ночь два устройства видят по-разному"
-description: "Парное сравнение данных сна, пульса и активности Fitbit Charge 6 и Oura Ring 4 из одного личного датасета OptiHealth"
+description: "Сравнение Fitbit Charge 6 и Oura Ring 4 на данных одного пользователя OptiHealth: где совпадают и где расходятся показатели сна, пульса и активности."
 pubDate: 2026-10-22
 language: ru
 translationKey: fitbit-vs-oura

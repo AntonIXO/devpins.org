@@ -12,12 +12,13 @@ type Props = CollectionEntry<'blog'>['data'] & {
 	alternate?: CollectionEntry<'blog'>;
 };
 
-const { title, description, pubDate, updatedDate, heroImage, heroAtTop = true, kicker, post, alternate } = Astro.props;
+const { title, seoTitle, description, pubDate, updatedDate, heroImage, heroAtTop = true, kicker, post, alternate } = Astro.props;
 const alternateUrl = alternate ? new URL(`/blog/${alternate.id}/`, Astro.site).href : undefined;
 ---
 
 <SiteLayout
-	title={title}
+	title={seoTitle ?? title}
+	articleHeadline={title}
 	description={description}
 	image={heroImage}
 	type="article"

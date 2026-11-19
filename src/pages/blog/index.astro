@@ -1,14 +1,13 @@
 ---
 import SectionLabel from '../../components/SectionLabel.astro';
 import WritingLanguageSwitch from '../../components/WritingLanguageSwitch.astro';
-import { SITE_TITLE } from '../../consts';
 import { getWritingPosts } from '../../data/writing';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const posts = await getWritingPosts();
 ---
 
-<SiteLayout title="Writing" description={`Notes from ${SITE_TITLE}.`} wide={false} atmosphere="blank">
+<SiteLayout title="Writing on AI, Maths & Wearable Data" description="Read Anton Ivanov’s notes in English and Russian on studying at ITMO AI360, working on personal projects, and comparing data from Fitbit, Oura and WHOOP." wide={false} atmosphere="blank">
 	<section class="writing">
 		<SectionLabel>Writing</SectionLabel>
 		{posts.length === 0 ? <p class="empty">No posts yet.</p> : <WritingLanguageSwitch posts={posts} />}

@@ -5,7 +5,6 @@ import {
 	SITE_EMAIL,
 	SITE_GITHUB,
 	SITE_TELEGRAM,
-	SITE_TITLE,
 	SITE_X,
 	SITE_X_HANDLE,
 } from '../consts';
@@ -18,7 +17,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 const posts = await getWritingPosts();
 ---
 
-<SiteLayout title={SITE_TITLE} atmosphere="field">
+<SiteLayout title="Anton Ivanov — Applied Maths, AI & Software Projects" atmosphere="field">
 	<section class="identity">
 		<h1>{SITE_AUTHOR}</h1>
 		<p class="bio">{cvIntro}</p>
