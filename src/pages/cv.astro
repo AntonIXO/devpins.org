@@ -1,4 +1,5 @@
 ---
+import CvPortrait from '../components/CvPortrait.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import VibesciencePreview from '../components/VibesciencePreview.astro';
 import { SITE_AUTHOR, SITE_LOCATION } from '../consts';
@@ -44,117 +45,99 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 	atmosphere="blank"
 >
 	<article class="cv">
-		<h1>{SITE_AUTHOR}</h1>
-		<p class="place">{SITE_LOCATION}</p>
-		<div class="chips">
-			{
-				cvLinks.map((link) => (
-					<a
-						href={link.href}
-						target={link.href.startsWith('mailto:') ? undefined : '_blank'}
-						rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
-						data-umami-event="cv-contact-click"
-						data-umami-event-channel={link.label.toLowerCase()}
-					>
-						{link.label}
-					</a>
-				))
-			}
-		</div>
-
-		<SectionLabel>Education</SectionLabel>
-		<div class="stack">
-			{
-				education.map((item) => (
-					<div class:list={['card', { compact: !item.bullets }]}>
-						<div class="card__head">
-							<h2>{item.title}</h2>
-							<span>{item.period}</span>
-						</div>
-						{item.meta &&
-							(item.metaHref ? (
-								<p class="meta">
-									<a
-										href={item.metaHref}
-										target="_blank"
-										rel="noopener noreferrer"
-										data-umami-event="cv-education-click"
-										data-umami-event-institution={item.meta.split(' · ')[0]}
-									>
-										{item.meta.split(' · ')[0]}
-									</a>
-									{' · '}
-									{item.meta.split(' · ').slice(1).join(' · ')}
-								</p>
-							) : (
-								<p class="meta">{item.meta}</p>
-							))}
-						{item.bullets && (
-							<ul>
-								{item.bullets.map((bullet) => (
-									<li>{bullet}</li>
-								))}
-							</ul>
-						)}
+		<div class="cv-intro" data-cv-intro>
+			<header class="cv-header">
+				<div class="portrait-rail">
+					<div class="portrait-sticky"><CvPortrait /></div>
+				</div>
+				<div class="cv-identity">
+					<h1>{SITE_AUTHOR}</h1>
+					<p class="place">{SITE_LOCATION}</p>
+					<div class="chips">
+						{
+							cvLinks.map((link) => (
+								<a
+									href={link.href}
+									target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+									rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+									data-umami-event="cv-contact-click"
+									data-umami-event-channel={link.label.toLowerCase()}
+								>
+									{link.label}
+								</a>
+							))
+						}
 					</div>
-				))
-			}
+				</div>
+			</header>
+
+			<SectionLabel>Education</SectionLabel>
+			<div class="stack">
+				{
+					education.map((item) => (
+						<div class:list={['card', { compact: !item.bullets }]}>
+							<div class="card__head">
+								<h2>{item.title}</h2>
+								<span>{item.period}</span>
+							</div>
+							{item.meta &&
+								(item.metaHref ? (
+									<p class="meta">
+										<a
+											href={item.metaHref}
+											target="_blank"
+											rel="noopener noreferrer"
+											data-umami-event="cv-education-click"
+											data-umami-event-institution={item.meta.split(' · ')[0]}
+										>
+											{item.meta.split(' · ')[0]}
+										</a>
+										{' · '}
+										{item.meta.split(' · ').slice(1).join(' · ')}
+									</p>
+								) : (
+									<p class="meta">{item.meta}</p>
+								))}
+							{item.bullets && (
+								<ul>
+									{item.bullets.map((bullet) => (
+										<li>{bullet}</li>
+									))}
+								</ul>
+							)}
+						</div>
+					))
+				}
+			</div>
 		</div>
 
 		<SectionLabel>Projects</SectionLabel>
 		<p class="section-note">{cvProjectsNote}</p>
-		<div class="stack">
-			{
-				cvProjects.map((item) => (
-					<div class="card">
-						<div class="card__head">
-							<h2>
-								{item.href ? (
-									<a
-										href={item.href}
-										target="_blank"
-										rel="noopener noreferrer"
-										data-umami-event="cv-project-click"
-										data-umami-event-project={item.title}
-									>
-										{item.title}
-									</a>
-								) : (
-									item.title
-								)}
-							</h2>
-							<span>{item.period}</span>
+		<div class="projects">
+			{cvProjects.map((item, index) => (
+				<details class="project" data-cv-project>
+					<summary class="project__summary" aria-controls={`project-panel-${index}`}>
+						<span class="project__title"><a href={item.href} target={item.href?.startsWith('/') ? undefined : '_blank'}
+							rel="noopener noreferrer" data-umami-event="cv-project-click" data-umami-event-project={item.title}>
+							{item.title}
+						</a></span>
+						<span class="project__period">{item.period}</span>
+						<span class="project__lede">{item.lede}</span>
+						<span class="project__indicator" aria-hidden="true"></span>
+					</summary>
+					<div class="project__panel" id={`project-panel-${index}`}>
+						<ul>{item.bullets.map(bullet => <li set:html={bullet} />)}</ul>
+						<div class="project__media">
+							{item.image && <img loading="lazy" src={item.image.src} alt={item.image.alt} />}
+							{item.preview && <VibesciencePreview data={vibesciencePreviewData} />}
+							{item.video && <video controls playsinline preload="none" poster={item.video.poster} aria-label={item.video.label}>
+								<source src={item.video.webm} type="video/webm" /><source src={item.video.src} type="video/mp4" />
+							</video>}
+							{item.diagram && <ol class="project__diagram">{item.diagram.map(step => <li>{step}</li>)}</ol>}
 						</div>
-						<p class="lede">{item.lede}</p>
-						<ul>
-							{item.bullets.map((bullet) => {
-								const isVibesciencePreview = item.preview === 'vibescience' && bullet === item.bullets[item.bullets.length - 1];
-								return (
-									<li class:list={{ 'vibescience-preview-row': isVibesciencePreview }}>
-										<span
-											set:html={bullet.replace(
-												'Yuri Rykov (scholar profile)',
-												'<a href="https://scholar.google.com/citations?user=hOxcaCcAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer" data-umami-event="cv-scholar-click" data-umami-event-target="yuri-rykov">Yuri Rykov\'s scholar profile</a>',
-											)}
-										/>
-										{isVibesciencePreview && <VibesciencePreview data={vibesciencePreviewData} />}
-									</li>
-								);
-							})}
-						</ul>
-						{item.video && (
-							<figure class="project-video">
-								<video controls preload="metadata" playsinline poster={item.video.poster}>
-									<source src={item.video.webm} type="video/webm" />
-									<source src={item.video.src} type="video/mp4" />
-									Your browser does not support HTML video.
-								</video>
-								<figcaption>{item.video.label}</figcaption>
-							</figure>
-						)}
 					</div>
-				))
-			}
+				</details>
+			))}
 		</div>
 
 		<SectionLabel>Misc vibe</SectionLabel>
@@ -179,42 +162,84 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 			}
 		</div>
 
-		<SectionLabel>Awards</SectionLabel>
-		<div class="awards">
-			{
-				awards.map((item) => (
-					<div class="award">
-						<span>{item.mark}</span>
-						<p>
-							<span set:html={item.text} />
-							{item.note && <em> — {item.note}</em>}
-						</p>
-					</div>
-				))
-			}
-		</div>
-
-		<SectionLabel>Skills</SectionLabel>
-		<div class="skills">
-			{
-				skills.map((group) => (
-					<div class="skill">
-						<p>{group.label}</p>
-						<div>
-							{group.items.map((item) => (
-								<span>{item}</span>
-							))}
+		<div class="cv-outro">
+			<SectionLabel>Awards</SectionLabel>
+			<div class="awards">
+				{
+					awards.map((item) => (
+						<div class="award">
+							<span>{item.mark}</span>
+							<p>
+								<span set:html={item.text} />
+								{item.note && <em> — {item.note}</em>}
+							</p>
 						</div>
-					</div>
-				))
-			}
+					))
+				}
+			</div>
+
+			<SectionLabel>Skills</SectionLabel>
+			<div class="skills">
+				{
+					skills.map((group) => (
+						<div class="skill">
+							<p>{group.label}</p>
+							<div>
+								{group.items.map((item) => (
+									<span>{item}</span>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+			<CvPortrait variant="pointing" />
 		</div>
 	</article>
 </SiteLayout>
 
+<script>
+	import '../scripts/cv-portrait';
+	import '../scripts/cv-projects';
+</script>
+
 <style>
 	.cv {
-		padding: 72px 0 24px;
+		--cv-top: 72px;
+		--portrait-rail-gap: 34px;
+		--portrait-gutter-width: calc((100vw - var(--page-max-narrow)) / 2 - var(--portrait-rail-gap) - var(--page-pad-x));
+		position: relative;
+		padding: var(--cv-top) 0 24px;
+	}
+
+	.cv-header {
+		display: grid;
+		grid-template-columns: clamp(88px, 24vw, 158px) minmax(0, 1fr);
+		align-items: center;
+		gap: clamp(15px, 3vw, 30px);
+	}
+
+	@media screen and (min-width: 1120px) and (min-height: 450px) {
+		.cv-header {
+			display: block;
+		}
+
+		.portrait-rail {
+			position: absolute;
+			inset-block: var(--cv-top) 24px;
+			right: calc(100% + var(--portrait-rail-gap));
+			width: clamp(136px, var(--portrait-gutter-width), 238px);
+		}
+
+		.portrait-sticky {
+			position: sticky;
+			top: 28px;
+		}
+
+		.portrait-sticky > :global([data-cv-portrait='rail']) {
+			--portrait-position: 54% 45%;
+			height: var(--portrait-height, auto);
+		}
 	}
 
 	.section-note {
@@ -312,24 +337,92 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		margin-top: 10px;
 	}
 
-	.project-video {
-		margin: 24px 0 0;
+	.projects {
+		container-type: inline-size;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 10px;
 	}
-
-	.project-video video {
-		display: block;
+	.project {
+		--expanded-width: max(100cqw, calc(50cqw + 50vw - var(--page-pad-x)));
+		box-sizing: border-box;
 		width: 100%;
-		height: auto;
-		aspect-ratio: 1280 / 1024;
-		background: #050708;
-		border: 1px solid var(--rule);
+		border-top: 1px solid var(--rule);
+		overflow: clip;
+		overflow-anchor: none;
 	}
-
-	.project-video figcaption {
-		margin-top: 8px;
-		font-family: var(--font-mono);
-		font-size: 11.5px;
-		color: var(--mute);
+	.project[open] {
+		width: var(--expanded-width);
+	}
+	.project__summary {
+		box-sizing: border-box;
+		width: 100%;
+		display: grid;
+		/* Give the space revealed by the card to the gap before the date. */
+		--date-gap: max(14px, calc(14px + 100% - 100cqw));
+		grid-template-columns: minmax(0, 1fr) var(--date-gap) auto 14px 18px;
+		grid-template-areas: 'title . period . indicator' 'lede lede lede . indicator';
+		align-items: baseline;
+		row-gap: 5px;
+		padding: 14px 0;
+		list-style: none;
+		cursor: pointer;
+	}
+	.project__summary::-webkit-details-marker { display: none; }
+	.project__title { grid-area: title; font-size: 17px; font-weight: 500; line-height: 1.35; letter-spacing: -.015em; }
+	.project__summary:focus-visible { outline-offset: -2px; }
+	.project__title a, .project__panel :global(a) {
+		color: var(--ink);
+		border: 0;
+		text-decoration: underline;
+		text-decoration-color: var(--mute);
+		text-decoration-thickness: 1px;
+		text-underline-offset: .2em;
+	}
+	.project__title a:hover, .project__panel :global(a:hover) { text-decoration-color: var(--ink); }
+	.project__period { grid-area: period; font: 11.5px var(--font-mono); color: var(--mute); }
+	.project__lede { grid-area: lede; max-width: calc(100cqw - 32px); font-size: 14px; line-height: 1.5; color: var(--mute); }
+	.project__indicator { grid-area: indicator; text-align: center; color: var(--mute); line-height: 1; }
+	.project__indicator::before { content: '+'; }
+	.project[open] .project__indicator::before { content: '−'; }
+	.project__panel {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+		align-items: start;
+		gap: clamp(16px, 2vw, 32px);
+		width: var(--expanded-width);
+		padding: 16px 0;
+		background: color-mix(in srgb, var(--paper) 90%, transparent);
+		backdrop-filter: blur(8px);
+		border-top: 1px solid var(--rule);
+	}
+	.project__panel ul { margin: 0; }
+	.project__media {
+		position: relative;
+		display: grid;
+		place-items: center;
+		overflow: hidden;
+		border-radius: 8px;
+		border: 1px solid var(--rule);
+		background: var(--paper);
+		aspect-ratio: 1.6;
+	}
+	.project__media img, .project__media video { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
+	.project__media :global(.vibescience-preview) { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 1; visibility: visible; transform: none; border: 0; border-radius: 0; }
+	.project__diagram { margin: 0; padding: 10px; list-style: none; text-align: center; font: clamp(11px, 1vw, 14px) var(--font-mono); }
+	.project__diagram li { width: fit-content; margin: auto; padding: 4px 14px; border: 1px solid var(--rule); border-radius: 5px; }
+	.project__diagram li + li { margin-top: 12px; position: relative; }
+	.project__diagram li + li::before { content: ''; position: absolute; bottom: 100%; left: 50%; height: 13px; width: 1px; background: var(--mute); }
+	@media (max-width: 680px) {
+		.project__panel { grid-template-columns: minmax(0, 1fr); }
+	}
+	@media (max-width: 560px) {
+		.project__summary {
+			grid-template-columns: minmax(0, 1fr) 18px;
+			grid-template-areas: 'title indicator' 'period indicator' 'lede lede';
+			column-gap: 14px;
+		}
+		.project__lede { max-width: none; }
 	}
 
 	ul {
@@ -345,16 +438,6 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 
 	ul :global(a) {
 		border-bottom: 1px solid var(--rule);
-	}
-
-	.vibescience-preview-row {
-		position: relative;
-		z-index: 1;
-	}
-
-	.vibescience-preview-row:hover,
-	.vibescience-preview-row:focus-within {
-		z-index: 4;
 	}
 
 	.awards {
@@ -403,6 +486,28 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		gap: 16px;
 	}
 
+	.cv-outro > :global([data-cv-portrait='pointing']) {
+		--pointing-size-divisor: 1.5;
+		--portrait-position: center 34%;
+		width: calc(100% / var(--pointing-size-divisor));
+		margin: 32px 0 0 auto;
+	}
+
+	@media screen and (min-width: 1120px) and (min-height: 450px) {
+		.cv-outro {
+			position: relative;
+		}
+
+		.cv-outro > :global([data-cv-portrait='pointing']) {
+			position: absolute;
+			bottom: 0;
+			left: calc(100% + var(--portrait-rail-gap));
+			width: calc(var(--portrait-gutter-width) / var(--pointing-size-divisor));
+			height: calc(min(100%, calc(var(--portrait-gutter-width) * 1.35)) / var(--pointing-size-divisor));
+			margin: 0;
+		}
+	}
+
 	.skill {
 		display: flex;
 		align-items: baseline;
@@ -430,7 +535,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 
 	@media (max-width: 720px) {
 		.cv {
-			padding-top: 48px;
+			--cv-top: 48px;
 		}
 
 		.award {
@@ -441,7 +546,29 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 
 	@media print {
 		.cv {
-			padding-top: 0;
+			--paper: #fff;
+			--ink: #111;
+			--mute: #555;
+			--rule: #ccc;
+			--pulse: #111;
+			--cv-top: 0px;
 		}
+
+		.cv-header {
+			display: block;
+		}
+
+		.portrait-rail,
+		.cv-outro > :global([data-cv-portrait='pointing']) {
+			display: none;
+		}
+
+		.project {
+			break-inside: avoid;
+		}
+
+		.project { --expanded-width: 100%; overflow: visible; }
+		.project::details-content { content-visibility: visible; }
+		.project__indicator { display: none; }
 	}
 </style>

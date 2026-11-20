@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import pointingPortrait from '../assets/cv/anton-pointing.jpg';
+import portrait from '../assets/cv/anton-portrait.webp';
+import { SITE_AUTHOR } from '../consts';
+
+interface Props {
+	variant?: 'rail' | 'pointing';
+}
+
+const { variant = 'rail' } = Astro.props;
+const isPointing = variant === 'pointing';
+---
+
+<figure class="portrait" data-cv-portrait={variant}>
+	<Image
+		src={isPointing ? pointingPortrait : portrait}
+		alt={isPointing ? `${SITE_AUTHOR} sitting on a boulder and pointing left` : SITE_AUTHOR}
+		width={isPointing ? 900 : 480}
+		format="webp"
+		loading={isPointing ? 'lazy' : 'eager'}
+		fetchpriority={variant === 'rail' ? 'high' : 'low'}
+	/>
+	{Array.from({ length: 4 }, () => <canvas aria-hidden="true" hidden></canvas>)}
+</figure>
+
+<style>
+	.portrait {
+		position: relative;
+		margin: 0;
+		isolation: isolate;
+		overflow: hidden;
+		border: 1px solid var(--rule);
+		border-radius: 6px;
+		background: var(--paper);
+	}
+
+	img,
+	canvas {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: var(--portrait-position, center);
+	}
+
+	img {
+		display: block;
+	}
+
+	canvas {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	@media (prefers-reduced-motion: reduce), print {
+		canvas {
+			display: none;
+		}
+	}
+</style>
