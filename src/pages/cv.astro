@@ -111,7 +111,6 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 			</div>
 		</div>
 
-		<div class="portrait-inline"><CvPortrait variant="inline" /></div>
 		<SectionLabel>Projects</SectionLabel>
 		<p class="section-note">{cvProjectsNote}</p>
 		<div class="projects">
@@ -220,10 +219,6 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		gap: clamp(15px, 3vw, 30px);
 	}
 
-	.portrait-inline {
-		display: none;
-	}
-
 	@media screen and (min-width: 1120px) and (min-height: 450px) {
 		.cv-header {
 			display: block;
@@ -244,14 +239,6 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		.portrait-sticky > :global([data-cv-portrait='rail']) {
 			--portrait-position: 54% 45%;
 			height: var(--portrait-height, auto);
-		}
-	}
-
-	@media screen and (max-width: 1119px), screen and (max-height: 449px) {
-		.portrait-inline:has(:global([data-ascii-ready])) {
-			display: block;
-			width: min(54%, 210px);
-			margin: 32px 0 0 auto;
 		}
 	}
 

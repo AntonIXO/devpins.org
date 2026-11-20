@@ -5,7 +5,7 @@ import portrait from '../assets/cv/anton-portrait.webp';
 import { SITE_AUTHOR } from '../consts';
 
 interface Props {
-	variant?: 'rail' | 'inline' | 'pointing';
+	variant?: 'rail' | 'pointing';
 }
 
 const { variant = 'rail' } = Astro.props;
@@ -15,7 +15,7 @@ const isPointing = variant === 'pointing';
 <figure class="portrait" data-cv-portrait={variant}>
 	<Image
 		src={isPointing ? pointingPortrait : portrait}
-		alt={isPointing ? `${SITE_AUTHOR} sitting on a boulder and pointing left` : variant === 'inline' ? '' : SITE_AUTHOR}
+		alt={isPointing ? `${SITE_AUTHOR} sitting on a boulder and pointing left` : SITE_AUTHOR}
 		width={isPointing ? 900 : 480}
 		format="webp"
 		loading={isPointing ? 'lazy' : 'eager'}

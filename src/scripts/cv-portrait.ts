@@ -83,26 +83,22 @@ function mountPortraits(article: HTMLElement) {
 		const viewport = window.innerHeight;
 		const articleBounds = article.getBoundingClientRect();
 		for (const { element, image, layers } of portraits) {
-			const isRail = element.dataset.cvPortrait === 'rail';
 			const isPointing = element.dataset.cvPortrait === 'pointing';
-			const active = !reduced.matches && (isPointing || wide.matches === isRail) && image.naturalWidth > 0;
-			element.toggleAttribute('data-ascii-ready', active);
+			const active = !reduced.matches && (isPointing || wide.matches) && image.naturalWidth > 0;
 			if (!active) {
 				layers.forEach((layer) => { layer.hidden = true; });
 				continue;
 			}
 
-			const bounds = isRail ? articleBounds : element.getBoundingClientRect();
 			let progress: number;
 			if (isPointing) {
+				const bounds = element.getBoundingClientRect();
 				// Finish the wipe even when the photo stays low in the viewport at the end of the page.
 				const remainingScroll = document.documentElement.scrollHeight - viewport - window.scrollY;
 				const endTop = Math.max(viewport * 0.12, bounds.top - remainingScroll);
 				progress = (viewport - bounds.top) / Math.max(1, viewport - endTop);
-			} else if (isRail) {
-				progress = -bounds.top / Math.max(1, bounds.height - viewport * 0.85);
 			} else {
-				progress = (viewport * 0.96 - bounds.top) / (viewport * 0.82);
+				progress = -articleBounds.top / Math.max(1, articleBounds.height - viewport * 0.85);
 			}
 			const position = (isPointing ? 1 - clamp(progress) : clamp(progress)) * layers.length;
 
