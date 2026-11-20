@@ -77,6 +77,8 @@ function mountPortraits(article: HTMLElement) {
 	const wide = window.matchMedia('(min-width: 1120px) and (min-height: 450px)');
 	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const rendered = new WeakSet<HTMLCanvasElement>();
+	const listeners = new AbortController();
+	const { signal } = listeners;
 	let scrollEnd = 0;
 	let pointingStart = 0;
 	let frame = 0;
@@ -117,6 +119,7 @@ function mountPortraits(article: HTMLElement) {
 	}
 
 	function measureTrack() {
+		if (intro) article.style.setProperty('--portrait-height', `${intro.getBoundingClientRect().height}px`);
 		if (!outro) return;
 		const viewport = window.innerHeight;
 		const height = document.documentElement.scrollHeight;
@@ -133,17 +136,21 @@ function mountPortraits(article: HTMLElement) {
 	const observer = new ResizeObserver(measureTrack);
 	observer.observe(article);
 	observer.observe(document.body);
-	if (intro) {
-		const measureIntro = () => article.style.setProperty('--portrait-height', `${intro.getBoundingClientRect().height}px`);
-		new ResizeObserver(measureIntro).observe(intro);
-		measureIntro();
-	}
-	for (const { image } of portraits) image.addEventListener('load', schedule);
-	window.addEventListener('scroll', schedule, { passive: true });
-	window.addEventListener('resize', measureTrack);
-	reduced.addEventListener('change', schedule);
+	if (intro) observer.observe(intro);
+	for (const { image } of portraits) image.addEventListener('load', schedule, { signal });
+	window.addEventListener('scroll', schedule, { passive: true, signal });
+	window.addEventListener('resize', measureTrack, { signal });
+	reduced.addEventListener('change', schedule, { signal });
 	measureTrack();
+
+	document.addEventListener('astro:before-swap', () => {
+		listeners.abort();
+		observer.disconnect();
+		window.cancelAnimationFrame(frame);
+	}, { once: true });
 }
 
-const article = document.querySelector<HTMLElement>('.cv');
-if (article) mountPortraits(article);
+document.addEventListener('astro:page-load', () => {
+	const article = document.querySelector<HTMLElement>('.cv');
+	if (article) mountPortraits(article);
+});

@@ -1,4 +1,4 @@
-import sleepComparison from '../assets/blog/fitbit-vs-oura/fig1_sleep_scatter.png';
+import itmoLogo from '../assets/cv/itmo-logo.png';
 
 export interface CvLink {
 	label: string;
@@ -8,6 +8,7 @@ export interface CvLink {
 export interface CvEducation {
 	title: string;
 	period: string;
+	logo?: ImageMetadata;
 	meta?: string;
 	metaHref?: string;
 	bullets?: string[];
@@ -21,12 +22,20 @@ export interface CvProject {
 	bullets: string[];
 	preview?: 'vibescience';
 	diagram?: string[];
+	videoEmbed?: string;
 	image?: { src: string; alt: string };
 	video?: {
 		src: string;
-		webm: string;
+		webm?: string;
 		poster: string;
 		label: string;
+		captions?: {
+			src: string;
+			lang: string;
+			label: string;
+			kind: 'captions' | 'subtitles';
+			default?: boolean;
+		}[];
 	};
 }
 
@@ -63,6 +72,10 @@ export const education: CvEducation[] = [
 	{
 		title: 'ITMO University — BSc, Applied Mathematics and Informatics',
 		period: 'Sept 2025 – June 2029',
+		// Alexey Minaev, CC BY 4.0. Cropped transparent margins and resized.
+		// https://commons.wikimedia.org/wiki/File:ITMO_University_logo.png
+		// https://creativecommons.org/licenses/by/4.0/
+		logo: itmoLogo,
 		meta: 'Computer Science · St. Petersburg, Russia',
 		bullets: [
 			'Foundational track built to grow elite engineers.',
@@ -74,13 +87,13 @@ export const education: CvEducation[] = [
 export const cvProjects: CvProject[] = [
 	{
 		title: 'optiHealth — personal N-of-1 biohacking platform',
-		image: { src: sleepComparison.src, alt: 'Comparison of time in bed and deep sleep on paired Fitbit and Oura nights' },
 		href: 'https://optihealth.devpins.org/',
 		period: 'July 2025 – present',
 		lede: 'A single place to bring together all my health data (vitals, sleep, training, tags, supplements, location, and more) and search it for insights.',
 		bullets: [
 			'Web app, Android app, scalable database, and analysis-engine.',
 			'Classical statistical analysis using Spearman correlation and BH-FDR.',
+			'<a href="https://optihealth.devpins.org/blog/whoop-vs-fitbit" target="_blank" rel="noopener noreferrer">WHOOP vs Fitbit: Real-World Data (N=97)</a>',
 			'Some interesting findings: my mood follows an hourly curve',
 			'and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length)',
 			'Polygala, GABA, and NAC ↔ Oura sleep score.',
@@ -128,7 +141,15 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'MineBit — NFT marketplace for Minecraft builds',
-		diagram: ['Minecraft build', 'Minestom server', 'TON marketplace'],
+		video: {
+			src: '/projects/minebit-demo.mp4',
+			poster: '/projects/minebit-demo.webp',
+			label: 'MineBit pitch at The Open League Hackathon',
+			captions: [
+				{ src: '/projects/minebit-demo.en.vtt', lang: 'en', label: 'English', kind: 'subtitles', default: true },
+				{ src: '/projects/minebit-demo.ru.vtt', lang: 'ru', label: 'Русский', kind: 'captions' },
+			],
+		},
 		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
 		period: 'May 2024 – August 2024',
 		lede: 'Marketplace letting creators mint and sell builds as NFTs.',
@@ -165,7 +186,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'KonspecterAI PWA',
-		diagram: ['Book', 'Retrieval', 'Chat & quizzes'],
+		videoEmbed: 'https://www.youtube-nocookie.com/embed/EK9oM1SHyf4',
 		href: 'https://devpost.com/software/konspecterai',
 		period: 'Oct 2024 – Jan 2025',
 		lede: 'Open-source progressive web app that folds LLMs into the reading flow.',
@@ -177,8 +198,8 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'Android hacking',
-		diagram: ['Custom firmware', 'Magisk modules', 'Android'],
-		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
+		videoEmbed: 'https://www.youtube-nocookie.com/embed/YW6hTkQDYFQ',
+		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ',
 		period: 'Jan 2021 – May 2021',
 		lede: 'Improved my phone\'s and hi-fi player\'s features with custom firmware and Magisk modules to make them run faster and sound better.',
 		bullets: [

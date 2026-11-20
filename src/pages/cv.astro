@@ -76,6 +76,9 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 				{
 					education.map((item) => (
 						<div class:list={['card', { compact: !item.bullets }]}>
+							{item.logo && (
+								<img class="education-logo" src={item.logo.src} width={item.logo.width} height={item.logo.height} alt="" />
+							)}
 							<div class="card__head">
 								<h2>{item.title}</h2>
 								<span>{item.period}</span>
@@ -127,14 +130,31 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 					</summary>
 					<div class="project__panel" id={`project-panel-${index}`}>
 						<ul>{item.bullets.map(bullet => <li set:html={bullet} />)}</ul>
-						<div class="project__media">
+						{(item.image || item.preview || item.video || item.videoEmbed || item.diagram) && <div class="project__media">
 							{item.image && <img loading="lazy" src={item.image.src} alt={item.image.alt} />}
 							{item.preview && <VibesciencePreview data={vibesciencePreviewData} />}
 							{item.video && <video controls playsinline preload="none" poster={item.video.poster} aria-label={item.video.label}>
-								<source src={item.video.webm} type="video/webm" /><source src={item.video.src} type="video/mp4" />
+								{item.video.webm && <source src={item.video.webm} type="video/webm" />}
+								<source src={item.video.src} type="video/mp4" />
+								{item.video.captions?.map(caption => (
+									<track
+										kind={caption.kind}
+										src={caption.src}
+										srclang={caption.lang}
+										label={caption.label}
+										default={caption.default}
+									/>
+								))}
 							</video>}
+							{item.videoEmbed && <iframe
+								src={item.videoEmbed}
+								title={`${item.title} video`}
+								loading="lazy"
+								referrerpolicy="strict-origin-when-cross-origin"
+								allow="fullscreen; picture-in-picture"
+							></iframe>}
 							{item.diagram && <ol class="project__diagram">{item.diagram.map(step => <li>{step}</li>)}</ol>}
-						</div>
+						</div>}
 					</div>
 				</details>
 			))}
@@ -292,6 +312,25 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		gap: 16px;
 	}
 
+	.education-logo {
+		display: block;
+		width: 88px;
+		height: auto;
+		margin-bottom: 12px;
+	}
+
+	@media screen {
+		:global(html[data-theme='dark']) .education-logo {
+			filter: brightness(0) invert(1);
+		}
+	}
+
+	@media screen and (prefers-color-scheme: dark) {
+		:global(html:not([data-theme])) .education-logo {
+			filter: brightness(0) invert(1);
+		}
+	}
+
 	.card__head {
 		display: flex;
 		align-items: baseline;
@@ -401,6 +440,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		border-top: 1px solid var(--rule);
 	}
 	.project__panel ul { margin: 0; }
+	.project__panel:not(:has(.project__media)) { grid-template-columns: minmax(0, 1fr); }
 	.project__media {
 		position: relative;
 		display: grid;
@@ -412,6 +452,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		aspect-ratio: 1.6;
 	}
 	.project__media img, .project__media video { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
+	.project__media iframe { width: 100%; height: 100%; min-height: 0; border: 0; }
 	.project__media :global(.vibescience-preview) { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 1; visibility: visible; transform: none; border: 0; border-radius: 0; }
 	.project__diagram { margin: 0; padding: 10px; list-style: none; text-align: center; font: clamp(11px, 1vw, 14px) var(--font-mono); }
 	.project__diagram li { width: fit-content; margin: auto; padding: 4px 14px; border: 1px solid var(--rule); border-radius: 5px; }
