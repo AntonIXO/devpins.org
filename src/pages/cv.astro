@@ -1,4 +1,5 @@
 ---
+import CvPortrait from '../components/CvPortrait.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import VibesciencePreview from '../components/VibesciencePreview.astro';
 import { SITE_AUTHOR, SITE_LOCATION } from '../consts';
@@ -44,63 +45,73 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 	atmosphere="blank"
 >
 	<article class="cv">
-		<h1>{SITE_AUTHOR}</h1>
-		<p class="place">{SITE_LOCATION}</p>
-		<div class="chips">
-			{
-				cvLinks.map((link) => (
-					<a
-						href={link.href}
-						target={link.href.startsWith('mailto:') ? undefined : '_blank'}
-						rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
-						data-umami-event="cv-contact-click"
-						data-umami-event-channel={link.label.toLowerCase()}
-					>
-						{link.label}
-					</a>
-				))
-			}
-		</div>
-
-		<SectionLabel>Education</SectionLabel>
-		<div class="stack">
-			{
-				education.map((item) => (
-					<div class:list={['card', { compact: !item.bullets }]}>
-						<div class="card__head">
-							<h2>{item.title}</h2>
-							<span>{item.period}</span>
-						</div>
-						{item.meta &&
-							(item.metaHref ? (
-								<p class="meta">
-									<a
-										href={item.metaHref}
-										target="_blank"
-										rel="noopener noreferrer"
-										data-umami-event="cv-education-click"
-										data-umami-event-institution={item.meta.split(' · ')[0]}
-									>
-										{item.meta.split(' · ')[0]}
-									</a>
-									{' · '}
-									{item.meta.split(' · ').slice(1).join(' · ')}
-								</p>
-							) : (
-								<p class="meta">{item.meta}</p>
-							))}
-						{item.bullets && (
-							<ul>
-								{item.bullets.map((bullet) => (
-									<li>{bullet}</li>
-								))}
-							</ul>
-						)}
+		<div class="cv-intro" data-cv-intro>
+			<header class="cv-header">
+				<div class="portrait-rail">
+					<div class="portrait-sticky"><CvPortrait /></div>
+				</div>
+				<div class="cv-identity">
+					<h1>{SITE_AUTHOR}</h1>
+					<p class="place">{SITE_LOCATION}</p>
+					<div class="chips">
+						{
+							cvLinks.map((link) => (
+								<a
+									href={link.href}
+									target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+									rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+									data-umami-event="cv-contact-click"
+									data-umami-event-channel={link.label.toLowerCase()}
+								>
+									{link.label}
+								</a>
+							))
+						}
 					</div>
-				))
-			}
+				</div>
+			</header>
+
+			<SectionLabel>Education</SectionLabel>
+			<div class="stack">
+				{
+					education.map((item) => (
+						<div class:list={['card', { compact: !item.bullets }]}>
+							<div class="card__head">
+								<h2>{item.title}</h2>
+								<span>{item.period}</span>
+							</div>
+							{item.meta &&
+								(item.metaHref ? (
+									<p class="meta">
+										<a
+											href={item.metaHref}
+											target="_blank"
+											rel="noopener noreferrer"
+											data-umami-event="cv-education-click"
+											data-umami-event-institution={item.meta.split(' · ')[0]}
+										>
+											{item.meta.split(' · ')[0]}
+										</a>
+										{' · '}
+										{item.meta.split(' · ').slice(1).join(' · ')}
+									</p>
+								) : (
+									<p class="meta">{item.meta}</p>
+								))}
+							{item.bullets && (
+								<ul>
+									{item.bullets.map((bullet) => (
+										<li>{bullet}</li>
+									))}
+								</ul>
+							)}
+						</div>
+					))
+				}
+			</div>
 		</div>
 
+		<div class="portrait-inline"><CvPortrait variant="inline" /></div>
 		<SectionLabel>Projects</SectionLabel>
 		<p class="section-note">{cvProjectsNote}</p>
 		<div class="stack">
@@ -179,42 +190,95 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 			}
 		</div>
 
-		<SectionLabel>Awards</SectionLabel>
-		<div class="awards">
-			{
-				awards.map((item) => (
-					<div class="award">
-						<span>{item.mark}</span>
-						<p>
-							<span set:html={item.text} />
-							{item.note && <em> — {item.note}</em>}
-						</p>
-					</div>
-				))
-			}
-		</div>
-
-		<SectionLabel>Skills</SectionLabel>
-		<div class="skills">
-			{
-				skills.map((group) => (
-					<div class="skill">
-						<p>{group.label}</p>
-						<div>
-							{group.items.map((item) => (
-								<span>{item}</span>
-							))}
+		<div class="cv-outro">
+			<SectionLabel>Awards</SectionLabel>
+			<div class="awards">
+				{
+					awards.map((item) => (
+						<div class="award">
+							<span>{item.mark}</span>
+							<p>
+								<span set:html={item.text} />
+								{item.note && <em> — {item.note}</em>}
+							</p>
 						</div>
-					</div>
-				))
-			}
+					))
+				}
+			</div>
+
+			<SectionLabel>Skills</SectionLabel>
+			<div class="skills">
+				{
+					skills.map((group) => (
+						<div class="skill">
+							<p>{group.label}</p>
+							<div>
+								{group.items.map((item) => (
+									<span>{item}</span>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+			<CvPortrait variant="pointing" />
 		</div>
 	</article>
 </SiteLayout>
 
+<script>
+	import '../scripts/cv-portrait';
+</script>
+
 <style>
 	.cv {
-		padding: 72px 0 24px;
+		--cv-top: 72px;
+		--portrait-rail-gap: 34px;
+		--portrait-gutter-width: calc((100vw - var(--page-max-narrow)) / 2 - var(--portrait-rail-gap) - var(--page-pad-x));
+		position: relative;
+		padding: var(--cv-top) 0 24px;
+	}
+
+	.cv-header {
+		display: grid;
+		grid-template-columns: clamp(88px, 24vw, 158px) minmax(0, 1fr);
+		align-items: center;
+		gap: clamp(15px, 3vw, 30px);
+	}
+
+	.portrait-inline {
+		display: none;
+	}
+
+	@media screen and (min-width: 1120px) and (min-height: 450px) {
+		.cv-header {
+			display: block;
+		}
+
+		.portrait-rail {
+			position: absolute;
+			inset-block: var(--cv-top) 24px;
+			right: calc(100% + var(--portrait-rail-gap));
+			width: clamp(136px, var(--portrait-gutter-width), 238px);
+		}
+
+		.portrait-sticky {
+			position: sticky;
+			top: 28px;
+		}
+
+		.portrait-sticky > :global([data-cv-portrait='rail']) {
+			--portrait-position: 54% 45%;
+			height: var(--portrait-height, auto);
+		}
+	}
+
+	@media screen and (max-width: 1119px), screen and (max-height: 449px) {
+		.portrait-inline:has(:global([data-ascii-ready])) {
+			display: block;
+			width: min(54%, 210px);
+			margin: 32px 0 0 auto;
+		}
 	}
 
 	.section-note {
@@ -403,6 +467,28 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		gap: 16px;
 	}
 
+	.cv-outro > :global([data-cv-portrait='pointing']) {
+		--pointing-size-divisor: 1.5;
+		--portrait-position: center 34%;
+		width: calc(100% / var(--pointing-size-divisor));
+		margin: 32px 0 0 auto;
+	}
+
+	@media screen and (min-width: 1120px) and (min-height: 450px) {
+		.cv-outro {
+			position: relative;
+		}
+
+		.cv-outro > :global([data-cv-portrait='pointing']) {
+			position: absolute;
+			bottom: 0;
+			left: calc(100% + var(--portrait-rail-gap));
+			width: calc(var(--portrait-gutter-width) / var(--pointing-size-divisor));
+			height: calc(min(100%, calc(var(--portrait-gutter-width) * 1.35)) / var(--pointing-size-divisor));
+			margin: 0;
+		}
+	}
+
 	.skill {
 		display: flex;
 		align-items: baseline;
@@ -430,7 +516,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 
 	@media (max-width: 720px) {
 		.cv {
-			padding-top: 48px;
+			--cv-top: 48px;
 		}
 
 		.award {
@@ -441,7 +527,16 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 
 	@media print {
 		.cv {
-			padding-top: 0;
+			--cv-top: 0px;
+		}
+
+		.cv-header {
+			display: block;
+		}
+
+		.portrait-rail,
+		.cv-outro > :global([data-cv-portrait='pointing']) {
+			display: none;
 		}
 	}
 </style>
