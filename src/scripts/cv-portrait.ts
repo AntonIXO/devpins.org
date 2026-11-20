@@ -66,55 +66,38 @@ function renderAscii(source: HTMLImageElement, canvas: HTMLCanvasElement, style:
 	return true;
 }
 
-function mountPortraits(article: HTMLElement) {
+function mountPortrait(article: HTMLElement, portrait: HTMLElement) {
 	const intro = article.querySelector<HTMLElement>('[data-cv-intro]');
-	const pointing = article.querySelector<HTMLElement>('.pointing-portrait');
-	const portraits = [...article.querySelectorAll<HTMLElement>('[data-cv-portrait]')].map((element) => ({
-		element,
-		image: element.querySelector('img')!,
-		layers: [...element.querySelectorAll('canvas')],
-	}));
+	const image = portrait.querySelector('img')!;
+	const layers = [...portrait.querySelectorAll('canvas')];
 	const wide = window.matchMedia('(min-width: 1120px) and (min-height: 450px)');
 	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const rendered = new WeakSet<HTMLCanvasElement>();
-	const pointingStart = 0.75;
 	let frame = 0;
 
 	function update() {
 		frame = 0;
-		const viewport = window.innerHeight;
-		const articleBounds = article.getBoundingClientRect();
-		const scrollRange = document.documentElement.scrollHeight - viewport;
-		const pageProgress = scrollRange > 0 ? clamp(window.scrollY / scrollRange) : 1;
-		const showPointing = pageProgress >= pointingStart;
-		pointing?.toggleAttribute('data-visible', showPointing);
-		for (const { element, image, layers } of portraits) {
-			const isPointing = element.dataset.cvPortrait === 'pointing';
-			const active = !reduced.matches && (isPointing ? showPointing : wide.matches) && image.naturalWidth > 0;
-			if (!active) {
-				layers.forEach((layer) => { layer.hidden = true; });
-				continue;
-			}
-
-			const progress = isPointing
-				? (1 - pageProgress) / (1 - pointingStart)
-				: -articleBounds.top / Math.max(1, articleBounds.height - viewport * 0.85);
-			const position = clamp(progress) * layers.length;
-
-			layers.forEach((layer, index) => {
-				// Hold each preset briefly, then reveal the next from the top down.
-				const reveal = clamp((position - index - 0.18) / 0.55);
-				const covered = position >= index + 1.73;
-				if (reveal > 0 && !covered && !rendered.has(layer) && renderAscii(image, layer, portraitStyles[index])) {
-					rendered.add(layer);
-				}
-				layer.hidden = reveal === 0 || covered || !rendered.has(layer);
-				if (!layer.hidden) {
-					const inset = `${(1 - reveal) * 100}%`;
-					layer.style.clipPath = isPointing ? `inset(${inset} 0 0 0)` : `inset(0 0 ${inset} 0)`;
-				}
-			});
+		if (reduced.matches || !wide.matches || image.naturalWidth === 0) {
+			layers.forEach((layer) => { layer.hidden = true; });
+			return;
 		}
+
+		const articleBounds = article.getBoundingClientRect();
+		const progress = -articleBounds.top / Math.max(1, articleBounds.height - window.innerHeight * 0.85);
+		const position = clamp(progress) * layers.length;
+
+		layers.forEach((layer, index) => {
+			// Hold each preset briefly, then reveal the next from the top down.
+			const reveal = clamp((position - index - 0.18) / 0.55);
+			const covered = position >= index + 1.73;
+			if (reveal > 0 && !covered && !rendered.has(layer) && renderAscii(image, layer, portraitStyles[index])) {
+				rendered.add(layer);
+			}
+			layer.hidden = reveal === 0 || covered || !rendered.has(layer);
+			if (!layer.hidden) {
+				layer.style.clipPath = `inset(0 0 ${(1 - reveal) * 100}% 0)`;
+			}
+		});
 	}
 
 	function schedule() {
@@ -128,13 +111,13 @@ function mountPortraits(article: HTMLElement) {
 		new ResizeObserver(measureIntro).observe(intro);
 		measureIntro();
 	}
-	for (const { image } of portraits) image.addEventListener('load', schedule);
+	image.addEventListener('load', schedule);
 	window.addEventListener('scroll', schedule, { passive: true });
 	window.addEventListener('resize', schedule);
 	reduced.addEventListener('change', schedule);
-	article.setAttribute('data-portrait-scroll', '');
 	schedule();
 }
 
 const article = document.querySelector<HTMLElement>('.cv');
-if (article) mountPortraits(article);
+const portrait = article?.querySelector<HTMLElement>('[data-cv-portrait="rail"]');
+if (article && portrait) mountPortrait(article, portrait);
