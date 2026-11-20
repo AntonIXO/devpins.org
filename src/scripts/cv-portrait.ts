@@ -66,58 +66,84 @@ function renderAscii(source: HTMLImageElement, canvas: HTMLCanvasElement, style:
 	return true;
 }
 
-function mountPortrait(article: HTMLElement, portrait: HTMLElement) {
+function mountPortraits(article: HTMLElement) {
 	const intro = article.querySelector<HTMLElement>('[data-cv-intro]');
-	const image = portrait.querySelector('img')!;
-	const layers = [...portrait.querySelectorAll('canvas')];
+	const outro = article.querySelector<HTMLElement>('[data-cv-outro]');
+	const portraits = [...article.querySelectorAll<HTMLElement>('[data-cv-portrait]')].map((element) => ({
+		pointing: element.dataset.cvPortrait === 'pointing',
+		image: element.querySelector('img')!,
+		layers: [...element.querySelectorAll('canvas')],
+	}));
 	const wide = window.matchMedia('(min-width: 1120px) and (min-height: 450px)');
 	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const rendered = new WeakSet<HTMLCanvasElement>();
+	let scrollEnd = 0;
+	let pointingStart = 0;
 	let frame = 0;
 
 	function update() {
 		frame = 0;
-		if (reduced.matches || !wide.matches || image.naturalWidth === 0) {
-			layers.forEach((layer) => { layer.hidden = true; });
-			return;
-		}
-
 		const articleBounds = article.getBoundingClientRect();
-		const progress = -articleBounds.top / Math.max(1, articleBounds.height - window.innerHeight * 0.85);
-		const position = clamp(progress) * layers.length;
+		for (const { pointing, image, layers } of portraits) {
+			const active = !reduced.matches && (pointing ? window.scrollY >= pointingStart : wide.matches) && image.naturalWidth > 0;
+			if (!active) {
+				layers.forEach((layer) => { layer.hidden = true; });
+				continue;
+			}
 
-		layers.forEach((layer, index) => {
-			// Hold each preset briefly, then reveal the next from the top down.
-			const reveal = clamp((position - index - 0.18) / 0.55);
-			const covered = position >= index + 1.73;
-			if (reveal > 0 && !covered && !rendered.has(layer) && renderAscii(image, layer, portraitStyles[index])) {
-				rendered.add(layer);
-			}
-			layer.hidden = reveal === 0 || covered || !rendered.has(layer);
-			if (!layer.hidden) {
-				layer.style.clipPath = `inset(0 0 ${(1 - reveal) * 100}% 0)`;
-			}
-		});
+			const progress = pointing
+				? (scrollEnd - window.scrollY) / Math.max(1, scrollEnd - pointingStart)
+				: -articleBounds.top / Math.max(1, articleBounds.height - window.innerHeight * 0.85);
+			const position = clamp(progress) * layers.length;
+
+			layers.forEach((layer, index) => {
+				// Hold each preset briefly, then reveal the next from the top down.
+				const reveal = clamp((position - index - 0.18) / 0.55);
+				const covered = position >= index + 1.73;
+				if (reveal > 0 && !covered && !rendered.has(layer) && renderAscii(image, layer, portraitStyles[index])) {
+					rendered.add(layer);
+				}
+				layer.hidden = reveal === 0 || covered || !rendered.has(layer);
+				if (!layer.hidden) {
+					const inset = `${(1 - reveal) * 100}%`;
+					layer.style.clipPath = pointing ? `inset(${inset} 0 0 0)` : `inset(0 0 ${inset} 0)`;
+				}
+			});
+		}
 	}
 
 	function schedule() {
 		if (!frame) frame = window.requestAnimationFrame(update);
 	}
 
-	const observer = new ResizeObserver(schedule);
+	function measureTrack() {
+		if (!outro) return;
+		const viewport = window.innerHeight;
+		const height = document.documentElement.scrollHeight;
+		const bounds = outro.getBoundingClientRect();
+		scrollEnd = Math.max(0, height - viewport);
+		pointingStart = Math.ceil(scrollEnd * 0.7);
+		// Put the top of the sticky area at the viewport's bottom at 70% scroll.
+		outro.style.setProperty('--pointing-start', `${pointingStart + viewport - (bounds.top + window.scrollY)}px`);
+		// The desktop gutter can keep the portrait pinned alongside the footer.
+		outro.style.setProperty('--pointing-end', `${bounds.bottom + window.scrollY - height}px`);
+		schedule();
+	}
+
+	const observer = new ResizeObserver(measureTrack);
 	observer.observe(article);
+	observer.observe(document.body);
 	if (intro) {
 		const measureIntro = () => article.style.setProperty('--portrait-height', `${intro.getBoundingClientRect().height}px`);
 		new ResizeObserver(measureIntro).observe(intro);
 		measureIntro();
 	}
-	image.addEventListener('load', schedule);
+	for (const { image } of portraits) image.addEventListener('load', schedule);
 	window.addEventListener('scroll', schedule, { passive: true });
-	window.addEventListener('resize', schedule);
+	window.addEventListener('resize', measureTrack);
 	reduced.addEventListener('change', schedule);
-	schedule();
+	measureTrack();
 }
 
 const article = document.querySelector<HTMLElement>('.cv');
-const portrait = article?.querySelector<HTMLElement>('[data-cv-portrait="rail"]');
-if (article && portrait) mountPortrait(article, portrait);
+if (article) mountPortraits(article);

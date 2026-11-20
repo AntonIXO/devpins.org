@@ -21,7 +21,7 @@ const isPointing = variant === 'pointing';
 		loading={isPointing ? 'lazy' : 'eager'}
 		fetchpriority={variant === 'rail' ? 'high' : 'low'}
 	/>
-	{!isPointing && Array.from({ length: 4 }, () => <canvas aria-hidden="true" hidden></canvas>)}
+	{Array.from({ length: 4 }, () => <canvas aria-hidden="true" hidden></canvas>)}
 </figure>
 
 <style>
