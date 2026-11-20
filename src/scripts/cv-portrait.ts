@@ -68,6 +68,7 @@ function renderAscii(source: HTMLImageElement, canvas: HTMLCanvasElement, style:
 
 function mountPortraits(article: HTMLElement) {
 	const intro = article.querySelector<HTMLElement>('[data-cv-intro]');
+	const pointing = article.querySelector<HTMLElement>('.pointing-portrait');
 	const portraits = [...article.querySelectorAll<HTMLElement>('[data-cv-portrait]')].map((element) => ({
 		element,
 		image: element.querySelector('img')!,
@@ -76,31 +77,29 @@ function mountPortraits(article: HTMLElement) {
 	const wide = window.matchMedia('(min-width: 1120px) and (min-height: 450px)');
 	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const rendered = new WeakSet<HTMLCanvasElement>();
+	const pointingStart = 0.75;
 	let frame = 0;
 
 	function update() {
 		frame = 0;
 		const viewport = window.innerHeight;
 		const articleBounds = article.getBoundingClientRect();
+		const scrollRange = document.documentElement.scrollHeight - viewport;
+		const pageProgress = scrollRange > 0 ? clamp(window.scrollY / scrollRange) : 1;
+		const showPointing = pageProgress >= pointingStart;
+		pointing?.toggleAttribute('data-visible', showPointing);
 		for (const { element, image, layers } of portraits) {
 			const isPointing = element.dataset.cvPortrait === 'pointing';
-			const active = !reduced.matches && (isPointing || wide.matches) && image.naturalWidth > 0;
+			const active = !reduced.matches && (isPointing ? showPointing : wide.matches) && image.naturalWidth > 0;
 			if (!active) {
 				layers.forEach((layer) => { layer.hidden = true; });
 				continue;
 			}
 
-			let progress: number;
-			if (isPointing) {
-				const bounds = element.getBoundingClientRect();
-				// Finish the wipe even when the photo stays low in the viewport at the end of the page.
-				const remainingScroll = document.documentElement.scrollHeight - viewport - window.scrollY;
-				const endTop = Math.max(viewport * 0.12, bounds.top - remainingScroll);
-				progress = (viewport - bounds.top) / Math.max(1, viewport - endTop);
-			} else {
-				progress = -articleBounds.top / Math.max(1, articleBounds.height - viewport * 0.85);
-			}
-			const position = (isPointing ? 1 - clamp(progress) : clamp(progress)) * layers.length;
+			const progress = isPointing
+				? (1 - pageProgress) / (1 - pointingStart)
+				: -articleBounds.top / Math.max(1, articleBounds.height - viewport * 0.85);
+			const position = clamp(progress) * layers.length;
 
 			layers.forEach((layer, index) => {
 				// Hold each preset briefly, then reveal the next from the top down.
@@ -133,6 +132,7 @@ function mountPortraits(article: HTMLElement) {
 	window.addEventListener('scroll', schedule, { passive: true });
 	window.addEventListener('resize', schedule);
 	reduced.addEventListener('change', schedule);
+	article.setAttribute('data-portrait-scroll', '');
 	schedule();
 }
 

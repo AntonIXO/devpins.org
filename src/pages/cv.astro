@@ -193,8 +193,8 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 					))
 				}
 			</div>
-			<CvPortrait variant="pointing" />
 		</div>
+		<div class="pointing-portrait"><CvPortrait variant="pointing" /></div>
 	</article>
 </SiteLayout>
 
@@ -486,25 +486,41 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		gap: 16px;
 	}
 
-	.cv-outro > :global([data-cv-portrait='pointing']) {
-		--pointing-size-divisor: 1.5;
+	.pointing-portrait {
 		--portrait-position: center 34%;
-		width: calc(100% / var(--pointing-size-divisor));
+		width: min(26%, 112px);
 		margin: 32px 0 0 auto;
+		pointer-events: none;
+	}
+
+	@media screen {
+		.cv[data-portrait-scroll] .pointing-portrait {
+			position: sticky;
+			bottom: max(16px, env(safe-area-inset-bottom));
+			z-index: 2;
+		}
+
+		.cv[data-portrait-scroll] .pointing-portrait:not([data-visible]) {
+			visibility: hidden;
+		}
 	}
 
 	@media screen and (min-width: 1120px) and (min-height: 450px) {
-		.cv-outro {
-			position: relative;
+		.pointing-portrait,
+		.cv[data-portrait-scroll] .pointing-portrait {
+			position: absolute;
+			inset-block: var(--cv-top) 24px;
+			left: calc(100% + var(--portrait-rail-gap));
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			width: min(calc(var(--portrait-gutter-width) / 1.5), 180px);
+			margin: 0;
 		}
 
-		.cv-outro > :global([data-cv-portrait='pointing']) {
-			position: absolute;
-			bottom: 0;
-			left: calc(100% + var(--portrait-rail-gap));
-			width: calc(var(--portrait-gutter-width) / var(--pointing-size-divisor));
-			height: calc(min(100%, calc(var(--portrait-gutter-width) * 1.35)) / var(--pointing-size-divisor));
-			margin: 0;
+		.cv[data-portrait-scroll] .pointing-portrait > :global([data-cv-portrait='pointing']) {
+			position: sticky;
+			bottom: 28px;
 		}
 	}
 
@@ -559,7 +575,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		}
 
 		.portrait-rail,
-		.cv-outro > :global([data-cv-portrait='pointing']) {
+		.pointing-portrait {
 			display: none;
 		}
 
