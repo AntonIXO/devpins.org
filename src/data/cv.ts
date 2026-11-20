@@ -1,3 +1,5 @@
+import sleepComparison from '../assets/blog/fitbit-vs-oura/fig1_sleep_scatter.png';
+
 export interface CvLink {
 	label: string;
 	href: string;
@@ -18,6 +20,8 @@ export interface CvProject {
 	lede: string;
 	bullets: string[];
 	preview?: 'vibescience';
+	diagram?: string[];
+	image?: { src: string; alt: string };
 	video?: {
 		src: string;
 		webm: string;
@@ -70,6 +74,7 @@ export const education: CvEducation[] = [
 export const cvProjects: CvProject[] = [
 	{
 		title: 'optiHealth — personal N-of-1 biohacking platform',
+		image: { src: sleepComparison.src, alt: 'Comparison of time in bed and deep sleep on paired Fitbit and Oura nights' },
 		href: 'https://optihealth.devpins.org/',
 		period: 'July 2025 – present',
 		lede: 'A single place to bring together all my health data (vitals, sleep, training, tags, supplements, location, and more) and search it for insights.',
@@ -86,6 +91,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'Sensor Language Models (SLM) research',
+		href: '/vibescience/',
 		period: 'March 2026 – present',
 		lede: 'Implementing SLMs — LLMs capable of understanding time-series data from wearables. With open datasets, on the younger brother\'s RTX 5070',
 		preview: 'vibescience',
@@ -99,6 +105,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'Low-level system engineering — Linux on mobile',
+		diagram: ['SailfishOS', 'libhybris', 'Android HAL', 'Redmi Note 9 Pro'],
 		href: 'https://github.com/SailfishOS-miatoll',
 		period: 'Oct 2021 – May 2025',
 		lede: 'Ported a complete GNU/Linux (SailfishOS) system to an ARM Android (Xiaomi Redmi Note 9 Pro) smartphone.',
@@ -109,6 +116,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'BHWiki — open and modern BioHacking Wiki',
+		diagram: ['Publications', 'Mechanisms & targets', 'Substances'],
 		href: 'https://bhwiki.devpins.org/',
 		period: 'October 2026 – present',
 		lede: 'Decomposing medical publications pages linked together in graph.',
@@ -120,6 +128,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'MineBit — NFT marketplace for Minecraft builds',
+		diagram: ['Minecraft build', 'Minestom server', 'TON marketplace'],
 		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
 		period: 'May 2024 – August 2024',
 		lede: 'Marketplace letting creators mint and sell builds as NFTs.',
@@ -133,6 +142,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'LightSem — audio-to-stage-lighting fun',
+		video: { src: '/projects/lightsem-demo.mp4', webm: '/projects/lightsem-demo.webm', poster: '/projects/lightsem-demo.jpg', label: 'LightSem stage lighting demo' },
 		href: 'https://github.com/AntonIXO/lightsem',
 		period: 'Sept 2026 – present',
 		lede: 'I don\'t like stage lighting, especially algorithmic lighting, so I tried to build one learned from dancing.',
@@ -143,6 +153,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'Player — bit-perfect music player in Rust',
+		diagram: ['Rust player', 'Linux kernel', 'Chord Mojo 2'],
 		href: 'https://github.com/AntonIXO/player',
 		period: 'May 2026 – June 2026',
 		lede: 'High-end music player for postmarketOS on a Poco F1 running a mainline Linux kernel.',
@@ -154,6 +165,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'KonspecterAI PWA',
+		diagram: ['Book', 'Retrieval', 'Chat & quizzes'],
 		href: 'https://devpost.com/software/konspecterai',
 		period: 'Oct 2024 – Jan 2025',
 		lede: 'Open-source progressive web app that folds LLMs into the reading flow.',
@@ -165,6 +177,7 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'Android hacking',
+		diagram: ['Custom firmware', 'Magisk modules', 'Android'],
 		href: 'https://www.youtube.com/watch?v=YW6hTkQDYFQ&t=1s&pp=0gcJCSkMAYcqIYzv',
 		period: 'Jan 2021 – May 2021',
 		lede: 'Improved my phone\'s and hi-fi player\'s features with custom firmware and Magisk modules to make them run faster and sound better.',
