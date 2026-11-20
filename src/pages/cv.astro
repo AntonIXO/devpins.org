@@ -162,24 +162,24 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 			}
 		</div>
 
-		<div class="cv-outro">
-			<SectionLabel>Awards</SectionLabel>
-			<div class="awards">
-				{
-					awards.map((item) => (
-						<div class="award">
-							<span>{item.mark}</span>
-							<p>
-								<span set:html={item.text} />
-								{item.note && <em> — {item.note}</em>}
-							</p>
-						</div>
-					))
-				}
-			</div>
+		<div class="cv-outro" data-cv-outro>
+			<div>
+				<SectionLabel>Awards</SectionLabel>
+				<div class="awards">
+					{
+						awards.map((item) => (
+							<div class="award">
+								<span>{item.mark}</span>
+								<p>
+									<span set:html={item.text} />
+									{item.note && <em> — {item.note}</em>}
+								</p>
+							</div>
+						))
+					}
+				</div>
 
-			<SectionLabel>Skills</SectionLabel>
-			<div class="cv-skills">
+				<SectionLabel>Skills</SectionLabel>
 				<div class="skills">
 					{
 						skills.map((group) => (
@@ -194,9 +194,9 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 						))
 					}
 				</div>
-				<div class="pointing-portrait">
-					<div class="pointing-track"><CvPortrait variant="pointing" /></div>
-				</div>
+			</div>
+			<div class="pointing-portrait">
+				<div class="pointing-track"><CvPortrait variant="pointing" /></div>
 			</div>
 		</div>
 	</article>
@@ -491,22 +491,27 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 	}
 
 	@media screen {
-		.cv-skills {
+		.cv-outro {
+			--pointing-width: min(34%, 168px, 30svh);
+			position: relative;
 			display: grid;
-			grid-template-columns: minmax(0, 1fr) min(34%, 168px, 30svh);
+			grid-template-columns: minmax(0, 1fr) var(--pointing-width);
 			gap: clamp(12px, 4vw, 24px);
 		}
 
 		.pointing-portrait {
 			--portrait-position: center 34%;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
+			position: absolute;
+			inset-block: 0;
+			inset-inline-end: 0;
+			width: var(--pointing-width);
 		}
 
 		.pointing-track {
+			position: absolute;
+			inset-inline: 0;
+			inset-block: var(--pointing-start, 45%) 0;
 			display: flex;
-			flex: 1;
 			flex-direction: column;
 			justify-content: flex-end;
 		}
@@ -520,26 +525,19 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 
 	@media screen and (min-width: 1120px) and (min-height: 450px) {
 		.cv-outro {
-			position: relative;
-		}
-
-		.cv-skills {
 			display: block;
 		}
 
 		.pointing-portrait {
 			--pointing-height: calc(min(100cqh, var(--portrait-gutter-width) * 1.35) / 1.5);
-			position: absolute;
-			inset-block: 0;
-			left: calc(100% + var(--portrait-rail-gap));
+			inset-inline-start: calc(100% + var(--portrait-rail-gap));
+			inset-inline-end: auto;
 			width: calc(var(--portrait-gutter-width) / 1.5);
 			container-type: size;
 		}
 
 		.pointing-track {
-			/* Leave room for the photo to enter below the viewport and then stick. */
-			flex: none;
-			height: min(100%, max(64%, calc(var(--pointing-height) + 96px)));
+			inset-block: var(--pointing-start, 30%) var(--pointing-end, 0px);
 		}
 
 		.pointing-track > :global([data-cv-portrait='pointing']) {
