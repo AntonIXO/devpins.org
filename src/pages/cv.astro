@@ -111,7 +111,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 							{item.bullets && (
 								<ul>
 									{item.bullets.map((bullet) => (
-										<li>{bullet}</li>
+										<li class="cv-bullet">{bullet}</li>
 									))}
 								</ul>
 							)}
@@ -131,7 +131,8 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 				<div class:list={['projects', { 'misc-vibe': section.id === 'misc' }]}>
 					{section.items.map((item, index) => {
 						const hasMedia = Boolean(item.image || item.screenshots?.length || item.preview || item.video || item.videoEmbed || item.diagram);
-						const expandable = Boolean(item.bullets?.length || hasMedia);
+						const hasInsights = Boolean(item.insights?.length);
+						const expandable = Boolean(item.bullets?.length || hasInsights || hasMedia);
 						const Row = expandable ? 'details' : 'article';
 						const Header = expandable ? 'summary' : 'div';
 						const panelId = `project-panel-${section.id}-${index}`;
@@ -146,8 +147,20 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 									<span class="project__lede" set:html={item.lede} />
 									{expandable && <span class="project__indicator" aria-hidden="true"></span>}
 								</Header>
-								{expandable && <div class:list={["project__panel", { "project__panel--text": !hasMedia }]} id={panelId}>
-									{item.bullets?.length ? <ul>{item.bullets.map(bullet => <li set:html={bullet} />)}</ul> : null}
+								{expandable && <div class:list={["project__panel", { "project__panel--text": !hasMedia && !hasInsights }]} id={panelId}>
+									{item.bullets?.length ? <ul>{item.bullets.map(bullet => <li class="cv-bullet" set:html={bullet} />)}</ul> : null}
+									{hasInsights && <aside class="project__insights" aria-labelledby={`${panelId}-insights`}>
+										<h3 id={`${panelId}-insights`}>Some interesting insights</h3>
+										<ul>
+											{item.insights?.map(({ label, href, note, trackingId }) => (
+												<li>
+													<a href={href} target="_blank" rel="noopener noreferrer"
+														data-umami-event={trackingId ? 'cv-insight-click' : undefined} data-umami-event-insight={trackingId}>{label}</a>
+													{note && <small>{note}</small>}
+												</li>
+											))}
+										</ul>
+									</aside>}
 									{hasMedia && <div class:list={['project__media', {
 											'project__media--screenshots': item.screenshots?.length,
 											'project__media--with-note': item.video?.note,
@@ -155,14 +168,17 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 										style={item.screenshots?.length ? {
 											gridTemplateColumns: item.screenshots.map(({ width, height }) => `minmax(0, ${width / height}fr)`).join(' '),
 										} : undefined}>
-										{item.screenshots?.map(screenshot => (
-											<img loading="lazy" src={screenshot.src} alt={screenshot.alt} width={screenshot.width} height={screenshot.height} />
-										))}
-										{item.image && (item.image.href ? (
-											<a class="project__image-link" href={item.image.href}>
-												<img loading="lazy" src={item.image.src} alt={item.image.alt} />
-											</a>
-										) : <img loading="lazy" src={item.image.src} alt={item.image.alt} />)}
+										{(item.screenshots ?? (item.image ? [item.image] : [])).map(media => {
+											const href = 'href' in media ? media.href : undefined;
+											return (
+												<a class="project__zoom" href={media.src} data-cv-zoom data-image-link={href}
+													aria-label={`Enlarge image: ${media.alt}`}>
+													<img loading="lazy" src={media.src} alt={media.alt}
+														width={'width' in media ? media.width : undefined}
+														height={'height' in media ? media.height : undefined} />
+												</a>
+											);
+										})}
 										{item.preview && <VibesciencePreview data={vibesciencePreviewData} />}
 										{item.video && <video controls playsinline preload="none" poster={item.video.poster} aria-label={item.video.label}>
 											{item.video.webm && <source src={item.video.webm} type="video/webm" />}
@@ -204,7 +220,18 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 							<div class="award">
 								<span>{item.mark}</span>
 								<p>
-									<span set:html={item.text} />
+								{item.parts.map((part) => {
+									if (typeof part === 'string') return part;
+									const image = part.diploma && `/diplomas/${part.diploma}.webp`;
+									if (part.href) {
+										return <a href={part.href} target="_blank" rel="noopener noreferrer" data-cv-diploma={image}>{part.label}</a>;
+									}
+									if (image) {
+										return <a href={image} data-cv-diploma={image} data-cv-zoom
+											data-cv-image-alt={`Published results: ${part.label}`}>{part.label}</a>;
+									}
+									return part.label;
+								})}
 									{item.note && <em> — {item.note}</em>}
 								</p>
 							</div>
@@ -232,12 +259,25 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 				<div class="pointing-track"><CvPortrait variant="pointing" /></div>
 			</div>
 		</div>
+		<div class="cv-diploma-preview" data-cv-diploma-preview popover="manual" aria-hidden="true">
+			<img alt="" />
+		</div>
+		<dialog class="cv-image-viewer" data-cv-image-viewer aria-label="Image preview">
+			<div class="cv-image-viewer__content">
+				<form method="dialog">
+					<button autofocus aria-label="Close image"><span aria-hidden="true">×</span></button>
+				</form>
+				<img alt="" />
+				<a data-cv-image-link hidden>Explore the live graph</a>
+			</div>
+		</dialog>
 	</article>
 </SiteLayout>
 
 <script>
 	import '../scripts/cv-portrait';
 	import '../scripts/cv-projects';
+	import '../scripts/cv-diplomas';
 </script>
 
 <style>
@@ -447,7 +487,14 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		text-underline-offset: 0.18em;
 	}
 	.project__period { grid-area: period; font: 11.5px var(--font-mono); color: var(--mute); }
-	.project__lede { grid-area: lede; max-width: calc(100cqw - 32px); font-size: 14px; line-height: 1.5; color: var(--mute); }
+	.project__lede {
+		grid-area: lede;
+		max-width: calc(100cqw - 32px);
+		font-size: 14px;
+		line-height: 1.5;
+		color: var(--mute);
+	}
+	.project__lede, .cv-bullet { white-space: pre-line; }
 	.project__indicator { grid-area: indicator; text-align: center; color: var(--mute); line-height: 1; }
 	.project__indicator::before { content: '+'; }
 	.project[open] .project__indicator::before { content: '−'; }
@@ -464,6 +511,14 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 	}
 	.project__panel--text { grid-template-columns: minmax(0, 1fr); }
 	.project__panel ul { margin: 0; }
+	.project__insights {
+		padding: 14px 16px;
+		border: 1px solid var(--rule);
+		border-radius: 8px;
+		background: var(--paper);
+	}
+	.project__insights h3 { margin-bottom: 10px; font-size: 15px; }
+	.project__insights small { display: block; color: var(--mute); font-size: 12.5px; }
 	.project__media:only-child { grid-column: -2; }
 	.project__media {
 		position: relative;
@@ -496,9 +551,46 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		border: 1px solid var(--rule);
 		border-radius: 6px;
 	}
-	.project__image-link { position: absolute; inset: 0; }
-	.project__image-link img { display: block; }
-	.project__image-link:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; }
+	.project__zoom { display: block; width: 100%; cursor: zoom-in; }
+	.project__media:not(.project__media--screenshots) .project__zoom { position: absolute; inset: 0; }
+	.project__zoom img { display: block; }
+	.project__zoom:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; }
+
+	:global(html:has(.cv-image-viewer[open])) { overflow: hidden; }
+	.cv-image-viewer {
+		max-width: calc(100vw - 24px);
+		max-height: calc(100dvh - 24px);
+		box-sizing: border-box;
+		padding: 8px;
+		border: 1px solid var(--rule);
+		border-radius: 12px;
+		background: var(--paper);
+		color: var(--ink);
+	}
+	.cv-image-viewer::backdrop { background: rgb(0 0 0 / 78%); }
+	.cv-image-viewer__content { display: grid; justify-items: end; gap: 8px; }
+	.cv-image-viewer img {
+		display: block;
+		max-width: 100%;
+		max-height: calc(100dvh - 96px);
+		object-fit: contain;
+		border-radius: 5px;
+		cursor: zoom-out;
+	}
+	.cv-image-viewer:has([data-cv-image-link]:not([hidden])) img { max-height: calc(100dvh - 128px); }
+	.cv-image-viewer button {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border: 1px solid var(--rule);
+		border-radius: 8px;
+		background: var(--paper);
+		color: var(--ink);
+		font: 26px/1 system-ui;
+		cursor: pointer;
+	}
+	.cv-image-viewer button:hover { border-color: var(--ink); }
 	.project__media iframe { width: 100%; height: 100%; min-height: 0; border: 0; }
 	.project__media :global(.vibescience-preview) { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 1; visibility: visible; transform: none; border: 0; border-radius: 0; pointer-events: auto; }
 	.project__media :global(.vibescience-preview:focus-visible) { outline: 2px solid var(--ink); outline-offset: -3px; }
@@ -551,7 +643,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		border-bottom: 1px solid var(--rule);
 	}
 
-	.award span {
+	.award > span {
 		font-family: var(--font-mono);
 		font-size: 12px;
 		color: var(--mute);
@@ -570,8 +662,57 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		color: var(--mute);
 	}
 
-	.award :global(a) {
+	.award a {
 		border-bottom: 1px solid var(--rule);
+	}
+
+	.cv-diploma-preview {
+		position: fixed;
+		inset: auto;
+		margin: 0;
+		padding: 4px;
+		border: 1px solid var(--rule);
+		border-radius: 6px;
+		background: var(--paper);
+		box-shadow: 0 5px 16px rgb(0 0 0 / 20%);
+	}
+
+	.cv-diploma-preview img {
+		display: block;
+		max-width: min(240px, calc(100vw - 34px));
+		max-height: min(200px, var(--diploma-image-height));
+		border-radius: 3px;
+	}
+
+	@media screen and (any-hover: hover) and (any-pointer: fine) {
+		.cv-diploma-preview[data-pointer] {
+			--preview-ease: cubic-bezier(0.23, 1, 0.32, 1);
+			--preview-offset: -4px;
+			opacity: 0;
+			transform: translateY(var(--preview-offset));
+			pointer-events: none;
+			transition: opacity 150ms var(--preview-ease), transform 150ms var(--preview-ease),
+				display 150ms allow-discrete, overlay 150ms allow-discrete;
+		}
+
+		.cv-diploma-preview[data-pointer]:popover-open {
+			opacity: 1;
+			transform: none;
+			pointer-events: auto;
+		}
+
+		@starting-style {
+			.cv-diploma-preview[data-pointer]:popover-open {
+				opacity: 0;
+				transform: translateY(var(--preview-offset));
+			}
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cv-diploma-preview[data-pointer] {
+			--preview-offset: 0px;
+		}
 	}
 
 	.skills {
@@ -701,7 +842,8 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		}
 
 		.portrait-rail,
-		.pointing-portrait {
+		.pointing-portrait,
+		.cv-diploma-preview {
 			display: none;
 		}
 

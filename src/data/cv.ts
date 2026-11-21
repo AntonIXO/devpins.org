@@ -20,6 +20,7 @@ export interface CvProject {
 	period?: string;
 	lede: string;
 	bullets?: string[];
+	insights?: (CvLink & { trackingId?: string; note?: string })[];
 	preview?: 'vibescience';
 	diagram?: string[];
 	videoEmbed?: string;
@@ -43,7 +44,11 @@ export interface CvProject {
 
 export interface CvAward {
 	mark: string;
-	text: string;
+	parts: (string | {
+		label: string;
+		href?: string;
+		diploma?: string;
+	})[];
 	note?: string;
 }
 
@@ -79,8 +84,8 @@ export const education: CvEducation[] = [
 		},
 		meta: 'Computer Science · St. Petersburg, Russia',
 		bullets: [
-			'Foundational track built to grow elite engineers.',
-			'Mathematical analysis, linear algebra, discrete maths, probability theory, algorithms...',
+			'Foundational track to grow exceptional engineers.',
+			'Mathematical analysis, linear algebra, discrete math, probability theory, algorithms...',
 		],
 	}
 ];
@@ -90,31 +95,55 @@ export const cvProjects: CvProject[] = [
 		title: 'optiHealth — personal N-of-1 biohacking platform',
 		href: 'https://optihealth.devpins.org/',
 		period: 'July 2025 – present',
-		lede: 'A single place to bring together all my health data (vitals, sleep, training, tags, supplements, location, and more) and search it for insights.',
+		lede: 'Ultimate platform to search for insight in your health data.',
 		bullets: [
-			'Web app, Android app, scalable database, and analysis-engine.',
-			'Classical statistical analysis using Spearman correlation and BH-FDR.',
-			'<a href="https://optihealth.devpins.org/blog/whoop-vs-fitbit" target="_blank" rel="noopener noreferrer">WHOOP vs Fitbit: Real-World Data (N=97)</a>',
-			'Some interesting findings: my mood follows an hourly curve',
-			'and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length)',
-			'Polygala, GABA, and NAC ↔ Oura sleep score.',
-			'Multivitamins ↔ HRV.',
-			'<a href="https://optihealth.devpins.org/i/euWHqwAeaHymU5DfG9ELng" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-1">Cerebrolysin ↔ Sleep</a> · <a href="https://optihealth.devpins.org/i/tPmuyOxOgCdT5OVwkYMBgw" target="_blank" rel="noopener noreferrer" data-umami-event="cv-insight-click" data-umami-event-insight="cerebrolysin-sleep-2">Cerebrolysin ↔ RHR</a>',
-			'and hundred more hypotheses to check:)',
+			'Sync data from wearables to an OrioleDB database.',
+			'Add supplements, tags, geo from Android and iOS apps.',
+			'Running analysis with ~235 million permutations + BH-FDR to filter out noise.',
+			'Considering usage in clinical trials.'
+		],
+		insights: [
+			{
+				label: 'Two-Per-Day Multivitamin ↔ HRV (RMSSD)',
+				href: 'https://optihealth.devpins.org/i/S3Bn0dwACRCZLwajX7cYIg',
+				trackingId: 'multivitamin-hrv',
+			},
+			{
+				label: 'Polygala tenuifolia ↔ Oura sleep score',
+				href: 'https://optihealth.devpins.org/i/JdlvzVz8bbxlYpJo8T2z0A',
+				trackingId: 'polygala-oura-sleep-score',
+				note: 'Stack effects could not be separated.',
+			},
+			{
+				label: 'Strattera ↔ REM sleep',
+				href: 'https://optihealth.devpins.org/i/k9nWlwdddKfEPzPF1qRf1A',
+				trackingId: 'cerebrolysin-sleep-1',
+			},
+			{
+				label: 'Lithium carbonate ↔ HRV',
+				href: 'https://optihealth.devpins.org/i/BUD_d79zsr5SXmhUK89kWw',
+				trackingId: 'cerebrolysin-sleep-2',
+			},
+			{
+				label: 'WHOOP vs Fitbit: Real-World Data (N = 97)',
+				href: 'https://optihealth.devpins.org/blog/whoop-vs-fitbit',
+			},
 		],
 	},
 	{
 		title: 'Sensor Language Models (SLM) research',
 		href: '/vibescience/',
 		period: 'March 2026 – present',
-		lede: 'Implementing SLMs — LLMs capable of understanding time-series data from wearables. With open datasets, on the younger brother\'s RTX 5070',
+		lede: 'Implementing SLMs - LLMs capable of understanding time-series data from wearables.\nWith open datasets, on my younger brother\'s RTX 5070',
 		preview: 'vibescience',
 		bullets: [
-			'14041 days, 24 channels (ACC, HR, HRV, sleep, RR...). PatchTST -> TimeLLM CrossModalProjector -> LoRA on top of soft-tokens over MedGemma 1.5 4b.',
-			'Currently solving problem of soft tokens LLM data extraction (attention head MAE: 0.8 bpm, LLM MAE: 3.8 bpm, Trivial MAE: 12 bpm)',
-			'Using the optiHealth platform infrastructure for continuous physiological data collection.',
-			'Essentially it was a "top-down learning": my advisor was Perplexity deep research, Gemini explained things,',
-			'Claude run experiments: applied autoresearch with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> <- graph.',
+			'14041 days, 24 channels (Accelerometer, HR, HRV, sleep s, RR...).',
+			'PatchTST -> TimeLLM CrossModalProjector -> LoRA on top of soft-tokens over MedGemma 1.5 4b.',
+			'Currently exploring problem of LLM data extraction from soft tokens (attention head MAE: 0.8 bpm, LLM MAE: 3.8 bpm, Trivial MAE: 12 bpm)',
+			'Using the optiHealth infrastructure for personal data collection.',
+			'Starting ML in second semester was a "top-down learning": my advisor was Perplexity deep research, Gemini explained ML,',
+			'Claude ran experiments: with <a href="/vibescience/" data-umami-event="cv-vibescience-click">vibescience</a> <- graph.',
+			'While LLMs are good at running specific idea/paper verification, they struggle with past experience. <a href="https://github.com/AntonIXO/vibescience-mcp" target="_blank" rel="noopener noreferrer">vibescience-mcp</a> is an attempt to fix that.',
 		],
 	},
 	{
@@ -123,7 +152,7 @@ export const cvProjects: CvProject[] = [
 			src: '/projects/sailfish-demo.mp4',
 			poster: '/projects/sailfish-demo.webp',
 			label: 'Sailfish OS demo on the Redmi Note 9 Pro',
-			note: 'old video (the only I have). Issues was fixed.',
+			note: 'old video (the only one I have). Issues mentioned were fixed.',
 			captions: [
 				{ src: '/projects/sailfish-demo.en.vtt', lang: 'en', label: 'English', kind: 'captions', default: true },
 			],
@@ -132,24 +161,9 @@ export const cvProjects: CvProject[] = [
 		period: 'Oct 2021 – May 2025',
 		lede: 'Ported a complete GNU/Linux (SailfishOS) system to an ARM Android (Xiaomi Redmi Note 9 Pro) smartphone.',
 		bullets: [
-			'Adapted proprietary Android HAL drivers to glibc through libhybris — every subsystem functional. End-to-end',
+			'Adapted proprietary Android HAL drivers to glibc through libhybris — every subsystem functional. End-to-end.',
 			'Over 2,000 downloads and a 200+ user community on <a href="https://t.me/Sailfish_miatoll" target="_blank" rel="noopener noreferrer">Telegram</a>.',
-		],
-	},
-	{
-		title: 'BHWiki — open and modern BioHacking Wiki',
-		image: {
-			src: '/projects/bhwiki-graph.webp',
-			alt: 'Explore the BHWiki knowledge graph',
-			href: 'https://bhwiki.devpins.org/graph',
-		},
-		href: 'https://bhwiki.devpins.org/',
-		period: 'October 2026 – present',
-		lede: 'Decomposing medical publications pages linked together in graph.',
-		bullets: [
-			'Checks drugs interactions by utilizing graph of mechanisms and targets.',
-			'Linked to optiHealth outcomes and DB. Develop as parallel projects.',
-			'Open and available for contributions: <a href="https://bhwiki.devpins.org/" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-site">live wiki</a> · <a href="https://github.com/AntonIXO/BHWiki" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-repository">repository</a>.',
+			'Occasionally entered this project in national competitions and won most of them ↓.'
 		],
 	},
 	{
@@ -165,24 +179,44 @@ export const cvProjects: CvProject[] = [
 		},
 		href: 'https://t.me/MineBitServer_bot/MineBit?startapp=EQBvVYfI8q5yNnzD4xxLMatNFcKMWHEX_F7oubxxe7mfs_F9',
 		period: 'May 2024 – August 2024',
-		lede: 'Marketplace letting creators mint and sell builds as NFTs.',
+		lede: 'Letting creators sell their work as NFTs.',
 		bullets: [
 			'Implemented custom server logic with Minestom and Kotlin, replacing the official Microsoft codebase.',
-			'Go microservice for blockchain integration.',
+			'microservice in Go for blockchain integration.',
 			'Telegram bot with Next.js to show 3D builds in a mini app.',
-			'Highlighted at The Open League Hackathon. Received very good feedback from the crypto community.',
-			'Hand-coded during the pre-AI era 😮‍💨.',
+			'Highlighted at The Open League Hackathon. Received very good feedback from the crypto community.'
+		],
+	},
+	{
+		title: 'BHWiki — open and modern BioHacking Wiki',
+		image: {
+			src: '/projects/bhwiki-graph.webp',
+			alt: 'Explore the BHWiki knowledge graph',
+			href: 'https://bhwiki.devpins.org/graph',
+		},
+		href: 'https://bhwiki.devpins.org/',
+		period: 'October 2026 – present',
+		lede: 'Turns medical publications into a graph of linked wiki pages.',
+		bullets: [
+			'Checks drug interactions by using a graph of mechanisms and targets.',
+			'Linked to optiHealth outcomes and DB. Developing them in parallel.',
+			'Open and available for contributions: <a href="https://bhwiki.devpins.org/" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-site">live wiki</a> · <a href="https://github.com/AntonIXO/BHWiki" target="_blank" rel="noopener noreferrer" data-umami-event="cv-project-link" data-umami-event-project="bhwiki-repository">repository</a>.',
 		],
 	},
 	{
 		title: 'LightSem — audio-to-stage-lighting fun',
-		video: { src: '/projects/lightsem-demo.mp4', webm: '/projects/lightsem-demo.webm', poster: '/projects/lightsem-demo.jpg', label: 'LightSem stage lighting demo' },
+		video: {
+			src: '/projects/lightsem-demo.mp4',
+			webm: '/projects/lightsem-demo.webm',
+			poster: '/projects/lightsem-demo.jpg',
+			label: 'LightSem stage lighting demo',
+			note: 'Though it didn’t work well and collapsed, I’ll fix it in my free time',
+		},
 		href: 'https://github.com/AntonIXO/lightsem',
 		period: 'Sept 2026 – present',
-		lede: 'I don\'t like stage lighting, especially algorithmic lighting, so I tried to build one learned from dancing.',
+		lede: 'I don\'t like stage lighting, so I tried to build a lighting system that learns from dance.',
 		bullets: [
-			'Pulled all the Just Dance from YouTube, extracted the motions, and wired up <a href="https://github.com/tencent-ailab/muq" target="_blank" rel="noopener noreferrer">MuQ</a> alongside other features.',
-			'Though it did not work well and collapsed. I\'ll fix it in my free time.',
+			'Pulled 70gb of the Just Dance from YouTube, extracted the motions, and wired up <a href="https://github.com/tencent-ailab/muq" target="_blank" rel="noopener noreferrer">MuQ</a> alongside other features.',
 		],
 	},
 	{
@@ -209,8 +243,8 @@ export const cvProjects: CvProject[] = [
 		lede: 'Open-source progressive web app that folds LLMs into the reading flow.',
 		bullets: [
 			'Book chat with RAG, quiz generation. Using the Vercel AI SDK and Supabase Edge Functions.',
-			'Built during the ChromeAI and Sirius education center hackathon.',
-			'Mostly web education project'
+			'Built during the Google ChromeAI and Sirius education center hackathons.',
+			'Mostly web education project.'
 		],
 	},
 	{
@@ -220,7 +254,10 @@ export const cvProjects: CvProject[] = [
 		period: 'Jan 2021 – May 2021',
 		lede: 'Improved my phone\'s and hi-fi player\'s features with custom firmware and Magisk modules to make them run faster and sound better.',
 		bullets: [
-			'<a href="https://4pda.to/forum/index.php?showuser=5432820#" target="_blank" rel="noopener noreferrer" data-umami-event="cv-4pda-click">Participated in the 4pda community — over 500 posts and 100 repositories.</a>',
+			'<a href="https://4pda.to/forum/index.php?showuser=5432820#" target="_blank" rel="noopener noreferrer" data-umami-event="cv-4pda-click">Participated in the 4pda community — over 500 posts and 100 upvotes.</a>',
+			'<a href="https://4pda.to/forum/index.php?showtopic=908413&amp;view=findpost&amp;p=103737943" target="_blank" rel="noopener noreferrer">Audio player firmware</a>',
+			'<a href="https://4pda.to/forum/index.php?showtopic=931217&amp;view=findpost&amp;p=101878251" target="_blank" rel="noopener noreferrer">Phone mods</a>',
+			'23k views on YouTube ->'
 		],
 	},
 ];
@@ -234,12 +271,9 @@ export const miscVibeProjects: CvProject[] = [
 			{ src: '/projects/math-polar-area.webp', alt: 'Interactive visualization of area in polar coordinates', width: 2344, height: 1589 },
 		],
 		lede: 'Mathematical analysis resources for exam preparation.',
-		bullets: ['Visualizations and a PDF with proofs.'],
-	},
-	{
-		title: 'vibescience-mcp',
-		href: 'https://github.com/AntonIXO/vibescience-mcp',
-		lede: 'While LLMs are good at running specific idea/paper verification, they struggle with what was done and how to learn from it. vibescience is a graph of your experiments',
+		bullets: ['Parsed lectures + hand fixes to 70 theorem proofs in PDF.',
+			'Used by many peers on the course!'
+		],
 	},
 	{
 		title: 'Dream Walker — LLM-driven retro dream thriller',
@@ -248,7 +282,13 @@ export const miscVibeProjects: CvProject[] = [
 			src: '/projects/dream-walker.webp',
 			alt: 'Dream Walker gameplay showing a pixel-art house from above',
 		},
-		lede: 'Anton Dream Emulator powered by LLM and jev — world, npc, events... Everything and generated at by models.',
+		lede: 'Anton Dream Emulator powered by LLM and jev — world, npc, events...',
+		bullets: [
+			'Used to have many write-ups of my dreams. Decided to turn the most insane of them into a game',
+			'Created a story, generated the assets...',
+			'Agent-driven games aren’t here, yet.'
+
+		]
 	},
 	{
 		title: 'Deep sleep cube (Schumann-wave machine) app',
@@ -277,7 +317,7 @@ export const miscVibeProjects: CvProject[] = [
 			alt: 'Telegram groups and their participants visualized as a network in Obsidian',
 		},
 		href: 'https://github.com/AntonIXO/telegram-group-graph-obsidian',
-		lede: 'Graph of all your telegram groups participants in C++ with TDLib use.',
+		lede: 'Exports a graph of participants in your Telegram chats.',
 		bullets: ['Visualizes shared group memberships in Obsidian.'],
 	},
 ];
@@ -285,21 +325,40 @@ export const miscVibeProjects: CvProject[] = [
 export const awards: CvAward[] = [
 	{
 		mark: 'Winner',
-		text: 'HSE University CS Research Project Competition, with the Linux port',
+		parts: [
+			{ label: 'HSE University CS Research Project Competition', diploma: 'hse-cs-research' },
+			', with the Linux port',
+		],
 		note: 'full BSc scholarship',
 	},
 	{
 		mark: 'Top 5%',
-		text: 'National competitive programming olympiads winner: Tier 1 <a href="https://olymp.hse.ru/mmo/it" target="_blank" rel="noopener noreferrer">“Vysshaya Proba”</a> and Tier 2 <a href="https://cups.online/ru/contests/technocup-25" target="_blank" rel="noopener noreferrer">“Technocup”</a>',
+		parts: [
+			'Winner of national competitive programming olympiads: Tier 1 ',
+			{ label: '“Vysshaya Proba”', href: 'https://olymp.hse.ru/mmo/it', diploma: 'vysshaya-proba' },
+			' and Tier 2 ',
+			{ label: '“Technocup”', href: 'https://cups.online/ru/contests/technocup-25', diploma: 'technocup' },
+		],
 		note: 'full BSc scholarship',
 	},
 	{
-		mark: 'National project competitions winner',
-		text: '<a href="https://bigchallenges.ru/" target="_blank" rel="noopener noreferrer">Sirius Big Challenges</a>, <a href="https://pilotazh.hse.ru/" target="_blank" rel="noopener noreferrer">HSE Higher Pilot</a>, <a href="https://energo.bmstu.ru/step-into-the-future" target="_blank" rel="noopener noreferrer">BMSTU Step into the Future</a>',
+		mark: 'Winner of project competitions',
+		parts: [
+			{ label: 'Sirius Big Challenges', href: 'https://bigchallenges.ru/', diploma: 'sirius-big-challenges' },
+			', ',
+			{ label: 'HSE Higher Pilot', href: 'https://pilotazh.hse.ru/', diploma: 'hse-higher-pilot' },
+			', ',
+			{ label: 'BMSTU Step into the Future', href: 'https://energo.bmstu.ru/step-into-the-future' },
+		],
 	},
 	{
 		mark: 'Hackathons winner',
-		text: '<a href="https://github.com/AntonIXO/octusbridge-ansible" target="_blank" rel="noopener noreferrer">OctusBridge deployment hackathon (Everscale)</a> · <a href="https://goit.mephi.ru/nuclear-hack" target="_blank" rel="noopener noreferrer">MEPhI Nuclear Hack</a> · Central University Hackathon (team hack)',
+		parts: [
+			{ label: 'OctusBridge deployment hackathon (Everscale)', href: 'https://github.com/AntonIXO/octusbridge-ansible' },
+			' · ',
+			{ label: 'MEPhI Nuclear Hack', href: 'https://goit.mephi.ru/nuclear-hack', diploma: 'nuclear-hack' },
+			' · Central University Hackathon (team hack)',
+		],
 	},
 ];
 
@@ -318,6 +377,6 @@ export const skills: CvSkillGroup[] = [
 	},
 	{
 		label: 'Sport',
-		items: ['Running (half a marathon)', 'Rock climbing (6b+ on a rock)'],
+		items: ['Running (half a marathon)', 'Rock climbing (6b+ outdoors)'],
 	},
 ];

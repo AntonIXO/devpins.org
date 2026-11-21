@@ -2,9 +2,52 @@ import { animate } from 'motion/mini';
 import { prefersReducedMotion } from './reduced-motion';
 
 function mountProjects() {
-	const list = document.querySelector<HTMLElement>('.projects');
-	if (!list || list.hasAttribute('data-hover-ready')) return;
-	list.setAttribute('data-hover-ready', '');
+	const viewer = document.querySelector<HTMLDialogElement>('[data-cv-image-viewer]');
+	if (!viewer || viewer.hasAttribute('data-ready')) return;
+	viewer.setAttribute('data-ready', '');
+
+	const image = viewer.querySelector('img')!;
+	const imageLink = viewer.querySelector<HTMLAnchorElement>('[data-cv-image-link]')!;
+	let gallery: HTMLAnchorElement[] = [];
+	let currentIndex = 0;
+
+	function showImage(index: number) {
+		const zoom = gallery[index];
+		if (!zoom) return;
+		currentIndex = index;
+		image.alt = zoom.dataset.cvImageAlt ?? zoom.querySelector('img')?.alt ?? '';
+		image.src = zoom.href;
+		const href = zoom.dataset.imageLink;
+		imageLink.hidden = !href;
+		if (href) imageLink.href = href;
+	}
+
+	image.addEventListener('click', () => viewer.close());
+	viewer.addEventListener('keydown', event => {
+		if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+		const direction = event.key === 'ArrowLeft' ? -1 : 1;
+		if (gallery.length < 2) return;
+		event.preventDefault();
+		showImage(currentIndex + direction);
+	});
+	viewer.addEventListener('click', event => {
+		if (event.target !== viewer) return;
+		const { left, right, top, bottom } = viewer.getBoundingClientRect();
+		if (event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom) {
+			viewer.close();
+		}
+	});
+
+	for (const zoom of document.querySelectorAll<HTMLAnchorElement>('[data-cv-zoom]')) {
+		zoom.addEventListener('click', event => {
+			if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+			event.preventDefault();
+			const panel = zoom.closest('.project__panel');
+			gallery = panel ? Array.from(panel.querySelectorAll<HTMLAnchorElement>('[data-cv-zoom]')) : [zoom];
+			showImage(gallery.indexOf(zoom));
+			viewer.showModal();
+		});
+	}
 
 	const actions = new Map<HTMLDetailsElement, (open: boolean) => void>();
 	const hover = window.matchMedia('(any-hover: hover) and (any-pointer: fine)');
@@ -66,7 +109,7 @@ function mountProjects() {
 			if (event.key === 'Escape') reveal(false, true);
 		});
 		card.addEventListener('focusout', event => {
-			if (!card.contains(event.relatedTarget as Node) && !card.matches(':hover')) reveal(false, true);
+			if (!viewer.open && !card.contains(event.relatedTarget as Node) && !card.matches(':hover')) reveal(false, true);
 		});
 	}
 
@@ -87,7 +130,7 @@ function mountProjects() {
 	const listeners = new AbortController();
 	const options = { signal: listeners.signal };
 	document.addEventListener('pointermove', event => {
-		if (event.pointerType !== 'mouse' || !hover.matches) return;
+		if (viewer.open || event.pointerType !== 'mouse' || !hover.matches) return;
 		const { clientX: x, clientY: y } = event;
 		if (x === lastX && y === lastY) return;
 		lastX = x;
@@ -107,6 +150,7 @@ function mountProjects() {
 	}, options);
 
 	function leave() {
+		if (viewer.open) return;
 		select(null);
 		lastX = lastY = NaN;
 	}
