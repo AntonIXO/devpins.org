@@ -22,7 +22,7 @@ heroAtTop: false
 
 ![BAL ITMO_ Night without a name.png](../../assets/blog/ne-ya-umer/night.png)
 
-And here I am on the matan committee, so I answer the tickets perfectly, so the receiver reaches the ~~pants..~~ rows...  
+And here I am on the matan committee, so I answer the tickets perfectly, so the receiver reaches the series...  
 No luck!  
 Really expelled from AI360...
 
@@ -30,9 +30,9 @@ I'm upset.
 I was about to close down, I had a little debt: a math exam and was missing 6 points out of 60 in C++.
 
 But in a sense, subconsciously, I wanted to drop out.  
-Just like a year ago I was preparing to retake the Unified State Exam in mathematics: I needed to score 90 points to enter the HSE PMI, but when I was preparing to retake it, I actually dreamed of ITMO.
+Just like a year ago I was preparing to retake the Unified State Exam in mathematics: I needed to score 90 points to enter the HSE AMI, but when I was preparing to retake it, I actually dreamed of ITMO.
 
-A couple of years ago, I generally thought that a university was not needed. I thought that as a programmer I could learn everything on the Internet. This is true.   
+A couple of years ago, I generally thought that a university was not needed. I thought that as a programmer I could learn everything on the Internet. That's true.   
 With the advent of AI, programming has become completely devalued.
 
 And if you want to expand the boundaries of possibilities, you need to learn mathematics! I read Stay Upwind by Paul Graham and decided to go to university...
@@ -43,10 +43,9 @@ There are “creators” of three levels:
 1\. Craftsmen  
 2\. Engineers  
 3\. Architects  
-So, if you want not to use what exists, but to create something radically new: learn mathematics.
+So, if you want not to use what exists, but to create something radically new: learn math.
 
-An example from Yandex: when “Prigozhin went to Moscow” instead of grep by words, they limited such searches in vector space.  
-Or Google: they made a search algorithm on graphs, instead of text search (pagerank)  
+An example from Google: they made a search algorithm on graphs, instead of naive text search (pagerank)  
 Or make a blockchain bridge based on oracles vs trustless bridge using Zero-Knowledge
 
 At some point, this turned into the only argument in favor of studying  
@@ -64,9 +63,9 @@ I was looking for a community of people who would also be interested in doing co
 Reality: most of my classmates are cool mathematicians and algorithmists from math schools. Some of them have never made their own projects, never written application code.  
 And it seems that out of 36 people, only four are somehow interested in this.
 
-I hoped that, well, from other universities, well, sooner or later they would get acquainted with the practice and then they would definitely be able to do something together with someone!
+I hoped that, well, from other universities AI360 community, well, sooner or later they would get acquainted with the practice and then they would definitely be able to do something together with someone!
 
-I wanted to enroll in Physics and Technology because graduates personally told me: you know, just when everyone is ~~fucked~~ such a mental connection is formed! For life!  
+I wanted to enroll into MIPT (hardest Russian uni) because graduates personally told me: you know, just when everyone is ~~fucked~~ such a mental connection is formed! For life!  
 Over the course of a year, I couldn’t gather a group of people working together or even just supporting each other. Here they have several excuses:
 
 - “LLM will explain it that way!” (but LLM won't feel where your blunt is)
@@ -80,7 +79,7 @@ What if he already knows everything? I will continue to jerk off chatjbt...”
 ### 2. Foundation
 
 I wanted more math. I got math...  
-There was a lot of math, too much for me personally. Matan, linal, discra, algorithms...
+There was a lot of math, too much for me personally. Mathematical analysis, linear algebra, discrete math, algorithms...
 
 I admit honestly: I wrote off most of them. Not because I'm lazy, but because I'm ~~dumb~~ doing other things. I just didn’t have time to figure it out, to understand what was happening within the framework that I set for myself.
 
@@ -92,18 +91,18 @@ It's not that there was no point in my studies, but:
 
 - KR on the line I’m generally silent...
 
-I passed the Komsu matan thanks to luck.  
+I passed mathematical analysis committee just thanks to luck.  
 I honestly prepared for the supplementary and compulsory exams, every day of the holidays I sat and figured it out.
 
 Perhaps I had the wrong preparation tactics, perhaps I am too stupid in mathematics.  
-To understand: I could clearly prove 1/10 of all tickets. For the other half, I knew the wording at best.  
+To understand: I could clearly prove 1/10 of all tickets (you have to know most). For the other half, I knew the wording at best.  
 This time everything was much better, but the knowledge was more concentrated.
 
 ---
 
-And here it’s worth remembering that people study in the same program at TopDS, where there are paid students - not only mathematical geniuses...
+And here it’s worth remembering that people study in the same program at TopDS, where there are paid students - not only math geniuses...
 
-It turns out that instead of studying, I was engaged in biohacking and my own projects: in the first semester I lost the stipulation at 75k a month, and in the second I taught LLM a new modality.   
+It turns out that instead of studying, I was engaged in biohacking and my own projects: in the first semester I spent the scholarship at 1000$ a month, and in the second I taught LLM a new modality.   
 Unfortunately, no stack of intravenous Cerebrolysin and 9-methyl-beta-carboline will speed up so that you can understand the lecture not in 5, but in 2 hours, and the fourth attempt will not be assigned for the fact that you are a brilliant vibe coder...
 
 In the second semester after college, I swore that I would study diligently: after 2 weeks of trying, I was already making a resume and dreaming of internships, a month later I was already cutting SensorLM on my younger brother’s card and completely neglected my studies, covering only what was necessary at the moment.
