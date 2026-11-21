@@ -1,0 +1,114 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:06.100
+Hi there! In this video, I'll show you
+Sailfish OS on miatoll.
+
+00:00:06.850 --> 00:00:12.950
+Jolla developed Sailfish OS back in 2014
+
+00:00:13.840 --> 00:00:16.550
+as an alternative to Android.
+
+00:00:17.900 --> 00:00:24.560
+Let's take a look
+at the Redmi Note 9 Pro.
+
+00:00:25.820 --> 00:00:29.050
+Almost everything works, with
+a couple of exceptions.
+
+00:00:29.050 --> 00:00:35.450
+Receiving SMS and Alien Dalvik.
+
+00:00:35.450 --> 00:00:40.920
+Alien Dalvik lets you run Android apps
+on Sailfish OS.
+
+00:00:41.000 --> 00:00:47.250
+I couldn't debug it because it's
+proprietary and requires a paid license.
+
+00:00:48.250 --> 00:00:51.750
+You can use Waydroid instead.
+
+00:00:52.680 --> 00:00:56.420
+I prefer dual boot,
+which also works.
+
+00:00:56.420 --> 00:00:59.600
+There are a few minor issues.
+
+00:01:02.880 --> 00:01:06.900
+An encryption bug can leave you
+with a white screen.
+
+00:01:06.900 --> 00:01:09.130
+You have to force a reboot.
+
+00:01:09.730 --> 00:01:15.800
+There are also Bluetooth issues.
+
+00:01:16.000 --> 00:01:20.050
+Sometimes it turns itself off
+and back on.
+
+00:01:20.300 --> 00:01:22.050
+And that's all.
+
+00:01:22.710 --> 00:01:27.900
+Encryption, device lock
+and fingerprint recognition.
+
+00:01:28.580 --> 00:01:32.320
+The SD card too.
+Everything seems to work.
+
+00:01:32.670 --> 00:01:38.550
+You might still run into bugs
+from time to time.
+
+00:01:39.230 --> 00:01:40.780
+Atmospheres.
+
+00:01:46.760 --> 00:01:50.660
+The Sailfish OS features work.
+
+00:01:51.230 --> 00:01:52.750
+The Telegram client.
+
+00:01:54.120 --> 00:01:55.740
+The browser.
+
+00:02:14.650 --> 00:02:18.720
+What else do we have here? Maps.
+
+00:02:19.980 --> 00:02:24.250
+A QR scanner, Device Info,
+and the camera.
+
+00:02:26.160 --> 00:02:33.150
+The camera works too,
+including the extra lenses.
+
+00:02:35.250 --> 00:02:39.580
+This entry is a duplicate
+of the main camera.
+
+00:02:40.050 --> 00:02:44.100
+Leave the camera with the warning
+disabled.
+
+00:02:44.100 --> 00:02:50.850
+If you enable it, the camera app
+will crash and need a data reset.
+
+00:02:51.000 --> 00:02:54.000
+I don't know how to do that.
+
+00:02:54.050 --> 00:02:58.950
+Leave that camera disabled.
+It doesn't work.
+
+00:02:59.800 --> 00:03:02.000
+That's all.

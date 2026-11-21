@@ -119,7 +119,14 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'Low-level system engineering — Linux on mobile',
-		diagram: ['SailfishOS', 'libhybris', 'Android HAL', 'Redmi Note 9 Pro'],
+		video: {
+			src: '/projects/sailfish-demo.mp4',
+			poster: '/projects/sailfish-demo.webp',
+			label: 'Sailfish OS demo on the Redmi Note 9 Pro',
+			captions: [
+				{ src: '/projects/sailfish-demo.en.vtt', lang: 'en', label: 'English', kind: 'captions', default: true },
+			],
+		},
 		href: 'https://github.com/SailfishOS-miatoll',
 		period: 'Oct 2021 – May 2025',
 		lede: 'Ported a complete GNU/Linux (SailfishOS) system to an ARM Android (Xiaomi Redmi Note 9 Pro) smartphone.',
