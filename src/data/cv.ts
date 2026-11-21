@@ -1,4 +1,12 @@
+import bhwikiGraph from '../assets/cv/bhwiki-graph.webp';
+import dreamWalker from '../assets/cv/dream-walker.webp';
 import itmoLogo from '../assets/cv/itmo-logo.png';
+import mathPolarArea from '../assets/cv/math-polar-area.webp';
+import mathProofs from '../assets/cv/math-proofs.webp';
+import playerLibrary from '../assets/cv/player-library.webp';
+import playerNowPlaying from '../assets/cv/player-now-playing.webp';
+import playerQueue from '../assets/cv/player-queue.webp';
+import telegramGraph from '../assets/cv/telegram-graph.webp';
 
 export interface CvLink {
 	label: string;
@@ -14,6 +22,12 @@ export interface CvEducation {
 	bullets?: string[];
 }
 
+interface CvProjectImage {
+	src: ImageMetadata;
+	alt: string;
+	href?: string;
+}
+
 export interface CvProject {
 	title: string;
 	href?: string;
@@ -24,8 +38,8 @@ export interface CvProject {
 	preview?: 'vibescience';
 	diagram?: string[];
 	videoEmbed?: string;
-	image?: { src: string; alt: string; href?: string };
-	screenshots?: { src: string; alt: string; width: number; height: number }[];
+	image?: CvProjectImage;
+	screenshots?: CvProjectImage[];
 	video?: {
 		src: string;
 		webm?: string;
@@ -190,7 +204,7 @@ export const cvProjects: CvProject[] = [
 	{
 		title: 'BHWiki — open and modern BioHacking Wiki',
 		image: {
-			src: '/projects/bhwiki-graph.webp',
+			src: bhwikiGraph,
 			alt: 'Explore the BHWiki knowledge graph',
 			href: 'https://bhwiki.devpins.org/graph',
 		},
@@ -222,9 +236,9 @@ export const cvProjects: CvProject[] = [
 	{
 		title: 'Player — bit-perfect music player in Rust',
 		screenshots: [
-			{ src: '/projects/player-library.webp', alt: 'Player music library', width: 640, height: 1330 },
-			{ src: '/projects/player-now-playing.webp', alt: 'Now Playing screen with bit-perfect output indicator', width: 640, height: 1330 },
-			{ src: '/projects/player-queue.webp', alt: 'Player playback queue', width: 640, height: 1330 },
+			{ src: playerLibrary, alt: 'Player music library' },
+			{ src: playerNowPlaying, alt: 'Now Playing screen with bit-perfect output indicator' },
+			{ src: playerQueue, alt: 'Player playback queue' },
 		],
 		href: 'https://github.com/AntonIXO/player',
 		period: 'May 2026 – June 2026',
@@ -267,8 +281,8 @@ export const miscVibeProjects: CvProject[] = [
 		title: 'math.devpins.org — mathematical analysis notes',
 		href: 'https://math.devpins.org',
 		screenshots: [
-			{ src: '/projects/math-proofs.webp', alt: 'Pages from the notes on Hölder’s and Minkowski’s inequalities', width: 1323, height: 1743 },
-			{ src: '/projects/math-polar-area.webp', alt: 'Interactive visualization of area in polar coordinates', width: 2344, height: 1589 },
+			{ src: mathProofs, alt: 'Pages from the notes on Hölder’s and Minkowski’s inequalities' },
+			{ src: mathPolarArea, alt: 'Interactive visualization of area in polar coordinates' },
 		],
 		lede: 'Mathematical analysis resources for exam preparation.',
 		bullets: ['Parsed lectures + hand fixes to 70 theorem proofs in PDF.',
@@ -279,7 +293,7 @@ export const miscVibeProjects: CvProject[] = [
 		title: 'Dream Walker — LLM-driven retro dream thriller',
 		href: 'https://dreamwalker.devpins.org',
 		image: {
-			src: '/projects/dream-walker.webp',
+			src: dreamWalker,
 			alt: 'Dream Walker gameplay showing a pixel-art house from above',
 		},
 		lede: 'Anton Dream Emulator powered by LLM and jev — world, npc, events...',
@@ -313,7 +327,7 @@ export const miscVibeProjects: CvProject[] = [
 	{
 		title: 'Telegram graph',
 		image: {
-			src: '/projects/telegram-graph.webp',
+			src: telegramGraph,
 			alt: 'Telegram groups and their participants visualized as a network in Obsidian',
 		},
 		href: 'https://github.com/AntonIXO/telegram-group-graph-obsidian',

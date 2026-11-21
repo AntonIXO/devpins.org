@@ -31,6 +31,10 @@ const sitemapXmlAlias = {
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://devpins.org',
+	image: {
+		layout: 'constrained',
+		breakpoints: [320, 480, 640, 750, 960, 1280, 1440],
+	},
 	markdown: {
 		processor: unified({
 			remarkPlugins: [remarkMath],

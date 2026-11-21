@@ -35,12 +35,13 @@ const alternateUrl = alternate ? new URL(`/blog/${alternate.id}/`, Astro.site).h
 			heroImage && heroAtTop && (
 				<div class="hero">
 					<Image
-						width={1200}
-						densities={[1, 2]}
+						width={720}
+						widths={[360, 540, 720, 1080, 1440]}
+						sizes="(max-width: 768px) calc(100vw - 48px), 720px"
 						src={heroImage}
 						alt=""
-						loading="eager"
-						fetchpriority="high"
+						priority
+						decoding="async"
 					/>
 				</div>
 			)
@@ -67,7 +68,7 @@ const alternateUrl = alternate ? new URL(`/blog/${alternate.id}/`, Astro.site).h
 			<form method="dialog">
 				<button type="submit" aria-label="Close enlarged image">×</button>
 			</form>
-			<img src="" alt="" />
+			<img alt="" />
 		</dialog>
 		<div class="article-end-sentinel" aria-hidden="true"></div>
 	</article>
@@ -91,9 +92,7 @@ const alternateUrl = alternate ? new URL(`/blog/${alternate.id}/`, Astro.site).h
 
 			trigger.addEventListener('click', () => {
 				enlargedImage.alt = image.alt;
-				enlargedImage.src = image.currentSrc || image.src;
-				enlargedImage.srcset = image.srcset;
-				enlargedImage.sizes = 'min(94vw, 1800px)';
+			enlargedImage.src = image.src;
 				dialog.showModal();
 			});
 		}
@@ -111,7 +110,6 @@ const alternateUrl = alternate ? new URL(`/blog/${alternate.id}/`, Astro.site).h
 		});
 		dialog.addEventListener('close', () => {
 			enlargedImage.removeAttribute('src');
-			enlargedImage.removeAttribute('srcset');
 		});
 	};
 
