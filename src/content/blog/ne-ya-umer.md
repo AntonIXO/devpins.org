@@ -51,7 +51,7 @@ heroAtTop: false
 Или сделать блокчейн мост на оракулах vs trustless bridge, используя Zero-Knowledge
 
 В какой-то момент это превратилось в единственный аргумент в пользу учебы  
-([ведь, мне кажется, что жизнь после отчисления существует](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu)).  
+(<a href="https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu" target="_blank" rel="noopener">ведь, мне кажется, что жизнь после отчисления существует</a>).  
 Перешло из философии, в религию. Ради пути в рай — нужно страдать.
 
 Однако мы знаем по теореме о достаточном условии экстремума, что функция достигает его только если первая n-ная ненулевая производная четная!  
@@ -111,7 +111,7 @@ heroAtTop: false
 
 Такая стратегия прокатывает, если ты очень хорош в математике, но, как мы уже поняли, это не мой случай…
 
-## [When Shall I Be Free?](https://www.youtube.com/watch?v=ZcQvv8pubrc)
+## <a href="https://www.youtube.com/watch?v=ZcQvv8pubrc" target="_blank" rel="noopener">When Shall I Be Free?</a>
 
 Когда… эээ… не очень хороший человек мне поставил низкий коэффициент за лабу по плюсам, я был очень зол.   
 Зол на весь этот не очень хороший курс и возникла мысль:
@@ -174,5 +174,5 @@ P.S. Несмотря на то что тут много “оправданий
 
 5. Тому что не отчислили из вуза, а перевели в 35 группу.
 
-6. Мещерину за вдохновение. [Про отчисление](https://miptstream.ru/2016/01/16/drop-off/), [про обучение взрослых математике](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu).  
+6. Мещерину за вдохновение. <a href="https://miptstream.ru/2016/01/16/drop-off/" target="_blank" rel="noopener">Про отчисление</a>, <a href="https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu" target="_blank" rel="noopener">про обучение взрослых математике</a>.  
 Про множества Витали гениально. Не много в наше время по настоящему образованных людей, кто знает почему это так интересно и необычно.

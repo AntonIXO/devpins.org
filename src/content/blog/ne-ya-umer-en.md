@@ -51,7 +51,7 @@ Take Yandex. When “Prigozhin marched on Moscow,” they restricted those searc
 Or Google. PageRank let them search a graph instead of just matching text.  
 Or say you’re building a blockchain bridge. You could rely on oracles, or you could build a trustless bridge with zero-knowledge proofs.
 
-Eventually that was the only argument I had left for staying ([I’m pretty sure there’s life after getting kicked out](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu)).  
+Eventually that was the only argument I had left for staying (<a href="https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu" target="_blank" rel="noopener">I’m pretty sure there’s life after getting kicked out</a>).  
 My philosophy had turned into a religion. You want to get to heaven, you have to suffer.
 
 But as we know from the higher-order derivative test, if the first nonzero derivative is the <i>n</i>th and the function has a local extremum there, then <i>n</i> had better be even!  
@@ -107,7 +107,7 @@ In my second semester, after that first panel, I swore I’d buckle down. Two we
 
 You can get away with that if you’re really good at math. We’ve established how that worked out for me…
 
-## [When Shall I Be Free?](https://www.youtube.com/watch?v=ZcQvv8pubrc)
+## <a href="https://www.youtube.com/watch?v=ZcQvv8pubrc" target="_blank" rel="noopener">When Shall I Be Free?</a>
 
 When a certain… uh… less-than-wonderful person slapped a low multiplier on my C++ lab grade, I was pissed.  
 Pissed at that whole less-than-wonderful course. And a thought crossed my mind:
@@ -164,7 +164,7 @@ P.S. For all the “excuses” and “criticism” in here, there’s plenty I�
 3. The climbing club.
 4. The stipend I blew on biohacking and audio gear.
 5. They let me stay at ITMO and transferred me to Group 35.
-6. Meshcherin, for the inspiration. [On getting kicked out](https://miptstream.ru/2016/01/16/drop-off/) and [on teaching adults math](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu).  
+6. Meshcherin, for the inspiration. <a href="https://miptstream.ru/2016/01/16/drop-off/" target="_blank" rel="noopener">On getting kicked out</a> and <a href="https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu" target="_blank" rel="noopener">on teaching adults math</a>.  
    The bit about Vitali sets is genius. There aren’t many genuinely educated people around these days who understand why that’s so interesting and so strange.
 
 [^channel]: This was the channel where I posted my plans for the day.
