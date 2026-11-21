@@ -76,11 +76,18 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 				{
 					education.map((item) => (
 						<div class:list={['card', { compact: !item.bullets }]}>
-							{item.logo && (
-								<img class="education-logo" src={item.logo.src} width={item.logo.width} height={item.logo.height} alt="" />
-							)}
 							<div class="card__head">
-								<h2>{item.title}</h2>
+								<h2>
+									{item.institution && <>
+										<a class="education-institution" href={item.institution.href} target="_blank" rel="noopener noreferrer"
+											data-umami-event="cv-education-click" data-umami-event-institution={`${item.institution.logoAlt} ${item.institution.suffix}`}>
+											<img class="education-logo" src={item.institution.logo.src} width={item.institution.logo.width}
+												height={item.institution.logo.height} alt={item.institution.logoAlt} />{' '}
+											{item.institution.suffix}
+										</a>{' — '}
+									</>}
+									{item.title}
+								</h2>
 								<span>{item.period}</span>
 							</div>
 							{item.meta &&
@@ -123,7 +130,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 				{section.note && <p class="section-note">{section.note}</p>}
 				<div class:list={['projects', { 'misc-vibe': section.id === 'misc' }]}>
 					{section.items.map((item, index) => {
-						const hasMedia = Boolean(item.image || item.preview || item.video || item.videoEmbed || item.diagram);
+						const hasMedia = Boolean(item.image || item.screenshots?.length || item.preview || item.video || item.videoEmbed || item.diagram);
 						const expandable = Boolean(item.bullets?.length || hasMedia);
 						const Row = expandable ? 'details' : 'article';
 						const Header = expandable ? 'summary' : 'div';
@@ -141,7 +148,16 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 								</Header>
 								{expandable && <div class:list={["project__panel", { "project__panel--text": !hasMedia }]} id={panelId}>
 									{item.bullets?.length ? <ul>{item.bullets.map(bullet => <li set:html={bullet} />)}</ul> : null}
-									{hasMedia && <div class="project__media">
+									{hasMedia && <div class:list={['project__media', {
+											'project__media--screenshots': item.screenshots?.length,
+											'project__media--with-note': item.video?.note,
+										}]}
+										style={item.screenshots?.length ? {
+											gridTemplateColumns: item.screenshots.map(({ width, height }) => `minmax(0, ${width / height}fr)`).join(' '),
+										} : undefined}>
+										{item.screenshots?.map(screenshot => (
+											<img loading="lazy" src={screenshot.src} alt={screenshot.alt} width={screenshot.width} height={screenshot.height} />
+										))}
 										{item.image && (item.image.href ? (
 											<a class="project__image-link" href={item.image.href}>
 												<img loading="lazy" src={item.image.src} alt={item.image.alt} />
@@ -161,6 +177,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 												/>
 											))}
 										</video>}
+										{item.video?.note && <small class="project__video-note">{item.video.note}</small>}
 										{item.videoEmbed && <iframe
 											src={item.videoEmbed}
 											title={`${item.title} video`}
@@ -308,11 +325,15 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		gap: 16px;
 	}
 
+	.education-institution {
+		white-space: nowrap;
+	}
+
 	.education-logo {
-		display: block;
-		width: 88px;
-		height: auto;
-		margin-bottom: 12px;
+		display: inline-block;
+		width: auto;
+		height: 1.2792em;
+		vertical-align: baseline;
 	}
 
 	@media screen {
@@ -443,6 +464,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 	}
 	.project__panel--text { grid-template-columns: minmax(0, 1fr); }
 	.project__panel ul { margin: 0; }
+	.project__media:only-child { grid-column: -2; }
 	.project__media {
 		position: relative;
 		display: grid;
@@ -454,6 +476,26 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		aspect-ratio: 1.6;
 	}
 	.project__media img, .project__media video { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
+	.project__media--with-note { aspect-ratio: auto; }
+	.project__media--with-note video { height: auto; aspect-ratio: 1.6; }
+	.project__video-note {
+		padding: 6px 10px;
+		color: var(--mute);
+		font-size: 11px;
+	}
+	.project__media--screenshots {
+		gap: clamp(4px, 1vw, 10px);
+		aspect-ratio: auto;
+		border: 0;
+		background: transparent;
+	}
+	.project__media--screenshots img {
+		display: block;
+		box-sizing: border-box;
+		height: auto;
+		border: 1px solid var(--rule);
+		border-radius: 6px;
+	}
 	.project__image-link { position: absolute; inset: 0; }
 	.project__image-link img { display: block; }
 	.project__image-link:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; }

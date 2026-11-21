@@ -9,7 +9,7 @@ export interface CvLink {
 export interface CvEducation {
 	title: string;
 	period: string;
-	logo?: ImageMetadata;
+	institution?: { logo: ImageMetadata; logoAlt: string; suffix: string; href: string };
 	meta?: string;
 	metaHref?: string;
 	bullets?: string[];
@@ -25,11 +25,13 @@ export interface CvProject {
 	diagram?: string[];
 	videoEmbed?: string;
 	image?: { src: string; alt: string; href?: string };
+	screenshots?: { src: string; alt: string; width: number; height: number }[];
 	video?: {
 		src: string;
 		webm?: string;
 		poster: string;
 		label: string;
+		note?: string;
 		captions?: {
 			src: string;
 			lang: string;
@@ -65,12 +67,17 @@ export const cvLinks: CvLink[] = [
 
 export const education: CvEducation[] = [
 	{
-		title: 'ITMO University — BSc, Applied Mathematics and Informatics',
+		title: 'BSc, Applied Mathematics and Informatics',
 		period: 'Sept 2025 – June 2029',
 		// Alexey Minaev, CC BY 4.0. Cropped transparent margins and resized.
 		// https://commons.wikimedia.org/wiki/File:ITMO_University_logo.png
 		// https://creativecommons.org/licenses/by/4.0/
-		logo: itmoLogo,
+		institution: {
+			logo: itmoLogo,
+			logoAlt: 'ITMO',
+			suffix: 'University',
+			href: 'https://www.google.com/search?q=ITMO+University+CT',
+		},
 		meta: 'Computer Science · St. Petersburg, Russia',
 		bullets: [
 			'Foundational track built to grow elite engineers.',
@@ -117,6 +124,7 @@ export const cvProjects: CvProject[] = [
 			src: '/projects/sailfish-demo.mp4',
 			poster: '/projects/sailfish-demo.webp',
 			label: 'Sailfish OS demo on the Redmi Note 9 Pro',
+			note: 'old video (the only I have). Issues was fixed.',
 			captions: [
 				{ src: '/projects/sailfish-demo.en.vtt', lang: 'en', label: 'English', kind: 'captions', default: true },
 			],
@@ -180,7 +188,11 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'Player — bit-perfect music player in Rust',
-		diagram: ['Rust player', 'Linux kernel', 'Chord Mojo 2'],
+		screenshots: [
+			{ src: '/projects/player-library.webp', alt: 'Player music library', width: 640, height: 1330 },
+			{ src: '/projects/player-now-playing.webp', alt: 'Now Playing screen with bit-perfect output indicator', width: 640, height: 1330 },
+			{ src: '/projects/player-queue.webp', alt: 'Player playback queue', width: 640, height: 1330 },
+		],
 		href: 'https://github.com/AntonIXO/player',
 		period: 'May 2026 – June 2026',
 		lede: 'High-end music player for postmarketOS on a Poco F1 running a mainline Linux kernel.',
@@ -218,6 +230,10 @@ export const miscVibeProjects: CvProject[] = [
 	{
 		title: 'math.devpins.org — mathematical analysis notes',
 		href: 'https://math.devpins.org',
+		screenshots: [
+			{ src: '/projects/math-proofs.webp', alt: 'Pages from the notes on Hölder’s and Minkowski’s inequalities', width: 1323, height: 1743 },
+			{ src: '/projects/math-polar-area.webp', alt: 'Interactive visualization of area in polar coordinates', width: 2344, height: 1589 },
+		],
 		lede: 'Mathematical analysis resources for exam preparation.',
 		bullets: ['Visualizations and a PDF with proofs.'],
 	},
@@ -229,6 +245,10 @@ export const miscVibeProjects: CvProject[] = [
 	{
 		title: 'Dream Walker — LLM-driven retro dream thriller',
 		href: 'https://dreamwalker.devpins.org',
+		image: {
+			src: '/projects/dream-walker.webp',
+			alt: 'Dream Walker gameplay showing a pixel-art house from above',
+		},
 		lede: 'Anton Dream Emulator powered by LLM and jev — world, npc, events... Everything and generated at by models.',
 	},
 	{
