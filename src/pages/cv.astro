@@ -114,73 +114,69 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 			</div>
 		</div>
 
-		<SectionLabel>Projects</SectionLabel>
-		<p class="section-note">{cvProjectsNote}</p>
-		<div class="projects">
-			{cvProjects.map((item, index) => (
-				<details class="project" data-cv-project>
-					<summary class="project__summary" aria-controls={`project-panel-${index}`}>
-						<span class="project__title"><a href={item.href} target={item.href?.startsWith('/') ? undefined : '_blank'}
-							rel="noopener noreferrer" data-umami-event="cv-project-click" data-umami-event-project={item.title}>
-							{item.title}
-						</a></span>
-						<span class="project__period">{item.period}</span>
-						<span class="project__lede">{item.lede}</span>
-						<span class="project__indicator" aria-hidden="true"></span>
-					</summary>
-					<div class="project__panel" id={`project-panel-${index}`}>
-						<ul>{item.bullets.map(bullet => <li set:html={bullet} />)}</ul>
-						<div class="project__media">
-							{item.image && <img loading="lazy" src={item.image.src} alt={item.image.alt} />}
-							{item.preview && <VibesciencePreview data={vibesciencePreviewData} />}
-							{item.video && <video controls playsinline preload="none" poster={item.video.poster} aria-label={item.video.label}>
-								{item.video.webm && <source src={item.video.webm} type="video/webm" />}
-								<source src={item.video.src} type="video/mp4" />
-								{item.video.captions?.map(caption => (
-									<track
-										kind={caption.kind}
-										src={caption.src}
-										srclang={caption.lang}
-										label={caption.label}
-										default={caption.default}
-									/>
-								))}
-							</video>}
-							{item.videoEmbed && <iframe
-								src={item.videoEmbed}
-								title={`${item.title} video`}
-								loading="lazy"
-								referrerpolicy="strict-origin-when-cross-origin"
-								allow="fullscreen; picture-in-picture"
-							></iframe>}
-							{item.diagram && <ol class="project__diagram">{item.diagram.map(step => <li>{step}</li>)}</ol>}
-						</div>
-					</div>
-				</details>
-			))}
-		</div>
-
-		<SectionLabel>Misc vibe</SectionLabel>
-		<div class="stack misc-vibe">
-			{
-				miscVibeProjects.map((item) => (
-					<div class="card">
-						<h2>
-							<a
-								href={item.href}
-								target="_blank"
-								rel="noopener noreferrer"
-								data-umami-event="cv-misc-project-click"
-								data-umami-event-project={item.title}
-							>
-								{item.title}
-							</a>
-						</h2>
-						<p class="lede">{item.lede}</p>
-					</div>
-				))
-			}
-		</div>
+		{[
+			{ id: 'main', title: 'Projects', items: cvProjects, event: 'cv-project-click', note: cvProjectsNote },
+			{ id: 'misc', title: 'Misc vibe', items: miscVibeProjects, event: 'cv-misc-project-click' },
+		].map(section => (
+			<Fragment>
+				<SectionLabel>{section.title}</SectionLabel>
+				{section.note && <p class="section-note">{section.note}</p>}
+				<div class:list={['projects', { 'misc-vibe': section.id === 'misc' }]}>
+					{section.items.map((item, index) => {
+						const hasMedia = Boolean(item.image || item.preview || item.video || item.videoEmbed || item.diagram);
+						const expandable = Boolean(item.bullets?.length || hasMedia);
+						const Row = expandable ? 'details' : 'article';
+						const Header = expandable ? 'summary' : 'div';
+						const panelId = `project-panel-${section.id}-${index}`;
+						return (
+							<Row class="project" data-cv-project={expandable ? "" : undefined}>
+								<Header class="project__summary" aria-controls={expandable ? panelId : undefined}>
+									<span class="project__title"><a href={item.href} target={item.href?.startsWith('/') ? undefined : '_blank'}
+										rel="noopener noreferrer" data-umami-event={section.event} data-umami-event-project={item.title}>
+										{item.title}
+									</a></span>
+									{item.period && <span class="project__period">{item.period}</span>}
+									<span class="project__lede" set:html={item.lede} />
+									{expandable && <span class="project__indicator" aria-hidden="true"></span>}
+								</Header>
+								{expandable && <div class:list={["project__panel", { "project__panel--text": !hasMedia }]} id={panelId}>
+									{item.bullets?.length ? <ul>{item.bullets.map(bullet => <li set:html={bullet} />)}</ul> : null}
+									{hasMedia && <div class="project__media">
+										{item.image && (item.image.href ? (
+											<a class="project__image-link" href={item.image.href}>
+												<img loading="lazy" src={item.image.src} alt={item.image.alt} />
+											</a>
+										) : <img loading="lazy" src={item.image.src} alt={item.image.alt} />)}
+										{item.preview && <VibesciencePreview data={vibesciencePreviewData} />}
+										{item.video && <video controls playsinline preload="none" poster={item.video.poster} aria-label={item.video.label}>
+											{item.video.webm && <source src={item.video.webm} type="video/webm" />}
+											<source src={item.video.src} type="video/mp4" />
+											{item.video.captions?.map(caption => (
+												<track
+													kind={caption.kind}
+													src={caption.src}
+													srclang={caption.lang}
+													label={caption.label}
+													default={caption.default}
+												/>
+											))}
+										</video>}
+										{item.videoEmbed && <iframe
+											src={item.videoEmbed}
+											title={`${item.title} video`}
+											loading="lazy"
+											referrerpolicy="strict-origin-when-cross-origin"
+											allow="fullscreen; picture-in-picture"
+										></iframe>}
+										{item.diagram && <ol class="project__diagram">{item.diagram.map(step => <li>{step}</li>)}</ol>}
+									</div>}
+								</div>}
+							</Row>
+						);
+					})}
+				</div>
+			</Fragment>
+		))}
 
 		<div class="cv-outro" data-cv-outro>
 			<div>
@@ -386,6 +382,8 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		grid-template-columns: minmax(0, 1fr);
 		gap: 10px;
 	}
+	.projects.misc-vibe { gap: 4px; }
+	.misc-vibe .project__summary { padding-block: 9px; }
 	.project {
 		--expanded-width: max(100cqw, calc(50cqw + 50vw - var(--page-pad-x)));
 		box-sizing: border-box;
@@ -409,8 +407,8 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		row-gap: 5px;
 		padding: 14px 0;
 		list-style: none;
-		cursor: pointer;
 	}
+	summary.project__summary { cursor: pointer; }
 	.project__summary::-webkit-details-marker { display: none; }
 	.project__title { grid-area: title; font-size: 17px; font-weight: 500; line-height: 1.35; letter-spacing: -.015em; }
 	.project__summary:focus-visible { outline-offset: -2px; }
@@ -423,6 +421,10 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		text-underline-offset: .2em;
 	}
 	.project__title a:hover, .project__panel :global(a:hover) { text-decoration-color: var(--ink); }
+	.project__lede :global(a) {
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
 	.project__period { grid-area: period; font: 11.5px var(--font-mono); color: var(--mute); }
 	.project__lede { grid-area: lede; max-width: calc(100cqw - 32px); font-size: 14px; line-height: 1.5; color: var(--mute); }
 	.project__indicator { grid-area: indicator; text-align: center; color: var(--mute); line-height: 1; }
@@ -439,6 +441,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		backdrop-filter: blur(8px);
 		border-top: 1px solid var(--rule);
 	}
+	.project__panel--text { grid-template-columns: minmax(0, 1fr); }
 	.project__panel ul { margin: 0; }
 	.project__media {
 		position: relative;
@@ -451,8 +454,12 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 		aspect-ratio: 1.6;
 	}
 	.project__media img, .project__media video { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
+	.project__image-link { position: absolute; inset: 0; }
+	.project__image-link img { display: block; }
+	.project__image-link:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; }
 	.project__media iframe { width: 100%; height: 100%; min-height: 0; border: 0; }
-	.project__media :global(.vibescience-preview) { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 1; visibility: visible; transform: none; border: 0; border-radius: 0; }
+	.project__media :global(.vibescience-preview) { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 1; visibility: visible; transform: none; border: 0; border-radius: 0; pointer-events: auto; }
+	.project__media :global(.vibescience-preview:focus-visible) { outline: 2px solid var(--ink); outline-offset: -3px; }
 	.project__diagram { margin: 0; padding: 10px; list-style: none; text-align: center; font: clamp(11px, 1vw, 14px) var(--font-mono); }
 	.project__diagram li { width: fit-content; margin: auto; padding: 4px 14px; border: 1px solid var(--rule); border-radius: 5px; }
 	.project__diagram li + li { margin-top: 12px; position: relative; }
@@ -466,6 +473,7 @@ const vibesciencePreviewData = JSON.stringify({ nodes: previewNodes, links: prev
 			grid-template-areas: 'title indicator' 'period indicator' 'lede lede';
 			column-gap: 14px;
 		}
+		.project__summary:not(:has(.project__period)) { grid-template-areas: 'title indicator' 'lede lede'; }
 		.project__lede { max-width: none; }
 	}
 

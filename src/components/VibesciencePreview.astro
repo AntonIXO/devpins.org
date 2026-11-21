@@ -6,14 +6,16 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<div class="vibescience-preview" data-vibescience-preview aria-hidden="true">
-	<div class="preview-canvas" data-vibescience-preview-canvas></div>
+<a class="vibescience-preview" data-vibescience-preview href="/vibescience/" target="_blank"
+	rel="noopener noreferrer" aria-label="Open the full Vibescience graph in a new tab"
+	data-umami-event="cv-vibescience-click">
+	<div class="preview-canvas" data-vibescience-preview-canvas aria-hidden="true"></div>
 	<div class="preview-caption">
-		<span>vault graph / hover preview</span>
+		<span>Open full graph ↗</span>
 		<span>715 notes · 1,769 links</span>
 	</div>
 	<script type="application/json" data-vibescience-preview-data set:html={data}></script>
-</div>
+</a>
 
 <script>
 	import { mountVibesciencePreview } from '../scripts/vibescience-preview';

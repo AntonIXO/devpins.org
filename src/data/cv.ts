@@ -18,13 +18,13 @@ export interface CvEducation {
 export interface CvProject {
 	title: string;
 	href?: string;
-	period: string;
+	period?: string;
 	lede: string;
-	bullets: string[];
+	bullets?: string[];
 	preview?: 'vibescience';
 	diagram?: string[];
 	videoEmbed?: string;
-	image?: { src: string; alt: string };
+	image?: { src: string; alt: string; href?: string };
 	video?: {
 		src: string;
 		webm?: string;
@@ -38,12 +38,6 @@ export interface CvProject {
 			default?: boolean;
 		}[];
 	};
-}
-
-export interface CvMiscProject {
-	title: string;
-	href: string;
-	lede: string;
 }
 
 export interface CvAward {
@@ -137,7 +131,11 @@ export const cvProjects: CvProject[] = [
 	},
 	{
 		title: 'BHWiki — open and modern BioHacking Wiki',
-		diagram: ['Publications', 'Mechanisms & targets', 'Substances'],
+		image: {
+			src: '/projects/bhwiki-graph.webp',
+			alt: 'Explore the BHWiki knowledge graph',
+			href: 'https://bhwiki.devpins.org/graph',
+		},
 		href: 'https://bhwiki.devpins.org/',
 		period: 'October 2026 – present',
 		lede: 'Decomposing medical publications pages linked together in graph.',
@@ -216,11 +214,12 @@ export const cvProjects: CvProject[] = [
 	},
 ];
 
-export const miscVibeProjects: CvMiscProject[] = [
+export const miscVibeProjects: CvProject[] = [
 	{
 		title: 'math.devpins.org — mathematical analysis notes',
 		href: 'https://math.devpins.org',
-		lede: 'Visualizations + pdf with proofs to prepare to exams.',
+		lede: 'Mathematical analysis resources for exam preparation.',
+		bullets: ['Visualizations and a PDF with proofs.'],
 	},
 	{
 		title: 'vibescience-mcp',
@@ -254,8 +253,13 @@ export const miscVibeProjects: CvMiscProject[] = [
 	},
 	{
 		title: 'Telegram graph',
+		image: {
+			src: '/projects/telegram-graph.webp',
+			alt: 'Telegram groups and their participants visualized as a network in Obsidian',
+		},
 		href: 'https://github.com/AntonIXO/telegram-group-graph-obsidian',
 		lede: 'Graph of all your telegram groups participants in C++ with TDLib use.',
+		bullets: ['Visualizes shared group memberships in Obsidian.'],
 	},
 ];
 

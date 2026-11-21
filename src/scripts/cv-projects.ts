@@ -8,7 +8,7 @@ function mountProjects() {
 
 	const actions = new Map<HTMLDetailsElement, (open: boolean) => void>();
 	const hover = window.matchMedia('(any-hover: hover) and (any-pointer: fine)');
-	for (const card of list.querySelectorAll<HTMLDetailsElement>('[data-cv-project]')) {
+	for (const card of document.querySelectorAll<HTMLDetailsElement>('.projects > [data-cv-project]')) {
 		const summary = card.querySelector('summary')!;
 		const panel = card.querySelector<HTMLElement>('.project__panel')!;
 		let expanded = card.open;
@@ -97,7 +97,7 @@ function mountProjects() {
 
 		// The grid gap belongs to the handoff. Closing here would pull the next
 		// header away before the pointer could reach it.
-		if (target === list) return;
+		if (target.matches('.projects')) return;
 		const card = target.closest<HTMLDetailsElement>('[data-cv-project]');
 		if (entryBounds) {
 			if (x >= entryBounds.left && x < entryBounds.right && y >= entryBounds.top && y < entryBounds.bottom) return;

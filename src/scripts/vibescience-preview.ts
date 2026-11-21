@@ -1,4 +1,5 @@
 import ForceGraph, { type LinkObject, type NodeObject } from 'force-graph';
+import { readTheme, THEME_EVENT } from './theme';
 
 type PreviewNode = NodeObject & {
 	id: string;
@@ -45,6 +46,12 @@ export function mountVibesciencePreview(): (() => void) | undefined {
 	if (!canvasRoot || !data) return undefined;
 
 	const graph = new ForceGraph<PreviewNode, PreviewLink>(canvasRoot);
+	let light = readTheme() === 'light';
+	const updateTheme = () => {
+		light = readTheme() === 'light';
+		const linkColor = light ? 'rgba(58, 65, 81, 0.30)' : 'rgba(180, 185, 198, 0.2)';
+		graph.linkColor(() => linkColor);
+	};
 	graph
 		.width(canvasRoot.clientWidth)
 		.height(canvasRoot.clientHeight)
@@ -55,32 +62,34 @@ export function mountVibesciencePreview(): (() => void) | undefined {
 		.nodeLabel((node) => node.label)
 		.nodeCanvasObjectMode(() => 'replace')
 		.nodeCanvasObject((node, ctx, globalScale) => {
-			const radius = Math.max(1.5, Math.sqrt(Math.max(1, node.val)) * 1.15);
+			const radius = Math.max(light ? 1.8 / globalScale : 1.5, Math.sqrt(Math.max(1, node.val)) * 1.15);
 			ctx.beginPath();
 			ctx.arc(node.x ?? 0, node.y ?? 0, radius, 0, 2 * Math.PI, false);
-			ctx.globalAlpha = 0.88;
+			ctx.globalAlpha = light ? 1 : 0.88;
 			ctx.fillStyle = kindColor(node);
 			ctx.fill();
 			if (globalScale > 1.7 && node.degree > 10) {
 				ctx.globalAlpha = 0.72;
 				ctx.font = `${Math.max(8, 8 / globalScale)}px IBM Plex Mono, monospace`;
-				ctx.fillStyle = 'rgba(237, 236, 232, 0.82)';
+				ctx.fillStyle = light ? '#292834' : 'rgba(237, 236, 232, 0.82)';
 				ctx.textAlign = 'left';
 				ctx.textBaseline = 'middle';
 				ctx.fillText(node.label.slice(0, 26), (node.x ?? 0) + radius + 3 / globalScale, node.y ?? 0);
 			}
 			ctx.globalAlpha = 1;
 		})
-		.linkColor(() => 'rgba(180, 185, 198, 0.2)')
 		.linkWidth((link) => Math.min(0.45 + link.weight * 0.12, 1.1))
 		.enableNodeDrag(false)
 		.enableZoomInteraction(false)
 		.enablePanInteraction(false)
+		.enablePointerInteraction(false)
 		.autoPauseRedraw(true)
 		.warmupTicks(0)
 		.cooldownTicks(0)
 		.zoom(0.5)
 		.graphData(data);
+	updateTheme();
+	document.addEventListener(THEME_EVENT, updateTheme);
 
 		const fit = () => graph.zoomToFit(0, 22);
 		requestAnimationFrame(fit);
@@ -92,6 +101,7 @@ export function mountVibesciencePreview(): (() => void) | undefined {
 		resizeObserver?.observe(canvasRoot);
 
 		const cleanup = () => {
+			document.removeEventListener(THEME_EVENT, updateTheme);
 			resizeObserver?.disconnect();
 			graph._destructor();
 			if (root.__vibesciencePreviewCleanup === cleanup) delete root.__vibesciencePreviewCleanup;
