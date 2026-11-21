@@ -122,7 +122,7 @@ Careful what you let yourself think…
 
 <h4>I spent two years trying to love math. I kept telling myself math was cool. I sat down and did math…<br />Honest to God, I don’t give a fuck about math. I just don’t care.</h4>
 
-That’s why I barely posted on my channel and why it never went anywhere. I was writing about one thing and doing another. Part of the point of the channel was to make myself do something I didn’t want to do.  
+That’s why I barely posted on my channel[^channel] and why it never went anywhere. I was writing about one thing and doing another. Part of the point of the channel was to make myself do something I didn’t want to do.  
 That’s not gonzo journalism. That’s some kind of gonzo rape!  
 My mind doesn’t wander to math. I don’t dream about it. I only read about abstract math when I have a use for it.
 
@@ -166,3 +166,5 @@ P.S. For all the “excuses” and “criticism” in here, there’s plenty I�
 5. They let me stay at ITMO and transferred me to Group 35.
 6. Meshcherin, for the inspiration. [On getting kicked out](https://miptstream.ru/2016/01/16/drop-off/) and [on teaching adults math](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu).  
    The bit about Vitali sets is genius. There aren’t many genuinely educated people around these days who understand why that’s so interesting and so strange.
+
+[^channel]: This was the channel where I posted my plans for the day.
