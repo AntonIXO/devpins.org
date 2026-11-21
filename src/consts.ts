@@ -1,6 +1,6 @@
 export const SITE_TITLE = 'DevPins';
 export const SITE_DESCRIPTION =
-	'Anton Ivanov — applied maths and AI. Measure first, claim later.';
+	'Anton Ivanov’s portfolio and blog on applied maths, AI and personal experiments. Explore OptiHealth, wearable comparisons, and notes from ITMO AI360.';
 export const SITE_AUTHOR = 'Anton Ivanov';
 export const SITE_OG_IMAGE = '/og.png';
 export const SITE_OG_IMAGE_ALT = 'DevPins — Anton Ivanov, applied maths and AI';

@@ -1,6 +1,7 @@
 ---
 title: "(Not) I Died"
-description: "A personal note about being expelled from ITMO AI360, mathematics, and the choice to keep going."
+seoTitle: "(Not) I Died: Leaving ITMO AI360"
+description: "Anton Ivanov reflects on leaving ITMO AI360, what he hoped to find in mathematics and university life, and why he kept coming back to building his own projects."
 pubDate: 2026-10-22
 language: en
 translationKey: ne-ya-umer

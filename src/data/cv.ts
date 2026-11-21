@@ -1,4 +1,3 @@
-import sleepComparison from '../assets/blog/fitbit-vs-oura/fig1_sleep_scatter.png';
 import itmoLogo from '../assets/cv/itmo-logo.png';
 
 export interface CvLink {
@@ -89,13 +88,13 @@ export const education: CvEducation[] = [
 export const cvProjects: CvProject[] = [
 	{
 		title: 'optiHealth — personal N-of-1 biohacking platform',
-		image: { src: sleepComparison.src, alt: 'Comparison of time in bed and deep sleep on paired Fitbit and Oura nights' },
 		href: 'https://optihealth.devpins.org/',
 		period: 'July 2025 – present',
 		lede: 'A single place to bring together all my health data (vitals, sleep, training, tags, supplements, location, and more) and search it for insights.',
 		bullets: [
 			'Web app, Android app, scalable database, and analysis-engine.',
 			'Classical statistical analysis using Spearman correlation and BH-FDR.',
+			'<a href="https://optihealth.devpins.org/blog/whoop-vs-fitbit" target="_blank" rel="noopener noreferrer">WHOOP vs Fitbit: Real-World Data (N=97)</a>',
 			'Some interesting findings: my mood follows an hourly curve',
 			'and each later hour of bedtime costs 5 minutes of deep sleep (despite total sleep length)',
 			'Polygala, GABA, and NAC ↔ Oura sleep score.',

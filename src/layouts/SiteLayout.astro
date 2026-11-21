@@ -8,6 +8,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 interface Props {
 	title?: string;
+	articleHeadline?: string;
 	description?: string;
 	image?: ImageMetadata | string;
 	type?: 'website' | 'article' | 'profile';
@@ -22,6 +23,7 @@ interface Props {
 
 const {
 	title = SITE_TITLE,
+	articleHeadline,
 	description = SITE_DESCRIPTION,
 	image,
 	type = 'website',
@@ -42,6 +44,7 @@ const field = atmosphere === 'field';
 		<head>
 			<BaseHead
 				title={title}
+				articleHeadline={articleHeadline}
 				description={description}
 				image={image}
 				type={type}

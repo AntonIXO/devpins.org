@@ -42,33 +42,39 @@ class WritingParser(HTMLParser):
 
 
 class MigrationArtifactTests(unittest.TestCase):
-    def test_home_and_writing_link_to_english_optihealth_article_only(self):
+    def test_home_and_writing_link_to_the_same_optihealth_article_in_both_panels(self):
         for relative in ("index.html", "blog/index.html"):
             with self.subTest(page=relative):
                 parser = WritingParser()
                 parser.feed((ROOT / "dist" / relative).read_text())
                 external = [link for link in parser.links if link["href"] == DESTINATION]
-                self.assertEqual(len(external), 1, "missing/duplicate external article listing")
-                self.assertEqual(external[0]["language"], "en", "not a Russian translation")
-                self.assertIn("WHOOP vs Fitbit: Real-World Data (N=97)", external[0]["text"])
-                self.assertIn("optiHealth", external[0]["text"])
+                self.assertEqual([link["language"] for link in external], ["en", "ru"])
+                for link in external:
+                    self.assertIn("WHOOP vs Fitbit: Real-World Data (N=97)", link["text"])
+                    self.assertIn("optiHealth", link["text"])
+                self.assertIn("(EN)", external[1]["text"], "not a Russian translation")
                 old_links = [link for link in parser.links if link["href"] and
                              link["href"].startswith("/blog/whoop-vs-fitbit")]
                 self.assertEqual(old_links, [])
 
     def test_moved_and_deleted_articles_have_no_local_html_or_hreflang(self):
-        for slug in ("whoop-vs-fitbit", "whoop-vs-fitbit-ru"):
+        for slug in ("whoop-vs-fitbit", "whoop-vs-fitbit-ru", "fitbit-vs-oura", "fitbit-vs-oura-ru"):
             self.assertFalse((ROOT / "dist/blog" / slug).exists())
             self.assertFalse((ROOT / "dist/blog" / f"{slug}.html").exists())
         for page in (ROOT / "dist").rglob("*.html"):
             with self.subTest(page=str(page.relative_to(ROOT / "dist"))):
                 self.assertNotIn("whoop-vs-fitbit-ru", page.read_text())
+                self.assertNotIn("fitbit-vs-oura", page.read_text())
 
-    def test_sitemaps_and_feed_contain_exactly_the_other_six_local_posts(self):
+    def test_cv_links_to_the_optihealth_article_instead_of_the_removed_chart(self):
+        html = (ROOT / "dist/cv/index.html").read_text()
+        self.assertIn(f'href="{DESTINATION}"', html)
+        self.assertNotIn("fig1_sleep_scatter", html)
+
+    def test_sitemaps_and_feed_contain_exactly_the_other_four_local_posts(self):
         expected = {
             f"https://devpins.org/blog/{slug}/" for slug in (
-                "ai360-itmo-ru", "fear-of-calculus-itmo-ai360", "fitbit-vs-oura",
-                "fitbit-vs-oura-ru", "ne-ya-umer-en", "ne-ya-umer",
+                "ai360-itmo-ru", "fear-of-calculus-itmo-ai360", "ne-ya-umer-en", "ne-ya-umer",
             )
         }
         namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
@@ -152,14 +158,16 @@ class MigrationHTTPTests(unittest.TestCase):
 
     def test_other_articles_and_home_still_serve_without_redirecting(self):
         for slug in ("", "blog/", "blog/ai360-itmo-ru/", "blog/fear-of-calculus-itmo-ai360/",
-                     "blog/fitbit-vs-oura/", "blog/fitbit-vs-oura-ru/", "blog/ne-ya-umer/", "blog/ne-ya-umer-en/"):
+                     "blog/ne-ya-umer/", "blog/ne-ya-umer-en/"):
             with self.subTest(slug=slug):
                 status, location, body = self.request("/" + slug)
                 self.assertEqual(status, 200)
                 self.assertIsNone(location)
                 self.assertIn(b"<html", body)
         for path in ("/blog/whoop-vs-fitbit-unrelated", "/blog/whoop-vs-fitbit/nested",
-                     "/blog/whoop-vs-fitbit-ru-unrelated", "/blog/whoop-vs-fitbit-ru/nested"):
+                     "/blog/whoop-vs-fitbit-ru-unrelated", "/blog/whoop-vs-fitbit-ru/nested",
+                     "/blog/fitbit-vs-oura", "/blog/fitbit-vs-oura/",
+                     "/blog/fitbit-vs-oura-ru", "/blog/fitbit-vs-oura-ru/"):
             with self.subTest(path=path):
                 status, location, _ = self.request(path)
                 self.assertEqual(status, 404)
