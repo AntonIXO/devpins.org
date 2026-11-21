@@ -324,17 +324,9 @@ export const miscVibeProjects: CvProject[] = [
 
 export const awards: CvAward[] = [
 	{
-		mark: 'Winner',
-		parts: [
-			{ label: 'HSE University CS Research Project Competition', diploma: 'hse-cs-research' },
-			', with the Linux port',
-		],
-		note: 'full BSc scholarship',
-	},
-	{
 		mark: 'Top 5%',
 		parts: [
-			'Winner of national competitive programming olympiads: Tier 1 ',
+			'National competitive programming olympiads: Tier 1 ',
 			{ label: '“Vysshaya Proba”', href: 'https://olymp.hse.ru/mmo/it', diploma: 'vysshaya-proba' },
 			' and Tier 2 ',
 			{ label: '“Technocup”', href: 'https://cups.online/ru/contests/technocup-25', diploma: 'technocup' },
@@ -342,8 +334,10 @@ export const awards: CvAward[] = [
 		note: 'full BSc scholarship',
 	},
 	{
-		mark: 'Winner of project competitions',
+		mark: 'Project competitions',
 		parts: [
+			{ label: 'HSE CS Research', diploma: 'hse-cs-research' },
+			' (full BSc scholarship), ',
 			{ label: 'Sirius Big Challenges', href: 'https://bigchallenges.ru/', diploma: 'sirius-big-challenges' },
 			', ',
 			{ label: 'HSE Higher Pilot', href: 'https://pilotazh.hse.ru/', diploma: 'hse-higher-pilot' },
@@ -352,7 +346,7 @@ export const awards: CvAward[] = [
 		],
 	},
 	{
-		mark: 'Hackathons winner',
+		mark: 'Hackathons',
 		parts: [
 			{ label: 'OctusBridge deployment hackathon (Everscale)', href: 'https://github.com/AntonIXO/octusbridge-ansible' },
 			' · ',
