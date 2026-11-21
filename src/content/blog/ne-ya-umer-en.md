@@ -1,176 +1,168 @@
 ---
-title: "(Not) I Died"
-seoTitle: "(Not) I Died: Leaving ITMO AI360"
-description: "Anton Ivanov reflects on leaving ITMO AI360, what he hoped to find in mathematics and university life, and why he kept coming back to building his own projects."
+title: 'Was It Me Who Died?'
+seoTitle: 'Was It Me Who Died? — Leaving AI360 at ITMO'
+description: 'Anton Ivanov on leaving AI360 at ITMO, what he wanted from math and university life, and why he kept going back to his own projects.'
 pubDate: 2026-10-22
 language: en
 translationKey: ne-ya-umer
 heroImage: '../../assets/blog/ne-ya-umer/night.png'
 heroAtTop: false
 ---
+
 > "You fucking die," I said to him  
->I said, "You fucking die!" to him  
+> I said, "You fucking die!" to him  
 > Huh? What?  
-> No, no, I was talkin' to the creator of AI technologies  
->I said, "You're fuckin' expelled!"  
+> No, no, I was talkin' to the creator of AI technology  
+> I said, "You’re fuckin' expelled!"  
 > No, I -- we were just goofin' around  
 > No, no, it didn't have anything to do with math  
-> He said, "Don't tou- if anybody touches Level 3..."  
->And I said, "You fuckin' die," like that  
+> He said, "Don't tou- if anybody touches Level 3…"  
+> And I said, "You fuckin' die," like that  
 > Now I am finishing this shit for him?  
->You know what I mean?
+> You know what I mean?
 
-![BAL ITMO_ Night without a name.png](../../assets/blog/ne-ya-umer/night.png)
+![ITMO Ball — A Night Without a Name](../../assets/blog/ne-ya-umer/night.png)
 
-And here I am on the matan committee, so I answer the tickets perfectly, so the receiver reaches the series...  
-No luck!  
-Really expelled from AI360...
+So there I am in front of the panel for my final calculus retake. I’m nailing every question. Then the examiner asks me about infinite series…  
+So much for my luck.  
+They actually kicked me out of AI360…
 
-I'm upset.   
-I was about to close down, I had a little debt: a math exam and was missing 6 points out of 60 in C++.
+I’m upset.  
+I was planning to get everything signed off. All I had left was the calculus exam, and I was six points short in C++, out of a possible sixty.
 
-But in a sense, subconsciously, I wanted to drop out.  
-Just like a year ago I was preparing to retake the Unified State Exam in mathematics: I needed to score 90 points to enter the HSE AMI, but when I was preparing to retake it, I actually dreamed of ITMO.
+But somewhere in the back of my mind, I wanted out.  
+Same as a year ago, studying to retake the math part of the national entrance exam. I needed a 90 to get into Applied Math and Computer Science at HSE. All the time I was studying, the place I was actually dreaming of was ITMO.
 
-A couple of years ago, I generally thought that a university was not needed. I thought that as a programmer I could learn everything on the Internet. That's true.   
-With the advent of AI, programming has become completely devalued.
+A couple of years ago I thought I could skip university altogether. Everything I needed to learn as a programmer, I could learn online. I still think that’s true.  
+Then AI came along and being able to program lost a lot of its value.
 
-And if you want to expand the boundaries of possibilities, you need to learn mathematics! I read Stay Upwind by Paul Graham and decided to go to university...
+But if you want to push the limits of what you can do, you need to learn math! I’d read a little too much Paul Graham about staying upwind and decided I was going to university after all…
 
-So that you understand how much this whole idea with the “foundation” has reached an extreme:   
-In the middle of the first semester, thinking about my problems with studying and the meaning of life, I came to the following philosophy:   
-There are “creators” of three levels:  
-1\. Craftsmen  
-2\. Engineers  
-3\. Architects  
-So, if you want not to use what exists, but to create something radically new: learn math.
+My obsession with getting a “foundation” reached a local extremum about halfway through my first semester. I was brooding over how much I was struggling at university and the meaning of life when I came up with a philosophy.  
+There were three levels of “creator”:
 
-An example from Google: they made a search algorithm on graphs, instead of naive text search (pagerank)  
-Or make a blockchain bridge based on oracles vs trustless bridge using Zero-Knowledge
+1. Craftspeople
+2. Engineers
+3. Architects
 
-At some point, this turned into the only argument in favor of studying  
-([after all, it seems to me that life after expulsion exists](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu)).  
-Moved from philosophy to religion. For the sake of the path to heaven, you need to suffer.
+Want to make something genuinely new instead of using what’s already there? Learn math.
 
-However, we know from the theorem on the sufficient condition for an extremum that the function reaches it only if the first nth non-zero derivative is even!  
-It looks like this was an excess, not an extreme...
+Take Yandex. When “Prigozhin marched on Moscow,” they restricted those searches in vector space instead of grepping for keywords.  
+Or Google. PageRank let them search a graph instead of just matching text.  
+Or say you’re building a blockchain bridge. You could rely on oracles, or you could build a trustless bridge with zero-knowledge proofs.
 
-## I wanted 2 things from the university:
+Eventually that was the only argument I had left for staying ([I’m pretty sure there’s life after getting kicked out](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu)).  
+My philosophy had turned into a religion. You want to get to heaven, you have to suffer.
 
-### 1. Community
+But as we know from the higher-order derivative test, if the first nonzero derivative is the <i>n</i>th and the function has a local extremum there, then <i>n</i> had better be even!  
+Guess that was an inflection point, not an extremum…
 
-I was looking for a community of people who would also be interested in doing cool things, people with a bone in their ass.  
-Reality: most of my classmates are cool mathematicians and algorithmists from math schools. Some of them have never made their own projects, never written application code.  
-And it seems that out of 36 people, only four are somehow interested in this.
+## I wanted two things out of university
 
-I hoped that, well, from other universities AI360 community, well, sooner or later they would get acquainted with the practice and then they would definitely be able to do something together with someone!
+### 1. A community
 
-I wanted to enroll into MIPT (hardest Russian uni) because graduates personally told me: you know, just when everyone is ~~fucked~~ such a mental connection is formed! For life!  
-Over the course of a year, I couldn’t gather a group of people working together or even just supporting each other. Here they have several excuses:
+I wanted to meet people who had the same itch I did. People who couldn’t sit on their asses when there was cool shit to build.  
+Turns out most of my classmates are really good at math and algorithms. They went to specialist math schools. Some had never built a project of their own or written code for an actual application.  
+Out of 36 people I think maybe four even cared about that stuff.
 
-- “LLM will explain it that way!” (but LLM won't feel where your blunt is)
+I kept thinking, well, AI360 runs at several universities, and we’re all part of the same community. Sooner or later more of us would start building things. Surely I could find a co-founder somewhere in that crowd!
 
-- “The speed of perception of the material is different!” (I want to study with a person who already knows everything, but why would such a person study with me?)
+One reason I wanted to go to MIPT was what its graduates told me in person. “You’ve got to understand, when everybody’s getting ~~fucked~~ … you form this mental bond! It’s for life!”  
+In a whole year I couldn’t get a study group going, or even a few people who’d look out for each other. Here are some of the excuses:
 
-- “What if I don’t know enough!   
-What if my ego gets bruised?   
-What if he already knows everything? I will continue to jerk off chatjbt...”
+- “An LLM can explain it!” (Sure, but can it tell where you got stuck?)
+- “People learn at different speeds!” (I’d love to study with somebody who already gets it. What would they get out of studying with me?)
+- “What if I don’t know enough!  
+  What if my ego gets bruised?  
+  What if the other guy knows it all already? Guess I’ll just keep jerking ChatGPT off…”
 
-### 2. Foundation
+### 2. A foundation
 
-I wanted more math. I got math...  
-There was a lot of math, too much for me personally. Mathematical analysis, linear algebra, discrete math, algorithms...
+I wanted more math. I got math…  
+A fuckton of math. Too much for me, personally. Calculus, linear algebra, discrete math, algorithms…
 
-I admit honestly: I wrote off most of them. Not because I'm lazy, but because I'm ~~dumb~~ doing other things. I just didn’t have time to figure it out, to understand what was happening within the framework that I set for myself.
+I’ll be honest. I copied most of it. It wasn’t laziness. I was ~~stupid~~ busy doing other things. I just couldn’t work through it all and figure out what was going on in the time I’d given myself.
 
-It's not that there was no point in my studies, but:
+I did get something out of studying, but still:
 
-- I copied almost all of my first semester homework on Mathan and Linal.
+- I copied almost every first-semester calculus and linear algebra assignment.
+- I copied half my calculus test.
+- The linear algebra test? Let’s leave that one alone…
 
-- KR wrote off half of the matan.
+You get three shots at the exam. First you sit it, then you get a retake, and if you fail that too, your last shot is an oral exam in front of a panel. First semester I made it all the way to the panel and got lucky.  
+I really did study for both retakes. I spent every day of the break sitting there working things out.
 
-- KR on the line I’m generally silent...
-
-I passed mathematical analysis committee just thanks to luck.  
-I honestly prepared for the supplementary and compulsory exams, every day of the holidays I sat and figured it out.
-
-Perhaps I had the wrong preparation tactics, perhaps I am too stupid in mathematics.  
-To understand: I could clearly prove 1/10 of all tickets (you have to know most). For the other half, I knew the wording at best.  
-This time everything was much better, but the knowledge was more concentrated.
+Maybe I went about it wrong. Maybe I’m just too dumb for math.  
+That first semester, I could actually do the proofs for maybe one topic in ten. For about half the topics, the best I could do was tell you what the theorem said. Somehow I passed.  
+This semester I wound up in front of the panel again. I knew half the topics cold. The other half I barely knew at all. This time my luck ran out.
 
 ---
 
-And here it’s worth remembering that people study in the same program at TopDS, where there are paid students - not only math geniuses...
+Worth remembering that the Top DS students take the same classes. Some of them pay tuition. You don’t have to be a math genius to be here…
 
-It turns out that instead of studying, I was engaged in biohacking and my own projects: in the first semester I spent the scholarship at 1000$ a month, and in the second I taught LLM a new modality.   
-Unfortunately, no stack of intravenous Cerebrolysin and 9-methyl-beta-carboline will speed up so that you can understand the lecture not in 5, but in 2 hours, and the fourth attempt will not be assigned for the fact that you are a brilliant vibe coder...
+So I suppose it comes down to what I did instead of studying. Biohacking and my own projects. First semester I blew through a 75,000-ruble monthly stipend. Second semester I was teaching an LLM a new modality.  
+Unfortunately, if it takes you five hours to get your head around a lecture, no stack of IV Cerebrolysin and 9-methyl-beta-carboline is going to get that down to two. And nobody gives you a fourth shot at an exam for being a genius vibe coder…
 
-In the second semester after college, I swore that I would study diligently: after 2 weeks of trying, I was already making a resume and dreaming of internships, a month later I was already cutting SensorLM on my younger brother’s card and completely neglected my studies, covering only what was necessary at the moment.
+In my second semester, after that first panel, I swore I’d buckle down. Two weeks in I was putting together a résumé and daydreaming about internships. A month in I was building SensorLM on my little brother’s graphics card. I’d blown off classes completely. Whatever was due *right now*, I’d do. That was it.
 
-This strategy works if you are very good at mathematics, but, as we already understood, this is not my case...
+You can get away with that if you’re really good at math. We’ve established how that worked out for me…
 
 ## [When Shall I Be Free?](https://www.youtube.com/watch?v=ZcQvv8pubrc)
 
-When... uh... a not very nice person gave me a low coefficient for the plus lab, I was very angry.   
-I was angry about this whole not very good course and a thought arose:
+When a certain… uh… less-than-wonderful person slapped a low multiplier on my C++ lab grade, I was pissed.  
+Pissed at that whole less-than-wonderful course. And a thought crossed my mind:
 
->What if goida? What if to hell with this study?  
-> Will I transfer to Group 32, get a military commission, launch a startup and move to Silicon Valley?  
-> No, it’s some kind of nonsense! I'm almost closed. I'll close and decide.
+> What if… goyda? What if I said to hell with school?  
+> Switch to Group 32, get my military ID, launch a startup and move to Silicon Valley?  
+> Nah, that’s ridiculous. I’ve almost passed everything. Let me get through exams and *then* I’ll decide.
 
-Be careful with your thoughts...
+Careful what you let yourself think…
 
-## Who the fuck died?
+## So who the fuck died?
 
-<h4>I tried to fall in love with mathematics for 2 years. I convinced myself, I said that mathematics was cool, I studied it...<br />I admit honestly: I don’t give a fuck about mathematics. No matter.</h4>
+<h4>I spent two years trying to love math. I kept telling myself math was cool. I sat down and did math…<br />Honest to God, I don’t give a fuck about math. I just don’t care.</h4>
 
-That’s why my channel was so meager and unsuccessful: because I wrote one thing and did another. Because the purpose of the channel was partly to make me do something I didn't want to do.   
-This is not gonzo journalism. This is some kind of gonzo rape!  
-I don’t think about mathematics in the background, I don’t dream about it, I don’t read about abstract mathematics without reference to practice.
+That’s why I barely posted on my channel and why it never went anywhere. I was writing about one thing and doing another. Part of the point of the channel was to make myself do something I didn’t want to do.  
+That’s not gonzo journalism. That’s some kind of gonzo rape!  
+My mind doesn’t wander to math. I don’t dream about it. I only read about abstract math when I have a use for it.
 
-I once listened to Huberman’s podcast where he talked about how to study.   
-One of the takeaways was about the need to process information studied in the background and think through it.  
-Math and my background thoughts: empty intersection.
+I was listening to Huberman’s podcast once and he was talking about how to study. One thing he said was that you need to turn what you’ve learned over in your head while you go about your day.  
+The intersection of math and the things I think about in the background is the empty set.
 
-One of my classmates wrote to me in a PM with the following statements:   
-"Here you write code with a neuron, you roll everything around, you don’t think with your brain. But didn’t you think ~~(contradiction)~~ that all these problems with debts, being paid off on commissions are due to the fact that instead of developing your brain, you use AI as a crutch?   
-I’m also stupid and spent a month of summer learning matan through blood, sweat and tears, and you?”
-  
-It seems that I abandoned my religion back in the summer, when I bought Claude 20x, when I vibecoded optiHealth for almost a month full time. It wasn't easy, you know!  
-I also lost to my project with Sensor Language Models, probably because with the new limits I had no time left for lectures on multimodal AI.
+One of my classmates had a bone to pick with me. He sent me this DM:  
+“You get AI to write your code, you copy everything, you never think for yourself. Have you ever thought ~~(contradiction)~~ that maybe the reason you’ve got courses you still haven’t passed and you’re flunking your final retake is that you use AI as a crutch instead of learning to use your own brain?  
+I’m stupid too. I spent a month of my summer on calculus. Blood, sweat and tears. What did you do?”
 
-“Here is an experienced developer who delegates to a neuron what he understands, but you don’t understand shit!”
+I think I’d already lost my religion that summer. I bought Claude 20x and spent close to a month vibe coding optiHealth full time. It wasn’t easy, I’ll have you know!  
+My Sensor Language Models project took a hit too. I needed to understand the machine learning behind it, so I’d been watching lectures on multimodal AI and actually working through the material. Once I had those higher Claude limits, I spent that time vibe coding optiHealth instead. Frontend work, ordinary software engineering. The hard ML part of SensorLM? I let it slide.
 
-Yes, I delegate to the neuron what I don’t fully understand.  
-You can do standard tasks with your hands, or you can set yourself a task that you can only complete with a neuron.   
+“An experienced developer delegates work to AI when they understand it. You don’t understand a fucking thing!”
+
+Yeah, I hand things to AI that I don’t fully understand.  
+You can do the usual jobs by hand. You can also set yourself a job you could *only* do with AI.  
 Singularity.
 
-I believe that in a couple of years only the top 1% of programmers will remain - the rest will become managers, products...   
-I don't think you can be top 1% in something without loving it, without being obsessed.
+I believe in a couple of years only the top 1% of programmers will still be programming. The rest will be managers, product managers…  
+I don’t think you get into the top 1% of anything unless you love it. Unless you’re obsessed.
 
-But I’m a bad mathematician, I’m not the creator of AI technologies, I don’t fit into your friendly community.
+Well, I suck at math. I’m no creator of AI technology. I didn’t fit into your tight-knit community.
 
-I tried to take on someone else's role and lost.  
-I tried to stick with a couple of years of foundation on the way to level 3, but I kept running into projects.
+I tried to squeeze myself into a role that wasn’t mine. And I lost.  
+I tried to stick out a couple of years of foundations on my way to Level 3. I kept sneaking off to work on projects.
 
-I can't sit still. It seems that I have so many ideas, and the world is changing so quickly that sitting and coding with pens is death. A waste of time.
+I can’t sit still. It feels like I’ve got so many ideas and the world’s moving so fast that sitting down and writing code by hand is death. A waste of time.
 
-Although sometimes it seems that these are simply attempts at “proactive procrastination.” They say motivation will wane as soon as studying stops.   
-Let's check it out, I think? Let's see who died?
+Though sometimes I wonder if this is all just “proactive procrastination.” Maybe once school’s out of the picture, there goes my motivation too.  
+Shall we see if that’s all it is? See who died?
 
 ## This game has no name, it will never be the same.
 
-P.S. Despite the fact that there are a lot of “justifications” and “criticisms” here, I am grateful to ITMO for:
+P.S. For all the “excuses” and “criticism” in here, there’s plenty I’m grateful to ITMO for.
 
-1. What was shoved into me is 40-60% of what was, and this is already a considerable foundation. I've really gotten better at math.
-
-2. To the AI360 community, because I believe that it will still be possible to connect with someone.
-
-3. Climbing sections
-
-4. Scholarships that I spent on biohacking and sound.
-
-5. Because they were not expelled from the university, but transferred to group 35.
-
-6. Meshcherin for inspiration. [About expulsion](https://miptstream.ru/2016/01/16/drop-off/), [about teaching mathematics to adults](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu).  
-Vitali is brilliant about sets. There are not many truly educated people these days who know why this is so interesting and unusual.
+1. Somewhere between 40 and 60% of what they tried to cram into my head actually stuck. That’s a pretty solid foundation. I really did get better at math.
+2. The AI360 community. I still think I’ll find someone there to connect with.
+3. The climbing club.
+4. The stipend I blew on biohacking and audio gear.
+5. They let me stay at ITMO and transferred me to Group 35.
+6. Meshcherin, for the inspiration. [On getting kicked out](https://miptstream.ru/2016/01/16/drop-off/) and [on teaching adults math](https://vk.ru/@mesyarik-pro-obuchenie-vzroslyh-s-nulya-matematike-i-programmirovaniu).  
+   The bit about Vitali sets is genius. There aren’t many genuinely educated people around these days who understand why that’s so interesting and so strange.
